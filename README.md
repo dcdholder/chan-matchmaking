@@ -2,6 +2,7 @@
 
 ## General Idea
 This is an application for playing matchmaker, using a database of personal data taken from QT charts.
+Looks like I'll be learning/using Django, since I want to stick with one language and Python has the best Imagemagick/Tesseract support.
 
 ## Challenges
 - Figure out how to combine the different chart image data representations with the models
