@@ -5,122 +5,113 @@
       checkboxes:
         - label: male
           coordinates:
-            you: 161x591
-            them: 
+            you:  161x591
+            them: 161x2078
         - label: female
           coordinates:
-            you: 383x591
-            them:
+            you:  383x591
+            them: 383x2078
         - label: ftm
           coordinates:
-            you: 661x591
-            them: 
+            you:  661x591
+            them: 661x2078
 
     - name: race
-      checkboxes:
       size: 78x78
+      checkboxes:
         - label: white
           coordinates:
-            you: 2570x591
-            them:
+            you:  2750x591
+            them: 2750x2076
         - label: asian
           coordinates:
-            you: 2865x591 
-            them:
+            you:  2865x591 
+            them: 2865x2076
         - label: latin
           coordinates:
-            you: 2980x591
-            them:
+            you:  2980x591
+            them: 2980x2076
         - label: arab
           coordinates:
-            you: 3097x591
-            them:
+            you:  3097x591
+            them: 3097x2076
         - label: jewish
           coordinates:
-            you: 3213x591
-            them:
+            you:  3213x591
+            them: 3213x2076
         - label: black
           coordinates:
-            you: 3329x591
-            them:
+            you:  3329x591
+            them: 3329x2076
         - label: other
           coordinates:
-            you: 3444x591
-            them:
+            you:  3444x591
+            them: 3444x2076
     
-    - name: hairLength
+    - name: hairStyle
+      size: 74x74
       checkboxes:
         - label: bald
           coordinates:
-            you: 
-            them:
-          size:
+            you:  3264x1534
+            them: 3264x3020
         - label: short
           coordinates:
-            you: 
-            them:
-          size:
+            you:  3378x1534
+            them: 3378x3020
         - label: medium
           coordinates:
-            you: 
-            them:
-          size:  
+            you:  3494x1534
+            them: 3494x3020
         - label: long
           coordinates:
-            you: 
-            them:
-          size:
+            you:  3614x1534
+            them: 3614x3020
         - label: veryLong
           coordinates:
-            you: 
-            them:
-          size:  
+            you:  3728x1534
+            them: 3728x3020
 
     - name: hairColor
+      size: 72x72
       checkboxes:
         - label: black
           coordinates:
-            you: 
-            them:
-          size:
+            you:  3146x1658
+            them: 3146x3148
         - label: brown
           coordinates:
-            you: 
-            them:
-          size:
+            you:  3262x1658
+            them: 3262x3148
         - label: gold
           coordinates:
-            you: 
-            them:
-          size:
+            you:  3380x1658
+            them: 3380x3148
         - label: blonde
           coordinates:
-            you: 
-            them:
-          size:
+            you:  3496x1658
+            them: 3496x3148
         - label: ginger
           coordinates:
-            you: 
-            them:
-          size:
+            you:  3610x1658
+            them: 3610x3148
         - label: other
           coordinates:
-            you: 
-            them:
-          size:
-
+            you:  3730x1658
+            them: 3730x3148
+            
   booleanBars:
     - name: piercings
       yesPosition: right
       coordinates: 
-        you: 3638x854
-        them:
+        you:  3638x854
+        them: 2638x2340
       size: 157x74
     - name: tattoos
       yesPosition: right
       coordinates: 
-        you: 3638x980
-        them:
+        you:  3638x980
+        them: 3638x2466
       size: 157x74
 
   pictographicCheckboxSets:
@@ -128,79 +119,80 @@
       checkboxes:
         - label: fitMale
           coordinates:
-            you: 2977x920
-            them:
+            you:  2977x920
+            them: 2977x2382
         - label: skinnyMale
           coordinates:
-            you: 3133x922
-            them: 
+            you:  3133x922
+            them: 3133x2416
         - label: thinMale
           coordinates:
-            you: 3296x928
-            them:     
+            you:  3296x928
+            them: 3296x2422
         - label: mediumMale
           coordinates:
-            you: 2981x1063
-            them:
+            you:  2981x1063
+            them: 2981x2556
         - label: chubbyMale
           coordinates:
-            you: 3175x1047
-            them:
+            you:  3175x1047
+            them: 3175x2530
         - label: fatMale
           coordinates:
-            you: 3360x1062
-            them:
+            you:  3360x1062
+            them: 3360x2542
+            
         - label: fitFemale
           coordinates:
-            you: 3021x924
-            them:
+            you:  3021x924
+            them: 3021x2414
         - label: skinnyFemale
           coordinates:
-            you: 3168x926
-            them: 
+            you:  3168x926
+            them: 3168x2412
         - label: thinFemale
           coordinates:
-            you: 3333x926
-            them:     
+            you:  3333x926
+            them: 3333x2402
         - label: mediumFemale
           coordinates:
-            you: 3024x1076
-            them:
+            you:  3024x1076
+            them: 3024x2560
         - label: chubbyFemale
           coordinates:
-            you: 3213x1074
-            them:
+            you:  3213x1074
+            them: 3213x2544
         - label: fatFemale
           coordinates:
-            you: 3412x1070
-            them:
+            you:  3412x1070
+            them: 3412x2556
     
     - name: facialHair
       checkboxes:
         - label: none
           coordinates:
-            you: 2999x1279
-            them:
+            you:  2999x1279
+            them: 2999x2770
         - label: moustache
           coordinates:
-            you: 3202x1255
-            them:
+            you:  3202x1255
+            them: 3202x2740
         - label: goatee
           coordinates:
-            you: 3445x1281
-            them:    
+            you:  3445x1281
+            them: 3445x2768  
         - label: stubble
           coordinates:
-            you: 2996x1370
-            them:
+            you:  2996x1370
+            them: 2996x2852
         - label: beard
           coordinates:
-            you: 3204x1369
-            them:
+            you:  3204x1369
+            them: 3204x2850
         - label: wizard
           coordinates:
-            you: 3445x1371
-            them:
+            you:  3445x1371
+            them: 3445x2870
 
   numericalRangeBars:
     - name: age
@@ -208,8 +200,8 @@
       max: 30
       numCells: 8
       coordinates:
-        you: 161x734
-        them: 
+        you:  161x734
+        them: 161x2218
       size: 637x77
       
     - name: height
@@ -217,9 +209,9 @@
       max: 75
       numCells: 10
       coordinates:
-        you: 
-        them:
-      size: 
+        you:  2794x752
+        them: 2794x2240
+      size: 798x76
         
 - category: emotional
   fuzzyRangeBars:
@@ -227,211 +219,177 @@
       left:     introverted
       right:    extroverted
       numCells: 10
-      coordinates:
-        you: 
-        them:
-      size: 
+      coordinates: 
+        you:  1596x570
+        them: 1596x2056
+      size: 600x52
         
     - name:     practicality
       left:     theoretical
       right:    practical
       numCells: 10
       coordinates:
-        you: 
-        them:
-      size: 
+        you:  1596x656
+        them: 1596x2142
+      size: 600x52
       
     - name:     emotional
       left:     logical
       right:    emotional
       numCells: 10
       coordinates:
-        you: 
-        them:
-      size: 
+        you:  1596x742
+        them: 1596x2228
+      size: 600x52
         
     - name:     spontaneity
       left:     structured
       right:    spontaneous
       numCells: 10
       coordinates:
-        you: 
-        them:
-      size: 
+        you:  1596x828
+        them: 1596x2316
+      size: 600x52
   
   checkboxSets:
     - name: quirks
+      size: 58x58
       checkboxes:
         - label: adventurous
           coordinates:
-            you: 
-            them:
-          size: 
+            you:  1324x1006
+            them: 1324x2494
         - label: cutesy
           coordinates:
-            you: 
-            them:
-          size: 
+            you:  1624x1006
+            them: 1624x2494
         - label: intelligent
           coordinates:
-            you: 
-            them:
-          size:  
+            you:  1902x1006
+            them: 1902x2494
         - label: reliable
           coordinates:
-            you: 
-            them:
-          size: 
+            you:  2212x1006
+            them: 2212x2494
             
         - label: ambitious
           coordinates:
-            you: 
-            them:
-          size: 
+            you:  1324x1102
+            them: 1324x2588
         - label: cynical
           coordinates:
-            you: 
-            them:
-          size: 
+            you:  1624x1102
+            them: 1624x2588
         - label: kind
           coordinates:
-          coordinates:
-            you: 
-            them:
-          size: 
+            you:  1902x1102
+            them: 1902x2588
         - label: resourceful
           coordinates:
-            you: 
-            them:
-          size: 
+            you:  2212x1102
+            them: 2212x2588
         
         - label: analytical
           coordinates:
-            you: 
-            them:
-          size: 
+            you:  1324x1194
+            them: 1324x2682
         - label: easyGoing
           coordinates:
-          coordinates:
-            you: 
-            them:
-          size: 
+            you:  1624x1194
+            them: 1624x2682
         - label: lazy
           coordinates:
-          coordinates:
-            you: 
-            them:
-          size:  
+            you:  1902x1194
+            them: 1902x2682
         - label: romantic
           coordinates:
-            you: 
-            them:
-          size: 
+            you:  2212x1194
+            them: 2212x2682
              
         - label: artistic
           coordinates:
-            you: 
-            them:
-          size: 
+            you:  1324x1290
+            them: 1324x2778
         - label: empathetic
           coordinates:
-            you: 
-            them:
-          size: 
+            you:  1624x1290
+            them: 1624x2778
         - label: loud
           coordinates:
-            you: 
-            them:
-          size:  
+            you:  1902x1290
+            them: 1902x2778
         - label: serious
           coordinates:
-            you: 
-            them:
-          size: 
+            you:  2212x1290
+            them: 2212x2778
             
         - label: assertive
           coordinates:
-            you: 
-            them:
-          size: 
+            you:  1324x1384
+            them: 1324x2870
         - label: energetic
           coordinates:
-            you: 
-            them:
-          size: 
+            you:  1624x1384
+            them: 1624x2870
         - label: materialistic
           coordinates:
-            you: 
-            them:
-          size: 
+            you:  1902x1384
+            them: 1902x2870
         - label: sexual
           coordinates:
-            you: 
-            them:
-          size: 
+            you:  2212x1384
+            them: 2212x2870
             
         - label: athletic
           coordinates:
-            you: 
-            them:
-          size: 
+            you:  1324x1478
+            them: 1324x2966
         - label: honest
           coordinates:
-            you: 
-            them:
-          size: 
+            you:  1624x1478
+            them: 1624x2966
         - label: messy
           coordinates:
-            you: 
-            them:
-          size:  
+            you:  1902x1478
+            them: 1902x2966
         - label: social
           coordinates:
-            you: 
-            them:
-          size:        
+            you:  2212x1478
+            them: 2212x2966
             
         - label: confident
           coordinates:
-            you: 
-            them:
-          size: 
+            you:  1324x1572
+            them: 1324x3058
         - label: humorous
           coordinates:
-            you: 
-            them:
-          size: 
+            you:  1624x1572
+            them: 1624x3058
         - label: outdoorsy
           coordinates:
-            you: 
-            them:
-          size:  
+            you:  1902x1572
+            them: 1902x3058
         - label: talkative
           coordinates:
-            you: 
-            them:
-          size: 
+            you:  2212x1572
+            them: 2212x3058
             
         - label: creative
           coordinates:
-            you: 
-            them:
-          size: 
+            you:  1324x1666
+            them: 1324x3154
         - label: hygienic
           coordinates:
-            you: 
-            them:
-          size: 
+            you:  1624x1666
+            them: 1624x3154
         - label: passionate
           coordinates:
-            you: 
-            them:
-          size: 
+            you:  1902x1666
+            them: 1902x3154
         - label: wise
           coordinates:
-            you: 
-            them:
-          size: 
+            you:  2212x1666
+            them: 2212x3154
             
 - category: beliefs
   twoDFuzzyRangeBars:
@@ -442,9 +400,9 @@
       bottom: socialist
       cellDimensions: 5
       coordinates:
-        you:
-        them:
-      size:
+        you:  696x1396
+        them: 696x2884
+      size: 300x300
         
   fuzzyRangeBars:
     - name:  political
@@ -452,15 +410,98 @@
       right: authoritarian
       numCells: 7
       coordinates:
-        you:
-        them: 
-      size:
+        you:  50x1142
+        them: 50x2626
+      size: 558x72
       
     - name:  social
       left:  progressive
       right: conservative
       numCells: 7
       coordinates:
-        you:
-        them: 
-      size:
+        you:  50x1360
+        them: 50x2846
+      size: 558x72
+      
+    - name:  religiousDevotion
+      left:  low
+      right: high
+      numCells: 5
+      coordinates:
+        you:  44x940
+        them: 44x2426
+      size: 160x28
+      
+  pictographicCheckboxSets:
+    - name: religion
+      checkboxes:
+        label: christian
+        coordinates:
+          you:  294x796
+          them: 294x2280
+        label: muslim
+        coordinates:
+          you:  460x808
+          them: 460x2296
+        label: jewish
+        coordinates:
+          you:  640x810
+          them: 640x2298
+        label: pagan
+        coordinates:
+          you:  838x810
+          them: 838x2296
+        label: satanist
+        coordinates:
+          you:  930x822
+          them: 930x2296
+          
+        label: deist
+        coordinates:
+          you:  304x902
+          them: 304x2388
+        label: polydeist
+        coordinates:
+          you:  432x898
+          them: 432x2386
+        label: agnostic
+        coordinates:
+          you:  634x896
+          them: 634x2382
+        label: atheist
+        coordinates:
+          you:  860x948
+          them: 860x2430
+        label: other
+        coordinates:
+          you:  1042x928
+          them: 1042x2416
+          
+- category: other
+  fuzzyRangeBars:
+    - name:     alcohol
+      left:     never
+      right:    frequently
+      numCells: 3
+      coordinates: 
+        you:  346x1542
+        them: 346x3028
+      size: 238x76
+        
+    - name:     tobacco
+      left:     never
+      right:    frequently
+      numCells: 3
+      coordinates:
+        you:  818x1542
+        them: 818x3028
+      size: 238x76
+      
+    - name:     otherDrugs
+      left:     never
+      right:    frequently
+      numCells: 3
+      coordinates:
+        you:  346x1666
+        them: 346x3150
+      size: 238x76
