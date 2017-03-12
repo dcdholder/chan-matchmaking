@@ -1,0 +1,94 @@
+body {
+    font-family:sans-serif;
+}
+
+.multicolorRadio {
+    margin:4px;
+    float:middle;
+    background-color:white;
+    white-space:nowrap;
+}
+
+.multicolorRadio .leftmostRadio label {
+    border-top-left-radius:15px;
+    border-bottom-left-radius:15px;
+}
+
+.multicolorRadio .rightmostRadio label {
+    border-top-right-radius:15px;
+    border-bottom-right-radius:15px;
+}
+
+.multicolorRadio label:hover {
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+    opacity: 0.75;
+}
+
+.multicolorRadio .middleRadio input:not(:checked) + span {
+    color:black;
+    visibility: hidden;
+}
+
+.multicolorRadio .middleRadio input:hover + span {
+    visibility: visible;
+}
+
+.multicolorRadio label {
+    float:left;
+    width:78px;
+    height:40px;
+    margin:0px;
+    background-color:#404040;
+    border:2px solid #D0D0D0;
+    overflow:auto;
+}
+
+.multicolorRadio label span {
+    position:relative;
+    top:50%;
+    transform:translateY(-50%);
+    color:white;
+    font-weight:bold;
+    text-align:center;
+    font-size: 10px;
+    padding:6px 0px;
+    display:block;
+}
+
+.multicolorRadio label input {
+    position:absolute;
+    top:-20px;
+}
+
+.multicolorRadio input:checked + span {
+    color:#F7F7F7;
+}
+
+.multicolorRadio .pink {
+    background-color:#FF00FF;
+}
+
+.multicolorRadio .yellow {
+    background-color:#FFFF00;
+    color:#333;
+}
+
+.multicolorRadio .blue {
+    background-color:#0000FF;
+    color:#333;
+}
+
+.multicolorRadio .red {
+    background-color:#FF0000;
+    color:#333;
+}
+
+.multicolorRadio .green {
+    background-color:#00FF00;
+    color:#333;
+}
+.multicolorRadio .orange {
+    background-color:#FF7200;
+    color:#333;
+}
+
