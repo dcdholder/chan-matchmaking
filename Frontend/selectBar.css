@@ -4,22 +4,35 @@ body {
 
 .multicolorRadio {
     margin:4px;
-    float:middle;
     background-color:white;
     white-space:nowrap;
+    clear: both;
+    padding:3px;
 }
 
-.multicolorRadio .leftmostRadio label {
+.multicolorRadio .leftmostRadio {
+	display:inline;
+}
+
+.multicolorRadio .rightmostRadio {
+	display:inline;
+}
+
+.multicolorRadio .middleRadio {
+	display:inline;
+}
+
+.multicolorRadio .leftmostRadio .color {
     border-top-left-radius:15px;
     border-bottom-left-radius:15px;
 }
 
-.multicolorRadio .rightmostRadio label {
+.multicolorRadio .rightmostRadio .color {
     border-top-right-radius:15px;
     border-bottom-right-radius:15px;
 }
 
-.multicolorRadio label:hover {
+.multicolorRadio .color:hover {
     box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
     opacity: 0.75;
 }
@@ -33,14 +46,28 @@ body {
     visibility: visible;
 }
 
-.multicolorRadio label {
+.multicolorRadio .color {
     float:left;
-    width:78px;
-    height:40px;
+    width:60px;
+    height:30px;
     margin:0px;
     background-color:#404040;
     border:2px solid #D0D0D0;
     overflow:auto;
+}
+
+.multicolorRadio .groupLabel {
+    float:left;
+    width:120px;
+    height:30px;
+    overflow:auto;
+}
+
+.multicolourSelect label {
+	width:40;
+	height:40;
+	background-color:#404040;
+	overflow:auto;
 }
 
 .multicolorRadio label span {
@@ -50,14 +77,20 @@ body {
     color:white;
     font-weight:bold;
     text-align:center;
-    font-size: 10px;
+    font-size: 8px;
     padding:6px 0px;
     display:block;
 }
 
+.multicolorRadio .groupLabel span {
+	color:black;
+	font-size: 14px;
+	text-align:left;
+}
+
 .multicolorRadio label input {
     position:absolute;
-    top:-20px;
+    top:-40px;
 }
 
 .multicolorRadio input:checked + span {
