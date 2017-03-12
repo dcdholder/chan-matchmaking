@@ -8,4 +8,10 @@ $(document).ready(function(e) {
 			$( this ).parent().css('background-color', 'black');
 		}
 	});
+	
+	$("div.selectAllFuzzyBarCell").find("select").click(function() {
+		var selectedColor = $( this ).val();
+		console.log(selectedColor);
+		$( this ).css('background-color', selectedColor);
+	});
 });

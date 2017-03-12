@@ -10,6 +10,30 @@ body {
     padding:3px;
 }
 
+.selectOneFuzzyBar {
+	margin:4px;
+	background-color:white;
+	white-space:nowrap;
+    clear: both;
+    padding:3px;
+}
+
+.selectAllFuzzyBar {
+	margin:4px;
+	background-color:white;
+	white-space:nowrap;
+    clear: both;
+    padding:3px;
+}
+
+.selectAllFuzzyBar .selectAllFuzzyBarCell {
+	display:inline;
+}
+
+.selectOneFuzzyBar .greenHover {
+	background-color:green;
+}
+
 .multicolorRadio .leftmostRadio {
 	display:inline;
 }
@@ -63,9 +87,72 @@ body {
     overflow:auto;
 }
 
+.selectAllFuzzyBar .groupLabel {
+    float:left;
+    width:120px;
+    height:30px;
+    overflow:auto;
+}
+
+.selectAllFuzzyBar .groupLabel span {
+	color:black;
+	font-size: 14px;
+	text-align:left;
+	position:relative;
+    top:50%;
+    transform:translateY(-50%);
+    font-weight:bold;
+}
+
+.selectOneFuzzyBar label {
+	float:left;
+    width:60px;
+    height:30px;
+    margin:0px;
+    overflow:auto;
+    display:inline;
+}
+
+.selectOneFuzzyBar label.selectOneCell {
+	background-color:#404040;
+	border:2px solid #D0D0D0;
+}
+
+.selectOneFuzzyBar label span {
+    position:relative;
+    top:50%;
+    transform:translateY(-50%);
+    color:white;
+    font-weight:bold;
+    text-align:center;
+    font-size: 8px;
+    padding:6px 0px;
+    display:block;
+}
+
+.selectOneFuzzyBar label input {
+    position:absolute;
+    top:-40px;
+}
+
+.selectOneFuzzyBar .groupLabel {
+    float:left;
+    width:120px;
+    height:30px;
+    overflow:auto;
+}
+
+.selectOneFuzzyBar .groupLabel span {
+	color:black;
+	font-size: 14px;
+	text-align:left;
+	position:relative;
+    top:50%;
+    transform:translateY(-50%);
+    font-weight:bold;
+}
+
 .multicolourSelect label {
-	width:40;
-	height:40;
 	background-color:#404040;
 	overflow:auto;
 }
@@ -95,6 +182,44 @@ body {
 
 .multicolorRadio input:checked + span {
     color:#F7F7F7;
+}
+
+.selectAllFuzzyBarCell select {
+	float:left;
+    width:60px;
+    height:30px;
+    margin:0px;
+    border:2px solid #D0D0D0;
+    overflow:auto;
+    text-indent: 100%;
+}
+
+.selectAllFuzzyBarCell .pink {
+    background-color:#FF00FF;
+}
+
+.selectAllFuzzyBarCell .yellow {
+    background-color:#FFFF00;
+    color:#333;
+}
+
+.selectAllFuzzyBarCell .blue {
+    background-color:#0000FF;
+    color:#333;
+}
+
+.selectAllFuzzyBarCell .red {
+    background-color:#FF0000;
+    color:#333;
+}
+
+.selectAllFuzzyBarCell .green {
+    background-color:#00FF00;
+    color:#333;
+}
+.selectAllFuzzyBarCell .orange {
+    background-color:#FF7200;
+    color:#333;
 }
 
 .multicolorRadio .pink {
