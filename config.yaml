@@ -1,6 +1,8 @@
 - category: physical
   checkboxSets:
     - name: gender
+      weighting: 100
+      isMulticolor: false
       size: 78x78
       checkboxes:
         - label: male
@@ -17,6 +19,8 @@
             them: 661x2078
 
     - name: race
+      weighting: 15
+      isMulticolor: false
       size: 78x78
       checkboxes:
         - label: white
@@ -49,6 +53,8 @@
             them: 3444x2076
     
     - name: hairStyle
+      weighting: 1
+      isMulticolor: false
       size: 74x74
       checkboxes:
         - label: bald
@@ -73,6 +79,8 @@
             them: 3728x3020
 
     - name: hairColor
+      weighting: 10
+      isMulticolor: false
       size: 72x72
       checkboxes:
         - label: black
@@ -102,12 +110,14 @@
             
   booleanBars:
     - name: piercings
+      weighting: 4
       yesPosition: right
       coordinates: 
         you:  3638x854
         them: 2638x2340
       size: 157x74
     - name: tattoos
+      weighting: 4
       yesPosition: right
       coordinates: 
         you:  3638x980
@@ -116,6 +126,7 @@
 
   pictographicCheckboxSets:
     - name: bodyType
+      weighting: 25
       checkboxes:
         - label: fitMale
           coordinates:
@@ -168,6 +179,7 @@
             them: 3412x2556
     
     - name: facialHair
+      weighting: 1
       checkboxes:
         - label: none
           coordinates:
@@ -196,6 +208,7 @@
 
   numericalRangeBars:
     - name: age
+      weighting: 25
       min: 16
       max: 30
       numCells: 8
@@ -205,6 +218,7 @@
       size: 637x77
       
     - name: height
+      weighting: 15
       min: 56
       max: 75
       numCells: 10
@@ -215,37 +229,41 @@
         
 - category: emotional
   fuzzyRangeBars:
-    - name:     introversion
-      left:     introverted
-      right:    extroverted
-      numCells: 10
+    - name:      introversion
+      weighting: 1
+      left:      introverted
+      right:     extroverted
+      numCells:  10
       coordinates: 
         you:  1596x570
         them: 1596x2056
       size: 600x52
         
-    - name:     practicality
-      left:     theoretical
-      right:    practical
-      numCells: 10
+    - name:      practicality
+      weighting: 1
+      left:      theoretical
+      right:     practical
+      numCells:  10
       coordinates:
         you:  1596x656
         them: 1596x2142
       size: 600x52
       
-    - name:     emotional
-      left:     logical
-      right:    emotional
-      numCells: 10
+    - name:      emotional
+      weighting: 1
+      left:      logical
+      right:     emotional
+      numCells:  10
       coordinates:
         you:  1596x742
         them: 1596x2228
       size: 600x52
         
-    - name:     spontaneity
-      left:     structured
-      right:    spontaneous
-      numCells: 10
+    - name:      spontaneity
+      weighting: 1
+      left:      structured
+      right:     spontaneous
+      numCells:  10
       coordinates:
         you:  1596x828
         them: 1596x2316
@@ -253,6 +271,8 @@
   
   checkboxSets:
     - name: quirks
+      weighting: 8
+      isMulticolor: true
       size: 58x58
       checkboxes:
         - label: adventurous
@@ -394,6 +414,7 @@
 - category: beliefs
   twoDFuzzyRangeBars:
     - name:   economic
+      weighting: 1
       left:   free
       right:  regulated
       top:    capitalist
@@ -406,6 +427,7 @@
         
   fuzzyRangeBars:
     - name:  political
+      weighting: 4
       left:  libertarian
       right: authoritarian
       numCells: 7
@@ -415,6 +437,7 @@
       size: 558x72
       
     - name:  social
+      weighting: 4
       left:  progressive
       right: conservative
       numCells: 7
@@ -424,6 +447,7 @@
       size: 558x72
       
     - name:  religiousDevotion
+      weighting: 4
       left:  low
       right: high
       numCells: 5
@@ -434,6 +458,7 @@
       
   pictographicCheckboxSets:
     - name: religion
+      weighting: 5
       checkboxes:
         label: christian
         coordinates:
@@ -480,6 +505,7 @@
 - category: other
   fuzzyRangeBars:
     - name:     alcohol
+      weighting: 1
       left:     never
       right:    frequently
       numCells: 3
@@ -489,6 +515,7 @@
       size: 238x76
         
     - name:     tobacco
+      weighting: 1
       left:     never
       right:    frequently
       numCells: 3
@@ -498,6 +525,7 @@
       size: 238x76
       
     - name:     otherDrugs
+      weighting: 1
       left:     never
       right:    frequently
       numCells: 3
