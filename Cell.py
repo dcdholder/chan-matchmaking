@@ -1,6 +1,8 @@
 #it looks like the coordinate is simply a tuple
 #a cell may have the color 'unselected', 'invalid', or one of six others
 
+import yaml
+
 class ColorDataField:
 	__unselectedColor   = 0xFFFFFF
 	__singleSelectIndex = 2
@@ -62,8 +64,8 @@ class ColorDataField:
 	
 		return finalScore
 	
-	def singleColorYouScoring(traitSelected,importanceScoreIndex) #trait score is either 1.0 or 0.0, no in-betweens
-		if traitSelected:
+	def singleColorYouScoring(traitIsSelected,importanceScoreIndex) #trait score is either 1.0 or 0.0, no in-betweens
+		if traitIsSelected:
 			traitScoreIndex = len(__traitScoreMapping)-1 #just set to either extreme trait score
 		else:
 			traitScoreIndex = 0
@@ -78,9 +80,17 @@ class Cell: #an indivisble component of an image element
 	
 	def __setColor() #just select color from the given coordinates -- is different for square cell
 		#TODO: figure out how to handle invalid cell colors
-		#TODO: write ImageMagick code to get color from pixel
-		return ColorDataField(colorCode)
-			
+		centerPixelCoordinates = self.getCenterPixel()
+		
+		rgb          = self.pixelMap.getPixel(centerPixelCoordinates)
+		hexColorCode = '#{:02x}{:02x}{:02x}'.format(rgb[0],rgb[1],rgb[2])
+		
+		return ColorDataField(hexColorCode)
+	
+	def getCenterPixel(): #the default is just to return the 'coordinates' -- overriden in SquareCell, but not PictographicCell
+		return coordinates
+	
+	def fillCell(coordinates, colorCode)		
 
 class PictographicCell(Cell):
 	
@@ -92,51 +102,21 @@ class SquareCell(Cell):
 		self.size           = size
 		self.colorDataField = self.__setColor()
 	
-	def __setColor() #this guy samples the color and assigns it the correct color name string
-		centerPixelCoordinates = self.getCenterPixel()
-		#TODO: colorValue = #feed the coordinates into imagemagick or whatever, get the color at that point
-		colorFound = False
-		if colorValue==self.__unselectedColor
-			colorFound = true
-			colorName  = 'unselected'
-		else
-			for name, value in self.__colorValues
-				if value==colorValue
-					colorFound = True
-					colorName  = name
-					break
-				
-		if colorFound
-			return colorName
-		else
-			return 'invalid'
-	
 	def genRow(pixelMap,baseCoordinates,cellSize,numCells) #create a horizontal row of cells
 		cells = []
 		for i in range(numCells)
-			cellCoordinates['x'] = baseCoordinates['x'] + cellSize['x'] * i
-			cellCoordinates['y'] = baseCoordinates['y']
+			cellCoordinates[0] = baseCoordinates[0] + cellSize[0] * i
+			cellCoordinates[1] = baseCoordinates[1]
 			cells.append(Cell(pixelMap,cellCoordinates,cellSize))
 			
 		return cells
-		
-	def isColored() #this guy checks that the color is not the default color
-		return self.color!='unselected'
-	
-	def isDefaultSelectedColor() 
-		return self.color=='green'
-	
-	def getColorScore()
-		return self.__colorScores[self.color]
 	
 	def getCenterPixel()
-		middleX = self.coordinates['x'] + self.size['x'] / 2
-		middleY = self.coordinates['y'] + self.size['y'] / 2
+		middleX = self.coordinates[0] + self.size[0] / 2
+		middleY = self.coordinates[1] + self.size[1] / 2
 
-		return {'x': middleX, 'y': middleY}
-
-class Element #a chart element is a collection of individual cells
-		
+		return (middleX, middleY)
+	
 class CheckboxSet(Element):
 	def __init__(self, checkboxes, category, label)
 		self.checkboxes = checkboxes
@@ -151,11 +131,11 @@ class BooleanBar(Element):
 		self.category    = category
 		self.label       = label
 		
-		cellSize['x'] = size['x'] / 2
-		cellSize['y'] = size['y']
+		cellSize[0] = size[0] / 2
+		cellSize[1] = size[1]
 		
-		rightCoordinates['x'] = coordinates['x'] / cellSize['x']
-		rightCoordinates['y'] = coordinates['y']
+		rightCoordinates[0] = coordinates[0] / cellSize[0]
+		rightCoordinates[1] = coordinates[1]
 		
 		if yesPosition=='left'
 			self.yesCell = Cell(pixelMap, coordinates, cellSize)
@@ -197,12 +177,109 @@ class FuzzyRangeBar(Element):
 	def getPercentScoreRight()
 		#TODO: generate a key-value pair corresponding to the "matching percentage" of the right attribute
 
+class Element: #a chart element is a collection of individual cells, has a non-configurable weighting within a category
+	def __init__(self, elementYaml, weighting, pixelMap)
+		self.elementYaml = elementYaml
+		self.name        = elementYaml['name']
+		self.weighting   = weighting
+		self.pixelMap    = pixelMap
+		self.cells       = self.__getCells()
+
+	def __getCells():
+
 class Category:
-	def __init__(self, name, elements)
-		self.name     = name
-		self.elements = elements
+	def __init__(self, categoryYaml, weighting, pixelMap) #category weighting must be passed in by chart, not set in stone
+		self.categoryYaml      = categoryYaml
+		self.name              = categoryYaml['category']
+		self.weighting         = weighting
+		self.pixelMap          = pixelMap
+		self.elements          = self.__getElements() #hash of tuples -- each key corresponds to the 'You' and 'Them' versions of an element
+		self.elementWeightings = self.__getElementWeightings()
 		
-class Chart
-	def __init__(self, name, categories)
-		self.name     = name
-		self.elements = categories
+	#TODO: pretty ugly
+	def __getElements(): #Yaml format is different for each element type
+		elements = {}
+	
+		checkboxSetsYaml = categoryYaml['checkboxSets']
+		for checkboxSetYaml in checkboxSetsYaml
+			elements[checkboxSetYaml['name']] = CheckboxSet.getYouAndThemElementsFromYaml(checkboxSetYaml)
+		
+		pictographicCheckboxSetsYaml = categoryYaml['pictographicCheckboxSets']
+		for pictographicCheckboxSetYaml in pictographicCheckboxSetsYaml
+			elements[pictographicCheckboxSetYaml['name']] = PictographicCheckboxSet.getYouAndThemElementsFromYaml(pictographicCheckboxSetYaml)
+		
+		numericalRangeBars = categoryYaml['numericalRangeBars']
+		for numericalRangeBarYaml in numericalRangeBarsYaml
+			elements[numericalRangeBarYaml['name']] = NumericalRangeBar.getYouAndThemElementsFromYaml(numericalRangeBarYaml)
+		
+		fuzzyRangeBars = categoryYaml['fuzzyRangeBars']
+		for fuzzyRangeBarYaml in fuzzyRangeBarsYaml
+			elements[fuzzyRangeBarYaml['name']] = FuzzyRangeBar.getYouAndThemElementsFromYaml(fuzzyRangeBarYaml)
+		
+		twoDFuzzyRangeBars = categoryYaml['twoDFuzzyRangeBars']
+		for twoDFuzzyRangeBarYaml in twoDFuzzyRangeBarsYaml
+			elements[twoDFuzzyRangeBarYaml['name']] = TwoDFuzzyRangeBar.getYouAndThemElementsFromYaml(twoDFuzzyRangeBarYaml)
+	
+	def __getElementWeightings():
+		for elementTypeYaml in categoryYaml
+			for elementYaml in elementTypeYaml
+				elementRelativeWeightings[elementYaml['name']] = elementYaml['weighting']
+				
+		return Chart.weightingsFromRelativeWeightings(elementRelativeWeightings)
+		
+	def scoreCategory(theirCategory):
+		totalCategoryScore = 0.0
+		for elementName,elementPair in self.elements
+			totalCategoryScore += elementPair[0].scoreElement(elementPair[1]) #'You' scores 'Them'
+			totalCategoryScore *= self.weighting
+			
+		return totalCategoryScore
+
+#TODO: I should only have to load config.yaml ONCE -- fix this
+class Chart:
+	def __init__(self, filename, categoryRelativeWeightings)
+		self.filename           = filename
+		self.categoryWeightings = self.weightingsFromRelativeWeightings(categoryRelativeWeightings)
+		self.pixelMap           = self.__getPixelMap()
+		self.categories         = self.__getCategories() #indexed by category name
+		
+	def __getCategories():
+		with open('config.yaml', 'r') as f:
+    		try:
+    			categories = {}
+    			categoriesYaml = yaml.load(f)
+        		for categoryYaml in categoriesYaml
+        			categories[categoryYaml['category']] = Category(categoryYaml,categoryWeighting[categoryYaml['category']],self.pixelMap)
+        			
+    		except yaml.YAMLError:
+        		print('Could not open config file.')
+	
+	def __getPixelMap():
+		im = Image.open(self.filename)
+		im.convert('RGB')
+	
+	#relativeWeightings are integers -- the fractional weightings are relative to the sum of the relativeWeightings
+	def weightingsFromRelativeWeightings(relativeWeightings):
+		totalRelative = 0
+		for weightingName,relativeWeighting in relativeWeightings:
+			totalRelative += relativeWeighting
+			
+		weightings = {}
+		for weightingName,relativeWeighting in relativeWeightings:
+			weightings[weightingName] = (float)relativeWeighting / (float)totalRelative
+			
+		return weightings
+	
+	def scoreChart():
+		totalChartScore = 0.0
+		for categoryName,category in categories:
+			totalChartScore += category.scoreCategory() #each category takes care of its weighting
+			
+		return totalChartScore
+	
+	#TODO: improve this so that fewer 'one-sided' high compatibility scores occur -- should not be simply an average of two compatibility scores
+	def compareCharts(chartB):
+		chartAScore = scoreChart()
+		chartBScore = chartB.scoreChart()
+		
+		return (chartAScore + chartBScore) / 2.0
