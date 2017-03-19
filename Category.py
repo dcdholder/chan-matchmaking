@@ -39,6 +39,8 @@ class Category:
 		twoDFuzzyRangeBars = categoryYaml['twoDFuzzyRangeBars']
 		for twoDFuzzyRangeBarYaml in twoDFuzzyRangeBarsYaml
 			elements[twoDFuzzyRangeBarYaml['name']] = TwoDFuzzyRangeBar.getYouAndThemElementsFromYaml(twoDFuzzyRangeBarYaml)
+			
+		return elements
 	
 	def __getElementWeightings():
 		for elementTypeYaml in categoryYaml
@@ -46,11 +48,3 @@ class Category:
 				elementRelativeWeightings[elementYaml['name']] = elementYaml['weighting']
 				
 		return Chart.weightingsFromRelativeWeightings(elementRelativeWeightings)
-		
-	def scoreCategory(theirCategory):
-		totalCategoryScore = 0.0
-		for elementName,elementPair in self.elements
-			totalCategoryScore += elementPair[0].scoreElement(elementPair[1]) #'You' scores 'Them'
-			totalCategoryScore *= self.weighting
-			
-		return totalCategoryScore

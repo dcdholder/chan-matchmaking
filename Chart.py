@@ -41,6 +41,18 @@ class Chart:
 			
 		return weightings
 	
+	def getWeightingTree():
+		weightingsTree = {}
+		for categoryName,category in category
+			weightingsTree[categoryName]             = {}
+			weightingsTree[categoryName]['elements'] = {}
+			weightingsTree[categoryName]['weight']   = category.weight
+			
+			for elementName,element in category.elements
+				weightingsTree[categoryName]['elements']['elementName'] = element.weighting
+				
+		return weightingsTree
+	
 	def loadInImage(filename):
 		__filename = filename
 		__pixelMap = self.__getPixelMap(filename)

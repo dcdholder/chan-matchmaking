@@ -3,24 +3,76 @@ class ChartData:
 		self.name             = name
 		self.categoryDataDict = categoryDataDict
 		
-	def __scoreChartData():
+	def scoreChartData(theirChartData,weightingsTree):
 		totalChartScore = 0.0
-		for categoryName,category in categories:
-			totalChartScore += category.scoreCategory() #each category takes care of its weighting
+		for categoryName,categoryData in self.categoryDataDict:
+			totalChartScore += category.scoreCategoryData(weightingsTree[categoryName]['weight'],weightingsTree[categoryName]['elements']) #each category takes care of its weighting
 			
 		return totalChartScore
 	
 	#TODO: improve this so that fewer 'one-sided' high compatibility scores occur -- should not be simply an average of two compatibility scores
-	def compare(chartDataB):
-		chartAScore = self.__scoreChartData()
-		chartBScore = chartB.__scoreChartData()
+	def compare(chartDataB,weightingsTree):
+		chartAScore = self.scoreChartData(chartDataB,weightingsTree)
+		chartBScore = chartDataB.scoreChartData(self,weightingsTree)
 		
 		return (chartAScore + chartBScore) / 2.0
+	
+	@staticmethod
+	def compareAll(chartDataList,weightingsTree):
+		scores = {}
+		for j in range(0,len(chartDataList))
+			scores[chartDataList[j].name] = {}
+			for i in range(j,len(chartDataList)) #two dict elements for every pair (indexed both by chart A first, and by chart B first)
+				scores[chartDataList[j].name][chartDataList[i].name] = chartDataList[j].compare(chartDataList[i],weightingsTree)
+				scores[chartDataList[i].name][chartDataList[j].name] = scores[chartDataList[j].name][chartDataList[i].name]
+		
+		return scores
+		
+	@staticmethod
+	def bestMatchesAll(chartDataList,weightingsTree):
+		scores = compareAll(chartDataList,weightingsTree)
+		
+		highestScores = {}
+		for nameA,chartDataScoreDict in chartDataList:		
+			highestScore         = 0.0
+			highestScores[nameA] = {}
+			for nameB,chartDataScore in chartDataScoreDict:
+				if chartDataScore > highestScore
+					highestScore     = chartDataScore
+					highestScoreName = nameB
+			
+			highestScores[nameA]['name']  = highestScoreName
+			highestScores[nameA]['score'] = highestScore
+			
+		return highestScores
 
 class CategoryData:
+	def __init__(self, name, elementDataDict)
+		self.name            = name
+		self.elementDataDict = elementDataDict
+	
+	def scoreCategoryData(theirCategory,weighting,elementWeightings):
+		totalCategoryScore = 0.0
+		for elementName,elementPair in self.elementDataDict:
+			totalCategoryScore += elementPair['you'].scoreElementData(elementPair['them'],elementWeightings[elementName]) #'You' scores 'Them'
+		
+		totalCategoryScore *= weighting
+		
+		return totalCategoryScore
 
 class ElementData:
-	def __init__
+	def __init__(self, name, colorFieldDataDict)
+		self.name               = name
+		self.colorFieldDataDict = colorFieldDataDict
+		
+	def scoreElementData(theirElement,weighting):	
+		totalElementScore = 0.0
+		for colorFieldName,colorFieldData in self.colorFieldDataDict:
+			totalElementScore += colorFieldDataDict[colorFieldName].scoreColorFieldData(theirElement.colorFieldDataDict[colorFieldName])
+			
+		totalElementScore *= weighting
+		
+		return totalElementScore
 
 class ColorFieldData:
 	__unselectedColor   = 0xFFFFFF
@@ -58,15 +110,15 @@ class ColorFieldData:
 		
 	def singleColorTraitSelected()
 		return __colorNames[self.colorScore]=='green'
-		
-	def yourTraitVsTheirImportance(theirImportance)
+	
+	def scoreColorFieldData(theirImportanceData)
 		if !isYou
 			raise ValueError('Must be executed on a You color data field.')
 		
 		if isMulticolor
-			return multiColorYouScoring(theirImportance.colorScore)
+			return multiColorYouScoring(theirImportanceData.colorScore)
 		else
-			return singleColorYouScoring(singleColorTraitSelected(),theirImportance.colorScore)
+			return singleColorYouScoring(singleColorTraitSelected(),theirImportanceData.colorScore)
 		
 	def multiColorYouScoring(importanceScoreIndex) #min possible score is 0, max possible score is 1.0	
 		importanceScore = __importanceScoreMapping[importanceScoreIndex]
