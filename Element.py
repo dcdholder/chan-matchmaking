@@ -8,6 +8,13 @@ class Element: #a chart element is a collection of individual cells, has a non-c
 		self.isYou       = isYou #specify whether to get 'You' or 'Them'
 		self.cells       = self.__getCells()
 
+	def getElementData():
+		cellDataDict = {}
+		for label,cell in cells:
+			cellDataDict[label] = cell.getColorFieldData()
+			
+		return ElementData(self.name,cellDataDict)
+
 	def __youOrThemString():
 		if self.isYou:
 			return 'you'

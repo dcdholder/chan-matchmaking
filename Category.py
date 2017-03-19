@@ -4,9 +4,18 @@ class Category:
 		self.name              = categoryYaml['category']
 		self.weighting         = weighting
 		self.pixelMap          = pixelMap
-		self.elements          = self.__getElements() #hash of tuples -- each key corresponds to the 'You' and 'Them' versions of an element
+		self.elements          = self.__getElements() #dict of dicts -- each key corresponds to the 'You' and 'Them' versions of an element
 		self.elementWeightings = self.__getElementWeightings()
 		
+	def getCategoryData():
+		elementDataDict = {}
+		for name,elementDict in elementDicts:
+			elementDataDict[name]         = {}
+			elementDataDict[name]['you']  = elementTuple['you'].getElementData()
+			elementDataDict[name]['them'] = elementTuple['them'].getElementData()
+			
+		return CategoryData(self.name,elementDataDict)
+	
 	#TODO: pretty ugly
 	def __getElements(): #Yaml format is different for each element type
 		elements = {}

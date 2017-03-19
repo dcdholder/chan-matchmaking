@@ -1,11 +1,19 @@
 #TODO: I should only have to load config.yaml ONCE -- fix this
 class Chart:
-	def __init__(self, filename, categoryRelativeWeightings)
-		self.filename           = filename
+	__filename = None
+	__pixelMap = None
+
+	def __init__(self, categoryRelativeWeightings)
 		self.categoryWeightings = self.weightingsFromRelativeWeightings(categoryRelativeWeightings)
-		self.pixelMap           = self.__getPixelMap()
 		self.categories         = self.__getCategories() #indexed by category name
-		
+	
+	def getChartData():
+		categoryDataDict = {}
+		for name,category in category:
+			categoryDataDict[name] = category.getCategoryData()
+			
+		return CategoryData(self.name,categoryDataDict)
+	
 	def __getCategories():
 		with open('config.yaml', 'r') as f:
     		try:
@@ -33,16 +41,12 @@ class Chart:
 			
 		return weightings
 	
-	def scoreChart():
-		totalChartScore = 0.0
-		for categoryName,category in categories:
-			totalChartScore += category.scoreCategory() #each category takes care of its weighting
-			
-		return totalChartScore
-	
-	#TODO: improve this so that fewer 'one-sided' high compatibility scores occur -- should not be simply an average of two compatibility scores
-	def compareCharts(chartB):
-		chartAScore = scoreChart()
-		chartBScore = chartB.scoreChart()
+	def loadInImage(filename):
+		__filename = filename
+		__pixelMap = self.__getPixelMap(filename)
 		
-		return (chartAScore + chartBScore) / 2.0
+	def saveAsImage(filename):
+		__filename = filename
+	
+	def loadInChartData():
+		pass
