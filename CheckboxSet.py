@@ -14,6 +14,14 @@ class PictographicCheckboxSet(CheckboxSet):
 			cellCoordinates = cellYaml['coordinates'][__youOrThemString()]
 			cells[cellYaml['label']] = PictographicCell(self,label,pixelMap,cellCoordinates)
 
+	#TODO: DRY
+	def getYouAndThemElementsFromYaml(elementYaml):
+		youAndThemElements = {}
+		youAndThemElements['you']  = PictographicCheckboxSet(elementYaml,True)
+		youAndThemElements['them'] = PictographicCheckboxSet(elementYaml,False)
+		
+		return YouAndThemElements
+
 class SquareCheckboxSet(CheckboxSet):
 	def __init__(self, elementYaml, pixelMap, isYou)
 		super().__init__(self,elementYaml,pixelMap,isYou)
@@ -29,3 +37,11 @@ class SquareCheckboxSet(CheckboxSet):
 			cells[cellYaml['label']] = SquareCell(self,label,pixelMap,cellCoordinates,checkboxSize)
 			
 		return cells
+		
+	#TODO: DRY
+	def getYouAndThemElementsFromYaml(elementYaml):
+		youAndThemElements = {}
+		youAndThemElements['you']  = SquareCheckboxSet(elementYaml,True)
+		youAndThemElements['them'] = SquareCheckboxSet(elementYaml,False)
+		
+		return YouAndThemElements
