@@ -17,6 +17,10 @@
           coordinates:
             you:  661x591
             them: 661x2078
+        - label: mtf
+          coordinates:
+            you:  860x591
+            them: 860x2078
 
     - name: race
       weighting: 15
