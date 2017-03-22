@@ -12,7 +12,7 @@ class ChartData:
         
         return chartString
     
-    def scoreChartData(theirChartData,weightingsTree):
+    def scoreChartData(self,theirChartData,weightingsTree):
         totalChartScore = 0.0
         for categoryName,categoryData in self.categoryDataDict:
             totalChartScore += category.scoreCategoryData(weightingsTree[categoryName]['weight'],weightingsTree[categoryName]['elements']) #each category takes care of its weighting
@@ -20,7 +20,7 @@ class ChartData:
         return totalChartScore
     
     #TODO: improve this so that fewer 'one-sided' high compatibility scores occur -- should not be simply an average of two compatibility scores
-    def compare(chartDataB,weightingsTree):
+    def compare(self,chartDataB,weightingsTree):
         chartAScore = self.scoreChartData(chartDataB,weightingsTree)
         chartBScore = chartDataB.scoreChartData(self,weightingsTree)
         
@@ -46,7 +46,7 @@ class ChartData:
             highestScore         = 0.0
             highestScores[nameA] = {}
             for nameB,chartDataScore in chartDataScoreDict:
-                if chartDataScore > highestScore
+                if chartDataScore > highestScore:
                     highestScore     = chartDataScore
                     highestScoreName = nameB
             
@@ -70,7 +70,7 @@ class CategoryData:
         
         return categoryString
     
-    def scoreCategoryData(theirCategory,weighting,elementWeightings):
+    def scoreCategoryData(self,theirCategory,weighting,elementWeightings):
         totalCategoryScore = 0.0
         for elementName,elementPair in self.elementDataDict:
             totalCategoryScore += elementPair['you'].scoreElementData(elementPair['them'],elementWeightings[elementName]) #'You' scores 'Them'
@@ -91,7 +91,7 @@ class ElementData:
             
         return elementString
     
-    def scoreElementData(theirElement,weighting):    
+    def scoreElementData(self,theirElement,weighting):    
         totalElementScore = 0.0
         for colorFieldName,colorFieldData in self.colorFieldDataDict:
             totalElementScore += colorFieldDataDict[colorFieldName].scoreColorFieldData(theirElement.colorFieldDataDict[colorFieldName])
@@ -115,44 +115,44 @@ class ColorFieldData:
         self.isSelected   = False
         self.colorScore   = colorScoreFromCode(colorCode) #TODO: would be nice to have an alternate constructor for colorIndex rather than colorCode...
         
-        if !isYou and !isMulticolor
+        if not isYou and not isMulticolor:
             raise ValueError('Them cells are always multicolor.')
     
     def __str__(self):
         return colorCode
     
-    def colorScoreFromCode(colorCode):
+    def colorScoreFromCode(self,colorCode):
         for i in range(0,len(colorValues)):
-            if __colorCodes[i]==colorCode
+            if __colorCodes[i]==colorCode:
                 self.isSelected = True
                 return i
         
         if colorCode==__unselectedColor:
-            if isMulticolor
+            if isMulticolor:
                 self.isSelected = True
                 return __neutralIndex #for multicolor cells, an unfilled cell can be assumed yellow
-            else
+            else:
                 self.isSelected = False
                 return 0
         
         raise ValueError('Could not map color code ' + colorCode + 'to a valid color score.')
     
-    def getColorCode():
+    def getColorCode(self):
         return __colorCodes[self.colorScore]
     
-    def singleColorTraitSelected():
+    def singleColorTraitSelected(self):
         return __colorNames[self.colorScore]=='green'
     
-    def scoreColorFieldData(theirImportanceData):
-        if !isYou:
+    def scoreColorFieldData(self,theirImportanceData):
+        if not isYou:
             raise ValueError('Must be executed on a You color data field.')
         
         if isMulticolor:
             return multiColorYouScoring(theirImportanceData.colorScore)
-        else
+        else:
             return singleColorYouScoring(singleColorTraitSelected(),theirImportanceData.colorScore)
         
-    def multiColorYouScoring(importanceScoreIndex): #min possible score is 0, max possible score is 1.0    
+    def multiColorYouScoring(self,importanceScoreIndex): #min possible score is 0, max possible score is 1.0    
         importanceScore = __importanceScoreMapping[importanceScoreIndex]
         traitScore      = __traitScoreMapping[self.colorScore]
 
@@ -167,7 +167,7 @@ class ColorFieldData:
     
         return finalScore
     
-    def singleColorYouScoring(traitIsSelected,importanceScoreIndex): #trait score is either 1.0 or 0.0, no in-betweens
+    def singleColorYouScoring(self,traitIsSelected,importanceScoreIndex): #trait score is either 1.0 or 0.0, no in-betweens
         if traitIsSelected:
             traitScoreIndex = len(__traitScoreMapping)-1 #just set to either extreme trait score
         else:

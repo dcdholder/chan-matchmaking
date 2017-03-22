@@ -6,14 +6,14 @@ from PIL import Image,ImageDraw
 import yaml
 
 class Cell: #an indivisble component of an image element
-    def __init__(label,coordinates):
+    def __init__(self,label,coordinates):
         self.pixelMap    = None
         self.coordinates = coordinates
     
-    def getColorFieldData(isYou,isMulticolor):
+    def getColorFieldData(self,isYou,isMulticolor):
         return ColorFieldData(__getColor(),isYou,isMulticolor)
     
-    def __getColor() #just select color from the given coordinates -- is different for square cell
+    def __getColor(self): #just select color from the given coordinates -- is different for square cell
         #TODO: figure out how to handle invalid cell colors
         centerPixelCoordinates = self.__getCenterPixel()
         
@@ -25,11 +25,11 @@ class Cell: #an indivisble component of an image element
         
         return hexColorCode
     
-    def fillCell(colorCode): #WARNING: Pillow does not support fuzzy floodfill, so use a losslessly compressed image
+    def fillCell(self,colorCode): #WARNING: Pillow does not support fuzzy floodfill, so use a losslessly compressed image
         fillCoordinates = self.__getCenterPixel()
         ImageDraw.floodfill(self.pixelMap,fillCoordinates,ImageColor.getrgb(colorCode))
         
-    def fillCellByColorFieldData(colorFieldData):
+    def fillCellByColorFieldData(self,colorFieldData):
         colorCode = colorFieldData.getColorCode()
         self.fillCell(colorCode)
 
@@ -38,7 +38,7 @@ class PictographicCell(Cell): #subclass is really just for readability right now
     def __init__(self,label,coordinates):
         super().__init__(self,label,coordinates)
         
-    def __getCenterPixel(): #the default is just to return the 'coordinates' -- overriden in SquareCell, but not PictographicCell
+    def __getCenterPixel(self): #the default is just to return the 'coordinates' -- overriden in SquareCell, but not PictographicCell
         return coordinates
 
 class SquareCell(Cell):
@@ -46,7 +46,7 @@ class SquareCell(Cell):
         self.size = size
         super().__init__(self,label,coordinates)
     
-    def genRow(baseCoordinates,cellSize,numCells): #create a horizontal row of cells
+    def genRow(self,baseCoordinates,cellSize,numCells): #create a horizontal row of cells
         cells = []
         for i in range(0,numCells):
             cellCoordinates    = ()
@@ -56,7 +56,7 @@ class SquareCell(Cell):
             
         return cells
     
-    def genSquare(baseCoordinates,cellSize,cellDimensions):
+    def genSquare(self,baseCoordinates,cellSize,cellDimensions):
         for j in range(0,cellDimensions): #assume all 2D cell arrays are square
             for i in range(0,cellDimensions):
                 cellCoordinates    = ()
@@ -66,7 +66,7 @@ class SquareCell(Cell):
                 
         return cells
     
-    def __getCenterPixel():
+    def __getCenterPixel(self):
         middleX = self.coordinates[0] + self.size[0] / 2
         middleY = self.coordinates[1] - self.size[1] / 2
 

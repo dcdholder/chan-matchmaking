@@ -1,16 +1,18 @@
+from Element import Element
+
 #TODO: figure out how abstract classes work in Python
 class Bar(Element):
     def __init__(self, elementYaml, isYou):
-        super().__init__(self,elementYaml,isYou)
-        self.coordinates = elementYaml['coordinates'][__youOrThemString()]
+        super().__init__(elementYaml,isYou)
+        self.coordinates = elementYaml['coordinates'][self.youOrThemString()]
         self.size        = elementYaml['size']
 
 class BooleanBar(Bar):
     def __init__(self, elementYaml, isYou):
-        super().__init__(self,elementYaml,isYou)
+        super().__init__(elementYaml,isYou)
         self.yesPosition = elementYaml['yesPosition']
             
-    def __getCells():
+    def __getCells(self):
         cells = {}
 
         cellSize = ()
@@ -34,31 +36,32 @@ class BooleanBar(Bar):
         return cells
     
     #TODO: DRY
+    @staticmethod
     def getYouAndThemElementsFromYaml(elementYaml):
         youAndThemElements = {}
         youAndThemElements['you']  = BooleanBar(elementYaml,True)
         youAndThemElements['them'] = BooleanBar(elementYaml,False)
         
-        return YouAndThemElements
+        return youAndThemElements
 
 class NumericalRangeBar(Bar):
     def __init__(self, elementYaml, isYou):
-        super().__init__(self,elementYaml,isYou)
+        super().__init__(elementYaml,isYou)
         self.numCells     = elementYaml['numCells']
         self.leftQuality  = elementYaml['min']
         self.rightQuality = elementYaml['max']
     
     #TODO: DRY
-    def __getCells():
+    def __getCells(self):
         cells     = {}
         cellArray = SquareCell.genRow(coordinates,cellSize,numCells)
         
-        for i in range(0,len(cellArray))
+        for i in range(0,len(cellArray)):
             cells[str(i)] = cellArray[i] #TODO: maybe there's a better way to do this than with a for loop
             
         return cells
     
-    def getNumericalValue():
+    def getNumericalValue(self):
         pass
         #TODO:
         #go through cells from left to right, find the max which has been selected
@@ -66,55 +69,57 @@ class NumericalRangeBar(Bar):
         #throw an exception if any weirdness is encountered
         
     #TODO: DRY
+    @staticmethod
     def getYouAndThemElementsFromYaml(elementYaml):
         youAndThemElements = {}
         youAndThemElements['you']  = NumericalRangeBar(elementYaml,True)
         youAndThemElements['them'] = NumericalRangeBar(elementYaml,False)
         
-        return YouAndThemElements
+        return youAndThemElements
 
 class FuzzyRangeBar(Bar):
     def __init__(self, elementYaml, isYou):
-        super().__init__(self,elementYaml,isYou)
+        super().__init__(elementYaml,isYou)
         self.numCells     = elementYaml['numCells']
         self.leftQuality  = elementYaml['left']
         self.rightQuality = elementYaml['right']
     
-    def __getCells():
+    def __getCells(self):
         cells     = {}
         cellArray = SquareCell.genRow(coordinates,cellSize,numCells)
         
-        for i in range(0,len(cellArray))
+        for i in range(0,len(cellArray)):
             cells[str(i)] = cellArray[i] #TODO: maybe there's a better way to do this than with a for loop
     
         return cells
     
-    def getPercentScoreLeft():
+    def getPercentScoreLeft(self):
         pass
         #TODO: generate a key-value pair corresponding to the "matching percentage" of the left attribute
     
-    def getPercentScoreRight():
+    def getPercentScoreRight(self):
         pass
         #TODO: generate a key-value pair corresponding to the "matching percentage" of the right attribute
 
     #TODO: DRY
+    @staticmethod
     def getYouAndThemElementsFromYaml(elementYaml):
         youAndThemElements = {}
         youAndThemElements['you']  = FuzzyRangeBar(elementYaml,True)
         youAndThemElements['them'] = FuzzyRangeBar(elementYaml,False)
         
-        return YouAndThemElements
+        return youAndThemElements
 
 class TwoDFuzzyRangeBar(Bar):
-    def __init__(self, elementYaml, isYou)
-        super().__init__(self,elementYaml,isYou)
+    def __init__(self, elementYaml, isYou):
+        super().__init__(elementYaml,isYou)
         self.numCells      = elementYaml['cellDimensions']
         self.leftQuality   = elementYaml['free']
         self.rightQuality  = elementYaml['regulated']
         self.topQuality    = elementYaml['capitalist']
         self.bottomQuality = elementYaml['socialist']
         
-    def __getCells():
+    def __getCells(self):
         cells       = {}
         cell2DArray = SquareCell.genSquare(coordinates,cellSize,cellDimensions)
         
@@ -125,9 +130,10 @@ class TwoDFuzzyRangeBar(Bar):
         return cells
         
     #TODO: DRY
+    @staticmethod
     def getYouAndThemElementsFromYaml(elementYaml):
         youAndThemElements = {}
         youAndThemElements['you']  = TwoDFuzzyRangeBar(elementYaml,True)
         youAndThemElements['them'] = TwoDFuzzyRangeBar(elementYaml,False)
         
-        return YouAndThemElements
+        return youAndThemElements

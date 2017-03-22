@@ -1,7 +1,5 @@
-import Cell
-import Bar
-import CheckboxSet
-import ElementData
+from Cell import Cell,PictographicCell,SquareCell
+from ChartData import ChartData, CategoryData, ElementData, ColorFieldData
 
 from PIL import Image
 
@@ -15,33 +13,33 @@ class Element: #a chart element is a collection of individual cells, has a non-c
         self.isMulticolor = False
         self.cells        = self.__getCells()
 
-    def getElementData():
+    def getElementData(self):
         cellDataDict = {}
-        for label,cell in cells:
+        for label,cell in cells.items():
             cellDataDict[label] = cell.getColorFieldData(self.isYou,self.isMulticolor)
             
         return ElementData(self.name,cellDataDict)
 
-    def __youOrThemString():
+    def youOrThemString(self):
         if self.isYou:
             return 'you'
         else:
             return 'them'
 
-    def __coordinatesFromString(coordinates):
+    def __coordinatesFromString(self,coordinates):
         coordsAsStringArray = coordinates.split("x")
         coordsAsIntTuple    = tuple(list(map(int,coordsAsStringArray)))
 
-    def getYouAndThemElementsFromYaml(elementYaml)
+    def getYouAndThemElementsFromYaml(self,elementYaml):
         pass
 
-    def __getCells():
+    def __getCells(self):
         pass
     
-    def colorElement(elementData):
-        for cellName,cell in self.cells
+    def colorElement(self,elementData):
+        for cellName,cell in self.cells:
             cell.fillCellByColorFieldData(elementData[cellName])
     
-    def propagatePixelMap(pixelMap):
-        for cell in self.cells:
+    def propagatePixelMap(self,pixelMap):
+        for cell in self.cells.items():
             cell.pixelMap = pixelMap
