@@ -101,11 +101,11 @@ class ElementData:
         return totalElementScore
 
 class ColorFieldData:
-    __unselectedColor   = '#ebebeb'
+    __unselectedColors  = ['#ebebeb','#c3c3c3','#c0c0c0','#ffffff'] #almost everything uses 'ebebeb'; 'facial hair' and 'body type' use the others
     __singleSelectIndex = 2
     __neutralIndex      = 3
     __colorNames = ['pink', 'blue', 'green', 'yellow', 'orange', 'red']
-    __colorCodes = ['#ff00ff', '#0000ff', '#00ff00', '#ffff00', '#ff7200', '#ff0000']
+    __colorCodes = ['#ff00ff', '#0000ff', '#00ff00', '#ffff00', '#ff7200', '#ff0000'] #these should be FF for at least one RGB component
     __importanceScoreMapping = [-1.0, -0.5, 0.0, 0.33, 0.67, 1.0]
     __traitScoreMapping      = [-1.0, -0.5, 0.0, 0.5, 1.0]
     
@@ -113,7 +113,7 @@ class ColorFieldData:
         self.isYou        = isYou #tells us whether this is a trait or importance score
         self.isMulticolor = isMulticolor
         self.isSelected   = False
-        self.colorScore   = colorScoreFromCode(colorCode) #TODO: would be nice to have an alternate constructor for colorIndex rather than colorCode...
+        self.colorScore   = self.colorScoreFromCode(colorCode) #TODO: would be nice to have an alternate constructor for colorIndex rather than colorCode...
         
         if not isYou and not isMulticolor:
             raise ValueError('Them cells are always multicolor.')
@@ -122,26 +122,26 @@ class ColorFieldData:
         return colorCode
     
     def colorScoreFromCode(self,colorCode):
-        for i in range(0,len(colorValues)):
-            if __colorCodes[i]==colorCode:
+        for i in range(0,len(self.__colorCodes)):
+            if self.__colorCodes[i]==colorCode:
                 self.isSelected = True
                 return i
         
-        if colorCode==__unselectedColor:
+        if colorCode in self.__unselectedColors:
             if isMulticolor:
                 self.isSelected = True
-                return __neutralIndex #for multicolor cells, an unfilled cell can be assumed yellow
+                return self.__neutralIndex #for multicolor cells, an unfilled cell can be assumed yellow
             else:
                 self.isSelected = False
                 return 0
         
-        raise ValueError('Could not map color code ' + colorCode + 'to a valid color score.')
+        raise ValueError('Could not map color code ' + colorCode + ' to a valid color score.')
     
     def getColorCode(self):
-        return __colorCodes[self.colorScore]
+        return self.__colorCodes[self.colorScore]
     
     def singleColorTraitSelected(self):
-        return __colorNames[self.colorScore]=='green'
+        return self.__colorNames[self.colorScore]=='green'
     
     def scoreColorFieldData(self,theirImportanceData):
         if not isYou:
@@ -153,8 +153,8 @@ class ColorFieldData:
             return singleColorYouScoring(singleColorTraitSelected(),theirImportanceData.colorScore)
         
     def multiColorYouScoring(self,importanceScoreIndex): #min possible score is 0, max possible score is 1.0    
-        importanceScore = __importanceScoreMapping[importanceScoreIndex]
-        traitScore      = __traitScoreMapping[self.colorScore]
+        importanceScore = self.__importanceScoreMapping[importanceScoreIndex]
+        traitScore      = self.__traitScoreMapping[self.colorScore]
 
         scoreDelta = importanceScore - traitScore
         if importanceScore*traitScore > 0: #true if they're the same sign
@@ -169,7 +169,7 @@ class ColorFieldData:
     
     def singleColorYouScoring(self,traitIsSelected,importanceScoreIndex): #trait score is either 1.0 or 0.0, no in-betweens
         if traitIsSelected:
-            traitScoreIndex = len(__traitScoreMapping)-1 #just set to either extreme trait score
+            traitScoreIndex = len(self.__traitScoreMapping)-1 #just set to either extreme trait score
         else:
             traitScoreIndex = 0
         

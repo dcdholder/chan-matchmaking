@@ -14,7 +14,7 @@ class PictographicCheckboxSet(CheckboxSet):
         cells = {}
         for cellYaml in self.elementYaml['checkboxes']:
             label           = cellYaml['label']
-            cellCoordinates = cellYaml['coordinates'][self.youOrThemString()]
+            cellCoordinates = Element.coordinatesFromString(cellYaml['coordinates'][self.youOrThemString()])
             cells[cellYaml['label']] = PictographicCell(label,cellCoordinates)
             
         return cells
@@ -30,7 +30,7 @@ class PictographicCheckboxSet(CheckboxSet):
 
 class SquareCheckboxSet(CheckboxSet):
     def __init__(self, elementYaml, isYou):
-        self.checkboxSize = elementYaml['size']
+        self.checkboxSize = Element.coordinatesFromString(elementYaml['size'])
         super().__init__(elementYaml,isYou)
         self.isMulticolor = self.elementYaml['isMulticolor']
     
@@ -39,7 +39,7 @@ class SquareCheckboxSet(CheckboxSet):
         cells = {}
         for cellYaml in self.elementYaml['checkboxes']:
             label           = cellYaml['label']
-            cellCoordinates = cellYaml['coordinates'][self.youOrThemString()]
+            cellCoordinates = Element.coordinatesFromString(cellYaml['coordinates'][self.youOrThemString()])
             cells[cellYaml['label']] = SquareCell(label,cellCoordinates,self.checkboxSize)
             
         return cells

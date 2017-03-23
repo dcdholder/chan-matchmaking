@@ -5,9 +5,9 @@ from Cell import Cell,SquareCell,PictographicCell
 class Bar(Element):
     def __init__(self, elementYaml, isYou):
         if isYou: #TODO: fix this ugly hack to get around calling youOrThemString before isYou is set, without setting isYou twice
-            self.coordinates = elementYaml['coordinates']['you']
+            self.coordinates = Element.coordinatesFromString(elementYaml['coordinates']['you'])
         else:
-            self.coordinates = elementYaml['coordinates']['them']
+            self.coordinates = Element.coordinatesFromString(elementYaml['coordinates']['them'])
             
         self.size     = Element.coordinatesFromString(elementYaml['size'])
         self.cellSize = self.getCellSize()
@@ -16,7 +16,7 @@ class Bar(Element):
     def getCellSize(self):
         print(self.size)
         print(self.numCells)
-        return ((self.size[0] / self.numCells), (self.size[1]))
+        return ((self.size[0] // self.numCells), (self.size[1]))
 
 class BooleanBar(Bar):
     def __init__(self, elementYaml, isYou):
@@ -64,14 +64,8 @@ class NumericalRangeBar(Bar):
         self.rightQuality = elementYaml['max']
     
     #TODO: DRY
-    def getCells(self):
-        cells     = {}
-        cellArray = SquareCell.genRow(self.coordinates,self.cellSize,self.numCells)
-        
-        for i in range(0,len(cellArray)):
-            cells[str(i)] = cellArray[i] #TODO: maybe there's a better way to do this than with a for loop
-            
-        return cells
+    def getCells(self):            
+        return SquareCell.genRow(self.coordinates,self.cellSize,self.numCells)
     
     def getNumericalValue(self):
         pass
@@ -96,14 +90,8 @@ class FuzzyRangeBar(Bar):
         self.leftQuality  = elementYaml['left']
         self.rightQuality = elementYaml['right']
     
-    def getCells(self):
-        cells     = {}
-        cellArray = SquareCell.genRow(self.coordinates,self.cellSize,self.numCells)
-        
-        for i in range(0,len(cellArray)):
-            cells[str(i)] = cellArray[i] #TODO: maybe there's a better way to do this than with a for loop
-    
-        return cells
+    def getCells(self):    
+        return SquareCell.genRow(self.coordinates,self.cellSize,self.numCells)
     
     def getPercentScoreLeft(self):
         pass
@@ -131,15 +119,8 @@ class TwoDFuzzyRangeBar(Bar):
         self.topQuality    = elementYaml['capitalist']
         self.bottomQuality = elementYaml['socialist']
         
-    def getCells(self):
-        cells       = {}
-        cell2DArray = SquareCell.genSquare(self.coordinates,self.cellSize,self.cellDimensions)
-        
-        for j in range(0,len(cell2DArray)):
-            for i in range(0,len(cell2DArray[0])):
-                cells[str(i) + "," + str(j)] = cell2DArray[j][i]
-        
-        return cells
+    def getCells(self):        
+        return SquareCell.genSquare(self.coordinates,self.cellSize,self.cellDimensions)
         
     #TODO: DRY
     @staticmethod
