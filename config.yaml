@@ -464,47 +464,47 @@
     - name: religion
       weighting: 5
       checkboxes:
-        label: christian
-        coordinates:
-          you:  294x796
-          them: 294x2280
-        label: muslim
-        coordinates:
-          you:  460x808
-          them: 460x2296
-        label: jewish
-        coordinates:
-          you:  640x810
-          them: 640x2298
-        label: pagan
-        coordinates:
-          you:  838x810
-          them: 838x2296
-        label: satanist
-        coordinates:
-          you:  930x822
-          them: 930x2296
-          
-        label: deist
-        coordinates:
-          you:  304x902
-          them: 304x2388
-        label: polydeist
-        coordinates:
-          you:  432x898
-          them: 432x2386
-        label: agnostic
-        coordinates:
-          you:  634x896
-          them: 634x2382
-        label: atheist
-        coordinates:
-          you:  860x948
-          them: 860x2430
-        label: other
-        coordinates:
-          you:  1042x928
-          them: 1042x2416
+        - label: christian
+          coordinates:
+            you:  294x796
+            them: 294x2280
+        - label: muslim
+          coordinates:
+            you:  460x808
+            them: 460x2296
+        - label: jewish
+          coordinates:
+            you:  640x810
+            them: 640x2298
+        - label: pagan
+          coordinates:
+            you:  838x810
+            them: 838x2296
+        - label: satanist
+          coordinates:
+            you:  930x822
+            them: 930x2296
+            
+        - label: deist
+          coordinates:
+            you:  304x902
+            them: 304x2388
+        - label: polydeist
+          coordinates:
+            you:  432x898
+            them: 432x2386
+        - label: agnostic
+          coordinates:
+            you:  634x896
+            them: 634x2382
+        - label: atheist
+          coordinates:
+            you:  860x948
+            them: 860x2430
+        - label: other
+          coordinates:
+            you:  1042x928
+            them: 1042x2416
           
 - category: other
   fuzzyRangeBars:
