@@ -18,12 +18,12 @@ class Chart:
         if categoryRelativeWeightings==None:
             categoryRelativeWeightings = self.DEF_CATEGORY_RELATIVE_WEIGHTINGS
     
-        self.categoryWeightings = self.weightingsFromRelativeWeightings(categoryRelativeWeightings)
+        self.categoryWeightings = Category.weightingsFromRelativeWeightings(categoryRelativeWeightings)
         self.categories         = self.__getCategories() #indexed by category name
     
     def getChartData(self):
         categoryDataDict = {}
-        for name,category in category.items():
+        for name,category in self.categories.items():
             categoryDataDict[name] = category.getCategoryData()
             
         return ChartData(self.name,categoryDataDict)
@@ -42,24 +42,11 @@ class Chart:
         return categories
     
     def __getPixelMap(self):
-        im = Image.open(self.filename)
-        im.convert('RGB')
+        pixelMap = Image.open(self.filename)
+        pixelMap.convert('RGB')
         
-        for category in self.categories: #we need to propagate the new pixelMap down the tree to the Cells
+        for categoryName,category in self.categories.items(): #we need to propagate the new pixelMap down the tree to the Cells
             category.propagatePixelMap(pixelMap)
-    
-    #relativeWeightings are integers -- the fractional weightings are relative to the sum of the relativeWeightings
-    @staticmethod
-    def weightingsFromRelativeWeightings(relativeWeightings):
-        totalRelative = 0
-        for weightingName,relativeWeighting in relativeWeightings.items():
-            totalRelative += relativeWeighting
-            
-        weightings = {}
-        for weightingName,relativeWeighting in relativeWeightings.items():
-            weightings[weightingName] = float(relativeWeighting) / float(totalRelative)
-            
-        return weightings
     
     def getWeightingTree(self):
         weightingsTree = {}
@@ -75,7 +62,7 @@ class Chart:
     
     def loadInImage(self,filename): #loadInImage loads chart data automatically
         self.filename  = filename
-        self.pixelMap  = self.__getPixelMap(filename)
+        self.pixelMap  = self.__getPixelMap()
         self.chartData = self.getChartData()
     
     def saveAsImage(self,filename):
@@ -99,16 +86,16 @@ class Chart:
     @staticmethod
     def getChartDataFromImage(filename,categoryRelativeWeightings=None):
         if categoryRelativeWeightings==None:
-            categoryRelativeWeightings = self.DEF_CATEGORY_RELATIVE_WEIGHTINGS
+            categoryRelativeWeightings = Chart.DEF_CATEGORY_RELATIVE_WEIGHTINGS
     
         chart = Chart(categoryRelativeWeightings)
         chart.loadInImage(filename)
         
-        return self.chartData
+        return chart.chartData
     
     @staticmethod
     def printChartDataFromImage(filename):
-        print(getChartDataFromImage(filename))
+        print(Chart.getChartDataFromImage(filename))
     
     @staticmethod
     def getChartDataFromAllImages(path):
@@ -120,6 +107,6 @@ class Chart:
     
         chartDataDict = {}
         for filename in filenames:
-            chartDataDict[filename] = getChartDataFromImage(filename)
+            chartDataDict[filename] = Chart.getChartDataFromImage(filename)
             
         return chartDataDict

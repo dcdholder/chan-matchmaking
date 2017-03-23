@@ -1,4 +1,5 @@
 from Element import Element
+from Cell import Cell,SquareCell,PictographicCell
 
 #TODO: figure out how abstract classes work in Python
 class CheckboxSet(Element):
@@ -9,12 +10,14 @@ class PictographicCheckboxSet(CheckboxSet):
     def __init__(self, elementYaml, isYou):
         super().__init__(elementYaml,isYou)
     
-    def __getCells(self):
+    def getCells(self):
         cells = {}
-        for cellYaml in elementYaml['checkboxes']:
+        for cellYaml in self.elementYaml['checkboxes']:
             label           = cellYaml['label']
-            cellCoordinates = cellYaml['coordinates'][__youOrThemString()]
-            cells[cellYaml['label']] = PictographicCell(self,label,pixelMap,cellCoordinates)
+            cellCoordinates = cellYaml['coordinates'][self.youOrThemString()]
+            cells[cellYaml['label']] = PictographicCell(label,cellCoordinates)
+            
+        return cells
 
     #TODO: DRY
     @staticmethod
@@ -27,17 +30,17 @@ class PictographicCheckboxSet(CheckboxSet):
 
 class SquareCheckboxSet(CheckboxSet):
     def __init__(self, elementYaml, isYou):
+        self.checkboxSize = elementYaml['size']
         super().__init__(elementYaml,isYou)
         self.isMulticolor = self.elementYaml['isMulticolor']
-        self.checkboxSize = self.elementYaml['size']
     
     #TODO: DRY
-    def __getCells(self):
+    def getCells(self):
         cells = {}
-        for cellYaml in elementYaml['checkboxes']:
+        for cellYaml in self.elementYaml['checkboxes']:
             label           = cellYaml['label']
-            cellCoordinates = cellYaml['coordinates'][__youOrThemString()]
-            cells[cellYaml['label']] = SquareCell(self,label,pixelMap,cellCoordinates,checkboxSize)
+            cellCoordinates = cellYaml['coordinates'][self.youOrThemString()]
+            cells[cellYaml['label']] = SquareCell(label,cellCoordinates,self.checkboxSize)
             
         return cells
         

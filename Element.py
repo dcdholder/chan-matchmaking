@@ -11,11 +11,11 @@ class Element: #a chart element is a collection of individual cells, has a non-c
         self.weighting    = elementYaml['weighting']
         self.isYou        = isYou #specify whether to get 'You' or 'Them'
         self.isMulticolor = False
-        self.cells        = self.__getCells()
+        self.cells        = self.getCells()
 
     def getElementData(self):
         cellDataDict = {}
-        for label,cell in cells.items():
+        for label,cell in self.cells.items():
             cellDataDict[label] = cell.getColorFieldData(self.isYou,self.isMulticolor)
             
         return ElementData(self.name,cellDataDict)
@@ -26,14 +26,18 @@ class Element: #a chart element is a collection of individual cells, has a non-c
         else:
             return 'them'
 
-    def __coordinatesFromString(self,coordinates):
+    @staticmethod
+    def coordinatesFromString(coordinates):
         coordsAsStringArray = coordinates.split("x")
         coordsAsIntTuple    = tuple(list(map(int,coordsAsStringArray)))
 
-    def getYouAndThemElementsFromYaml(self,elementYaml):
+        return coordsAsIntTuple
+        
+    def getCells(self):
+        raise ValueError('Parent version should never be called.')
         pass
 
-    def __getCells(self):
+    def getYouAndThemElementsFromYaml(self,elementYaml):
         pass
     
     def colorElement(self,elementData):
@@ -41,5 +45,6 @@ class Element: #a chart element is a collection of individual cells, has a non-c
             cell.fillCellByColorFieldData(elementData[cellName])
     
     def propagatePixelMap(self,pixelMap):
-        for cell in self.cells.items():
+        print(self.cells)
+        for cellName,cell in self.cells.items():
             cell.pixelMap = pixelMap

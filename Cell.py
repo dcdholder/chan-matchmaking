@@ -7,6 +7,7 @@ import yaml
 
 class Cell: #an indivisble component of an image element
     def __init__(self,label,coordinates):
+        print("Cell creation label: " + label)
         self.pixelMap    = None
         self.coordinates = coordinates
     
@@ -36,7 +37,7 @@ class Cell: #an indivisble component of an image element
 #TODO: allow for multiple color sampling points, since users don't fill in pictographic cells all the same way
 class PictographicCell(Cell): #subclass is really just for readability right now
     def __init__(self,label,coordinates):
-        super().__init__(self,label,coordinates)
+        super().__init__(label,coordinates)
         
     def __getCenterPixel(self): #the default is just to return the 'coordinates' -- overriden in SquareCell, but not PictographicCell
         return coordinates
@@ -44,9 +45,10 @@ class PictographicCell(Cell): #subclass is really just for readability right now
 class SquareCell(Cell):
     def __init__(self,label,coordinates,size):
         self.size = size
-        super().__init__(self,label,coordinates)
+        super().__init__(label,coordinates)
     
-    def genRow(self,baseCoordinates,cellSize,numCells): #create a horizontal row of cells
+    @staticmethod
+    def genRow(baseCoordinates,cellSize,numCells): #create a horizontal row of cells
         cells = []
         for i in range(0,numCells):
             cellCoordinates    = ()
@@ -56,7 +58,8 @@ class SquareCell(Cell):
             
         return cells
     
-    def genSquare(self,baseCoordinates,cellSize,cellDimensions):
+    @staticmethod
+    def genSquare(baseCoordinates,cellSize,cellDimensions):
         for j in range(0,cellDimensions): #assume all 2D cell arrays are square
             for i in range(0,cellDimensions):
                 cellCoordinates    = ()

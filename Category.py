@@ -14,10 +14,10 @@ class Category:
         
     def getCategoryData(self):
         elementDataDict = {}
-        for name,elementDict in elementDicts:
+        for name,elementDict in self.elements.items():
             elementDataDict[name]         = {}
-            elementDataDict[name]['you']  = elementTuple['you'].getElementData()
-            elementDataDict[name]['them'] = elementTuple['them'].getElementData()
+            elementDataDict[name]['you']  = elementDict['you'].getElementData()
+            elementDataDict[name]['them'] = elementDict['them'].getElementData()
             
         return CategoryData(self.name,elementDataDict)
     
@@ -60,14 +60,27 @@ class Category:
                 for elementYaml in self.categoryYaml[elementTypeYaml]:
                     elementRelativeWeightings[elementYaml['name']] = elementYaml['weighting']
                 
-        return Chart.weightingsFromRelativeWeightings(elementRelativeWeightings)
-        
+        return Category.weightingsFromRelativeWeightings(elementRelativeWeightings)
+    
+    #relativeWeightings are integers -- the fractional weightings are relative to the sum of the relativeWeightings
+    @staticmethod
+    def weightingsFromRelativeWeightings(relativeWeightings):
+        totalRelative = 0
+        for weightingName,relativeWeighting in relativeWeightings.items():
+            totalRelative += relativeWeighting
+            
+        weightings = {}
+        for weightingName,relativeWeighting in relativeWeightings.items():
+            weightings[weightingName] = float(relativeWeighting) / float(totalRelative)
+            
+        return weightings
+     
     def colorCategory(self,categoryData):
         for elementName,elementDict in self.elements.items():
             for elementOwner,element in elementDict.items():
                 element.colorElement(categoryData[elementName][elementOwner])    
         
-    def propagatePixelMap(self):
+    def propagatePixelMap(self,pixelMap):
         for elementName,elementDict in self.elements.items():
             for elementOwner,element in elementDict.items():
                 element.propagatePixelMap(pixelMap)
