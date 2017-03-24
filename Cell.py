@@ -7,6 +7,8 @@ from PIL import Image,ImageDraw,ImageColor
 import yaml
 
 class Cell: #an indivisble component of an image element
+    STANDARD_DIMENSIONS = (3828, 4587)
+
     def __init__(self,label,coordinates):
         #print("Cell creation label: " + label)
         self.label       = label
@@ -31,6 +33,18 @@ class Cell: #an indivisble component of an image element
     def getCenterPixel(self):
         raise ValueError('Should not reach parent version of method.')
     
+    def getExpansionRatio(self):
+        x,y = self.pixelMap.size
+        xExpansion = x / self.STANDARD_DIMENSIONS[0]
+        yExpansion = y / self.STANDARD_DIMENSIONS[1]
+        
+        expansionRatio = xExpansion
+        xYRatio        = xExpansion / yExpansion
+        if xYRatio < 0.99 or xYRatio > 1.01: #check that aspect ratio is very close to the original chart's (currently within 1 percent)
+            raise ValueError('Image has invalid aspect ratio.')
+            
+        return expansionRatio
+    
     def fillCell(self,colorCode): #WARNING: Pillow does not support fuzzy floodfill, so use a losslessly compressed image
         fillCoordinates = self.getCenterPixel()
         ImageDraw.floodfill(self.pixelMap,fillCoordinates,ImageColor.getrgb(colorCode))
@@ -45,7 +59,7 @@ class PictographicCell(Cell): #subclass is really just for readability right now
         super().__init__(label,coordinates)
         
     def getCenterPixel(self): #the default is just to return the 'coordinates' -- overriden in SquareCell, but not PictographicCell
-        return self.coordinates
+        return (int(self.coordinates[0]*self.getExpansionRatio()), int(self.coordinates[1]*self.getExpansionRatio()))
 
 class SquareCell(Cell):
     def __init__(self,label,coordinates,size):
@@ -72,7 +86,7 @@ class SquareCell(Cell):
         return cells
     
     def getCenterPixel(self):
-        middleX = self.coordinates[0] + self.size[0] / 2
-        middleY = self.coordinates[1] - self.size[1] / 2
+        middleXBase = self.coordinates[0] + self.size[0] / 2
+        middleYBase = self.coordinates[1] - self.size[1] / 2
 
-        return (middleX, middleY)
+        return (int(middleXBase*self.getExpansionRatio()), int(middleYBase*self.getExpansionRatio()))

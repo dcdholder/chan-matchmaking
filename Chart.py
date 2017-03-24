@@ -41,6 +41,7 @@ class Chart:
                 
         return categories
     
+    #TODO: change this to a setter, and update references to it
     def __getPixelMap(self):
         pixelMap = Image.open(self.filename)
         pixelMap.load()
