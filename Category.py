@@ -36,6 +36,11 @@ class Category:
             for pictographicCheckboxSetYaml in pictographicCheckboxSetsYaml:
                 elements[pictographicCheckboxSetYaml['name']] = PictographicCheckboxSet.getYouAndThemElementsFromYaml(pictographicCheckboxSetYaml)
         
+        if 'booleanBars' in self.categoryYaml.keys():
+            booleanBarsYaml = self.categoryYaml['booleanBars']
+            for booleanBarYaml in booleanBarsYaml:
+                elements[booleanBarYaml['name']] = BooleanBar.getYouAndThemElementsFromYaml(booleanBarYaml)
+        
         if 'numericalRangeBars' in self.categoryYaml.keys():
             numericalRangeBarsYaml = self.categoryYaml['numericalRangeBars']
             for numericalRangeBarYaml in numericalRangeBarsYaml:
@@ -79,7 +84,7 @@ class Category:
     def colorCategory(self,categoryData):
         for elementName,elementDict in self.elements.items():
             for elementOwner,element in elementDict.items():
-                element.colorElement(categoryData[elementName][elementOwner])    
+                element.colorElement(categoryData.elementDataDict[elementName][elementOwner])    
         
     def propagatePixelMap(self,pixelMap):
         for elementName,elementDict in self.elements.items():

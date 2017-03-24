@@ -19,26 +19,20 @@ class Bar(Element):
 class BooleanBar(Bar):
     def __init__(self, elementYaml, isYou):
         self.numCells = 2
-        super().__init__(elementYaml,isYou)
         self.yesPosition = elementYaml['yesPosition']
+        super().__init__(elementYaml,isYou)
             
     def getCells(self):
         cells = {}
-
-        cellSize = ()
-        cellSize[0] = self.size[0] / 2
-        cellSize[1] = self.size[1]
         
-        rightCoordinates = ()
-        rightCoordinates[0] = self.coordinates[0] + self.cellSize[0]
-        rightCoordinates[1] = self.coordinates[1]
+        rightCoordinates = (self.coordinates[0] + self.cellSize[0], self.coordinates[1])
         
-        if yesPosition=='left':
-            yesCell = SquareCell(self.coordinates, self.cellSize)
-            noCell  = SquareCell(rightCoordinates, self.cellSize)
+        if self.yesPosition=='left':
+            yesCell = SquareCell('yes', self.coordinates, self.cellSize)
+            noCell  = SquareCell('no', rightCoordinates, self.cellSize)
         else:
-            yesCell = SquareCell(rightCoordinates, self.cellSize)
-            noCell  = SquareCell(self.coordinates, self.cellSize)
+            yesCell = SquareCell('yes', rightCoordinates, self.cellSize)
+            noCell  = SquareCell('no', self.coordinates, self.cellSize)
         
         cells['yes'] = yesCell
         cells['no']  = noCell

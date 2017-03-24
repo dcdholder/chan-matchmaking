@@ -3,7 +3,7 @@
 #TODO: determine whether color testing needs some "fuzziness" by testing with multiple jpeg qualities
 
 from ChartData import ColorFieldData
-from PIL import Image,ImageDraw
+from PIL import Image,ImageDraw,ImageColor
 import yaml
 
 class Cell: #an indivisble component of an image element

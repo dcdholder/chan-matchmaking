@@ -118,7 +118,7 @@
       yesPosition: right
       coordinates: 
         you:  3638x854
-        them: 2638x2340
+        them: 3638x2340
       size: 157x74
     - name: tattoos
       weighting: 4
@@ -482,8 +482,8 @@
             them: 838x2296
         - label: satanist
           coordinates:
-            you:  930x822
-            them: 930x2296
+            you:  931x822
+            them: 931x2296
             
         - label: deist
           coordinates:

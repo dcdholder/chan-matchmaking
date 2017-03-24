@@ -43,10 +43,13 @@ class Chart:
     
     def __getPixelMap(self):
         pixelMap = Image.open(self.filename)
+        pixelMap.load()
         pixelMap.convert('RGB')
         
         for categoryName,category in self.categories.items(): #we need to propagate the new pixelMap down the tree to the Cells
             category.propagatePixelMap(pixelMap)
+            
+        return pixelMap
     
     def getWeightingTree(self):
         weightingsTree = {}
@@ -68,8 +71,10 @@ class Chart:
     def saveAsImage(self,filename):
         self.filename = filename
         
-        for categoryName,category in categories:
-            category.colorCategory(self.chartData[categoryName])
+        for categoryName,category in self.categories.items():
+            category.colorCategory(self.chartData.categoryDataDict[categoryName])
+            
+        self.pixelMap.save(filename)
     
     def loadInChartData(self,chartData):
         self.chartData = chartData
@@ -79,7 +84,7 @@ class Chart:
         chart = Chart()
         chart.loadInImage(filenameA)
         chartData = chart.chartData
-        chart.loadInImage(CLEAN_CHART_FILENAME)
+        chart.loadInImage(Chart.CLEAN_CHART_FILENAME)
         chart.loadInChartData(chartData)
         chart.saveAsImage(filenameB)
     

@@ -41,8 +41,8 @@ class Element: #a chart element is a collection of individual cells, has a non-c
         pass
     
     def colorElement(self,elementData):
-        for cellName,cell in self.cells:
-            cell.fillCellByColorFieldData(elementData[cellName])
+        for cellName,cell in self.cells.items():
+            cell.fillCellByColorFieldData(elementData.colorFieldDataDict[cellName])
     
     def propagatePixelMap(self,pixelMap):
         for cellName,cell in self.cells.items():
