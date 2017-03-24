@@ -1,3 +1,4 @@
+import re
 from PIL import Image
 
 class ChartData:
@@ -139,6 +140,58 @@ class ColorFieldData:
     
     def getColorCode(self):
         return self.__colorCodes[self.colorScore]
+    
+    @staticmethod
+    def htmlCodeToRgb(htmlCode):
+        pattern = re.compile('^#[a-f0-9]{6}$') #check that the format is correct
+        if not pattern.match(htmlCode):
+            raise ValueError('Improperly-formatted html color code.')
+        
+        stringTuple = ((htmlCode[1] + htmlCode[2]), (htmlCode[3] + htmlCode[4]), (htmlCode[5] + htmlCode[6]))
+        intTuple    = (int(stringTuple[0], 16), int(stringTuple[1], 16), int(stringTuple[2], 16))
+        
+        return intTuple
+
+    @staticmethod
+    def closeEnoughColor(htmlCanonicalColor,htmlTestColor):
+        PRIMARY_FUZZINESS               = 16
+        NON_PRIMARY_FUZZINESS           = 32
+        
+        COMPOUND_PRIMARY_ZERO_FUZZINESS          = 128
+        COMPOUND_PRIMARY_INTER_ELEMENT_FUZZINESS = 16
+
+        canonicalColor = ColorFieldData.htmlCodeToRgb(htmlCanonicalColor)
+        testColor      = ColorFieldData.htmlCodeToRgb(htmlTestColor)
+
+        closeEnoughPrimaries    = True
+        closeEnoughNonPrimaries = True
+        for i in range(0,3):
+            if canonicalColor[i]==255: #primary color
+                if testColor[i] < (canonicalColor[i] - PRIMARY_FUZZINESS):
+                    closeEnoughPrimaries = False
+            else:
+                if testColor[i] < (canonicalColor[i] - NON_PRIMARY_FUZZINESS) or testColor[i] > (canonicalColor[i] + NON_PRIMARY_FUZZINESS):
+                    closeEnoughNonPrimaries = False
+        
+        if not closeEnoughNonPrimaries: #give extra allowance when the subpixels are exclusively either FF or 00
+            numZeros = 0
+            for i in range(0,3):
+                if canonicalColor[i]==0:
+                    numZeros+=1
+                    
+            #TODO: make this a little less clunky
+            if numZeros==2: #as long as the difference between elements which are supposed to be 0 is small, the distance from zero can be fairly large (affects brightness)
+                if canonicalColor[0]==0 and canonicalColor[1]==0 and abs(testColor[0] - testColor[1]) < COMPOUND_PRIMARY_INTER_ELEMENT_FUZZINESS:
+                    if testColor[0]<COMPOUND_PRIMARY_ZERO_FUZZINESS and testColor[1]<COMPOUND_PRIMARY_ZERO_FUZZINESS:
+                        closeEnoughNonPrimaries = True
+                elif canonicalColor[0]==0 and canonicalColor[2]==0 and abs(testColor[0] - testColor[2]) < COMPOUND_PRIMARY_INTER_ELEMENT_FUZZINESS:
+                    if testColor[0]<COMPOUND_PRIMARY_ZERO_FUZZINESS and testColor[2]<COMPOUND_PRIMARY_ZERO_FUZZINESS:
+                        closeEnoughNonPrimaries = True
+                elif canonicalColor[1]==0 and canonicalColor[2]==0 and abs(testColor[1] - testColor[2]) < COMPOUND_PRIMARY_INTER_ELEMENT_FUZZINESS:
+                    if testColor[1]<COMPOUND_PRIMARY_ZERO_FUZZINESS and testColor[2]<COMPOUND_PRIMARY_ZERO_FUZZINESS:
+                        closeEnoughNonPrimaries = True
+                          
+        return closeEnoughPrimaries and closeEnoughNonPrimaries
     
     def singleColorTraitSelected(self):
         return self.__colorNames[self.colorScore]=='green'
