@@ -25,8 +25,8 @@ class Chart:
         categoryDataDict = {}
         for name,category in self.categories.items():
             categoryDataDict[name] = category.getCategoryData()
-            
-        return ChartData(self.filename,categoryDataDict) #TODO: figure out how to make name something other than the filename
+        
+        return ChartData(self.filename,categoryDataDict) #TODO: figure out how to make name something other than the filename    
     
     def __getCategories(self):
         with open('config.yaml', 'r') as f:

@@ -5,7 +5,6 @@ This is an application for playing matchmaker, using a database of personal data
 The first step is to get it working in offline use.
 
 ## Challenges
-- Finish debugging the offline component
 - Figure out how to combine the different chart image data representations with the models
 - Write a form application for generating chart data objects (with custom widgets based on the chart image elements)
 - Add database search functionality (user-configurable category weightings)

@@ -67,6 +67,7 @@ class CategoryData:
     def __init__(self, name, elementDataDict):
         self.name            = name
         self.elementDataDict = elementDataDict
+        self.postProcessCategory()
     
     #TODO: DRY
     def __str__(self):
@@ -87,6 +88,35 @@ class CategoryData:
         
         return categoryString
     
+    def postProcessCategory(self):
+        if self.name.lower()=='physical':
+            self.postProcessGender()
+        
+    def postProcessGender(self):
+        if self.name.lower()!='physical':
+            raise ValueError('Category must be physical to post-process genders.')
+    
+        acceptsMale   = not self.elementDataDict['gender']['them'].colorFieldDataDict['male'].isWorst()
+        acceptsFemale = not self.elementDataDict['gender']['them'].colorFieldDataDict['female'].isWorst()
+        acceptsMtf    = not self.elementDataDict['gender']['them'].colorFieldDataDict['mtf'].isWorst()
+        acceptsFtm    = not self.elementDataDict['gender']['them'].colorFieldDataDict['ftm'].isWorst()
+        
+        if acceptsMale and not acceptsFemale and not acceptsMtf and not acceptsFtm:    #allow facial hair, do not allow female body types
+            for bodyTypeName,bodyTypeData in self.elementDataDict['bodyType']['them'].colorFieldDataDict.items():
+                if 'Female' in bodyTypeName:
+                    bodyTypeData.resetToWorst()                    
+                
+        elif not acceptsMale and acceptsFemale and not acceptsMtf and not acceptsFtm: #do not allow facial hair (except for 'None'), do not allow male body types
+            for bodyTypeName,bodyTypeData in self.elementDataDict['bodyType']['them'].colorFieldDataDict.items():
+                if 'Male' in bodyTypeName:
+                    bodyTypeData.resetToWorst()
+                    
+            for facialHairName,facialHairData in self.elementDataDict['facialHair']['them'].colorFieldDataDict.items():
+                if facialHairName.lower()=='none':
+                    facialHairData.resetToBest()
+                else:
+                    facialHairData.resetToWorst()         
+        
     def scoreCategoryData(self,theirCategory,weighting,elementWeightings):
         totalCategoryScore = 0.0
         for elementName,elementPair in self.elementDataDict:
@@ -119,6 +149,7 @@ class ElementData:
 
 class ColorFieldData:
     __unselectedColors  = ['#ebebeb','#c3c3c3','#c0c0c0','#ffffff'] #almost everything uses 'ebebeb'; 'facial hair' and 'body type' use the others
+    __defaultEmptyIndex = 0
     __singleSelectIndex = 2
     __neutralIndex      = 3
     __bestIndex         = 0
@@ -144,6 +175,18 @@ class ColorFieldData:
     def __str__(self):
         return str(self.__colorNames[self.colorScore])
     
+    def isWorst(self):
+        return self.colorScore==self.__worstIndex
+    
+    def isBest(self):
+        return self.colorScore==self.__bestIndex
+    
+    def resetToWorst(self):
+        self.colorScore = self.__worstIndex
+    
+    def resetToBest(self):
+        self.colorScore = self.__bestIndex
+    
     def colorScoreFromCode(self,colorCode):
         for i in range(0,len(self.__colorCodes)):
             if self.closeEnoughColor(self.__colorCodes[i],colorCode):
@@ -162,7 +205,13 @@ class ColorFieldData:
         raise ValueError('Could not map color code ' + colorCode + ' to a valid color score.')
     
     def getColorCode(self):
-        return self.__colorCodes[self.colorScore]
+        if self.isYou and not self.isMulticolor:
+            if self.colorScore==self.__worstIndex:
+                return self.__unselectedColors[self.__defaultEmptyIndex]
+            else:
+                return self.__colorCodes[self.colorScore]
+        else:
+            return self.__colorCodes[self.colorScore]
     
     @staticmethod
     def htmlCodeToRgb(htmlCode):
