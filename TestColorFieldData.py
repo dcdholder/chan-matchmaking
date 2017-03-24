@@ -11,6 +11,9 @@ def test_closeEnoughCompoundPrimaryFarNonPrimary(): #should fail when subpixels 
 def test_closeEnoughCompoundPrimaryCloseNonprimary(): #should succeed when subpixels which are supposed to be 0 are close to each other
     assert ColorFieldData.closeEnoughColor('#ff0000','#fe2220')
 
+def test_closeEnoughCompoundPrimaryCloseSingleCanonicalZero(): #when only a single canonical subpixel is zero, we can change that subpixel a lot with minimal visible effect
+    assert ColorFieldData.closeEnoughColor('#ffff00','#fefe44')
+
 def test_closeEnoughNonCompoundPrimaryClose(): #should succeed when subpixels are close to canonical values
     assert ColorFieldData.closeEnoughColor('#ff7200','#fe6511')
 

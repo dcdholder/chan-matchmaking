@@ -124,17 +124,18 @@ class ColorFieldData:
     
     def colorScoreFromCode(self,colorCode):
         for i in range(0,len(self.__colorCodes)):
-            if self.__colorCodes[i]==colorCode:
+            if self.closeEnoughColor(self.__colorCodes[i],colorCode):
                 self.isSelected = True
                 return i
         
-        if colorCode in self.__unselectedColors:
-            if isMulticolor:
-                self.isSelected = True
-                return self.__neutralIndex #for multicolor cells, an unfilled cell can be assumed yellow
-            else:
-                self.isSelected = False
-                return 0
+        for unselectedColorCode in self.__unselectedColors:
+            if self.closeEnoughColor(unselectedColorCode,colorCode):
+                if self.isMulticolor:
+                    self.isSelected = True
+                    return self.__neutralIndex #for multicolor cells, an unfilled cell can be assumed yellow
+                else:
+                    self.isSelected = False
+                    return 0
         
         raise ValueError('Could not map color code ' + colorCode + ' to a valid color score.')
     
@@ -154,8 +155,8 @@ class ColorFieldData:
 
     @staticmethod
     def closeEnoughColor(htmlCanonicalColor,htmlTestColor):
-        PRIMARY_FUZZINESS               = 16
-        NON_PRIMARY_FUZZINESS           = 32
+        PRIMARY_FUZZINESS     = 32
+        NON_PRIMARY_FUZZINESS = 32
         
         COMPOUND_PRIMARY_ZERO_FUZZINESS          = 128
         COMPOUND_PRIMARY_INTER_ELEMENT_FUZZINESS = 16
@@ -178,18 +179,29 @@ class ColorFieldData:
             for i in range(0,3):
                 if canonicalColor[i]==0:
                     numZeros+=1
-                    
-            #TODO: make this a little less clunky
-            if numZeros==2: #as long as the difference between elements which are supposed to be 0 is small, the distance from zero can be fairly large (affects brightness)
-                if canonicalColor[0]==0 and canonicalColor[1]==0 and abs(testColor[0] - testColor[1]) < COMPOUND_PRIMARY_INTER_ELEMENT_FUZZINESS:
-                    if testColor[0]<COMPOUND_PRIMARY_ZERO_FUZZINESS and testColor[1]<COMPOUND_PRIMARY_ZERO_FUZZINESS:
-                        closeEnoughNonPrimaries = True
-                elif canonicalColor[0]==0 and canonicalColor[2]==0 and abs(testColor[0] - testColor[2]) < COMPOUND_PRIMARY_INTER_ELEMENT_FUZZINESS:
-                    if testColor[0]<COMPOUND_PRIMARY_ZERO_FUZZINESS and testColor[2]<COMPOUND_PRIMARY_ZERO_FUZZINESS:
-                        closeEnoughNonPrimaries = True
-                elif canonicalColor[1]==0 and canonicalColor[2]==0 and abs(testColor[1] - testColor[2]) < COMPOUND_PRIMARY_INTER_ELEMENT_FUZZINESS:
-                    if testColor[1]<COMPOUND_PRIMARY_ZERO_FUZZINESS and testColor[2]<COMPOUND_PRIMARY_ZERO_FUZZINESS:
-                        closeEnoughNonPrimaries = True
+            
+            compoundPrimary = True
+            for i in range(0,3):
+                if canonicalColor[i]!=255 and canonicalColor[i]!=0:
+                    compoundPrimary=False
+            
+            if compoundPrimary:
+                if numZeros==1:
+                    for i in range(0,3):
+                        if canonicalColor[i]==0:
+                            closeEnoughNonPrimaries = testColor[i]<COMPOUND_PRIMARY_ZERO_FUZZINESS
+                        
+                #TODO: make this a little less clunky
+                if numZeros==2: #as long as the difference between elements which are supposed to be 0 is small, the distance from zero can be fairly large (affects brightness)
+                    if canonicalColor[0]==0 and canonicalColor[1]==0 and abs(testColor[0] - testColor[1]) < COMPOUND_PRIMARY_INTER_ELEMENT_FUZZINESS:
+                        if testColor[0]<COMPOUND_PRIMARY_ZERO_FUZZINESS and testColor[1]<COMPOUND_PRIMARY_ZERO_FUZZINESS:
+                            closeEnoughNonPrimaries = True
+                    elif canonicalColor[0]==0 and canonicalColor[2]==0 and abs(testColor[0] - testColor[2]) < COMPOUND_PRIMARY_INTER_ELEMENT_FUZZINESS:
+                        if testColor[0]<COMPOUND_PRIMARY_ZERO_FUZZINESS and testColor[2]<COMPOUND_PRIMARY_ZERO_FUZZINESS:
+                            closeEnoughNonPrimaries = True
+                    elif canonicalColor[1]==0 and canonicalColor[2]==0 and abs(testColor[1] - testColor[2]) < COMPOUND_PRIMARY_INTER_ELEMENT_FUZZINESS:
+                        if testColor[1]<COMPOUND_PRIMARY_ZERO_FUZZINESS and testColor[2]<COMPOUND_PRIMARY_ZERO_FUZZINESS:
+                            closeEnoughNonPrimaries = True
                           
         return closeEnoughPrimaries and closeEnoughNonPrimaries
     
