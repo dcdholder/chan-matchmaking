@@ -35,7 +35,6 @@ class Element: #a chart element is a collection of individual cells, has a non-c
         
     def getCells(self):
         raise ValueError('Parent version should never be called.')
-        pass
 
     def getYouAndThemElementsFromYaml(self,elementYaml):
         pass

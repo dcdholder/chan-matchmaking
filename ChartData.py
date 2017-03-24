@@ -101,12 +101,12 @@ class CategoryData:
         acceptsMtf    = not self.elementDataDict['gender']['them'].colorFieldDataDict['mtf'].isWorst()
         acceptsFtm    = not self.elementDataDict['gender']['them'].colorFieldDataDict['ftm'].isWorst()
         
-        if acceptsMale and not acceptsFemale and not acceptsMtf and not acceptsFtm:    #allow facial hair, do not allow female body types
+        if (acceptsMale or acceptsFtm) and not acceptsFemale and not acceptsMtf:    #allow facial hair, do not allow female body types
             for bodyTypeName,bodyTypeData in self.elementDataDict['bodyType']['them'].colorFieldDataDict.items():
                 if 'Female' in bodyTypeName:
                     bodyTypeData.resetToWorst()                    
                 
-        elif not acceptsMale and acceptsFemale and not acceptsMtf and not acceptsFtm: #do not allow facial hair (except for 'None'), do not allow male body types
+        elif not acceptsMale and not acceptsFtm and (acceptsFemale or acceptsMtf): #do not allow facial hair (except for 'None'), do not allow male body types
             for bodyTypeName,bodyTypeData in self.elementDataDict['bodyType']['them'].colorFieldDataDict.items():
                 if 'Male' in bodyTypeName:
                     bodyTypeData.resetToWorst()
@@ -181,6 +181,9 @@ class ColorFieldData:
     def isBest(self):
         return self.colorScore==self.__bestIndex
     
+    def isPositive(self):
+        return self.colorScore in range(self.__bestIndex,self.__neutralIndex+1) #will need to be changed if we decide to flip the color arrays
+    
     def resetToWorst(self):
         self.colorScore = self.__worstIndex
     
@@ -201,6 +204,8 @@ class ColorFieldData:
                 else:
                     self.isSelected = False
                     return self.__worstIndex
+        
+        return self.__neutralIndex #TODO: For now, we handle colors we can't identify using the 'neutral' color. Find a better way.
         
         raise ValueError('Could not map color code ' + colorCode + ' to a valid color score.')
     

@@ -12,7 +12,7 @@ class Bar(Element):
         self.size     = Element.coordinatesFromString(elementYaml['size'])
         self.cellSize = self.getCellSize()
         super().__init__(elementYaml,isYou)
-        
+    
     def getCellSize(self):
         return ((self.size[0] // self.numCells), (self.size[1]))
 
@@ -38,6 +38,14 @@ class BooleanBar(Bar):
         cells['no']  = noCell
         
         return cells
+    
+    def getElementData(self): #throw it through a filter to ensure that both options aren't checked on the 'You' side
+        elementData = Element.getElementData(self)
+        if self.isYou:
+            if elementData.colorFieldDataDict['yes'].isPositive() and elementData.colorFieldDataDict['no'].isPositive():
+                raise ValueError('Cannot select both options in a boolean bar.')
+    
+        return elementData
     
     #TODO: DRY
     @staticmethod
@@ -65,6 +73,28 @@ class NumericalRangeBar(Bar):
         #go through cells from left to right, find the max which has been selected
         #check if a single cell is selected, two adjacent cells only, or all cells up to a final cell (and no other cells beyond that)
         #throw an exception if any weirdness is encountered
+    
+    #TODO: DRY - I think I can merge the numerical and fuzzy versions
+    def getElementData(self): #can select up to 2 cells -- the rightmost will be kept
+        elementData = Element.getElementData(self)
+        if self.isYou:
+            rightmostPositivePosition = 0
+            numSelected = 0
+            for label, colorFieldData in elementData.colorFieldDataDict.items():
+                if colorFieldData.isPositive():
+                    numSelected = 0
+                    if numSelected > 2:
+                        raise ValueError('Numerical range bar may only have two cells selected.')
+                    
+                    if int(label)>rightmostPositivePosition:
+                        rightmostPositivePosition = int(label)
+                        
+            for label, colorFieldData in elementData.colorFieldDataDict.items():
+                if int(label)!=rightmostPositivePosition:
+                    colorFieldData.resetToWorst()
+                    
+        return elementData
+                    
         
     #TODO: DRY
     @staticmethod
@@ -92,6 +122,21 @@ class FuzzyRangeBar(Bar):
     def getPercentScoreRight(self):
         pass
         #TODO: generate a key-value pair corresponding to the "matching percentage" of the right attribute
+
+    def getElementData(self): #some users like to draw a solid bar, rather than only selecting a single cell
+        elementData = Element.getElementData(self)
+        if self.isYou:
+            rightmostPositivePosition = 0
+            for label, colorFieldData in elementData.colorFieldDataDict.items():
+                if colorFieldData.isPositive():
+                    if int(label)>rightmostPositivePosition:
+                        rightmostPositivePosition = int(label)
+                        
+            for label, colorFieldData in elementData.colorFieldDataDict.items():
+                if int(label)!=rightmostPositivePosition:
+                    colorFieldData.resetToWorst()
+                
+        return elementData
 
     #TODO: DRY
     @staticmethod
