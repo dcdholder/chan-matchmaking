@@ -8,10 +8,17 @@ class ChartData:
     
     def __str__(self):
         chartString = "Chart name: " + self.name + '\n'
-        for name,categoryData in self.categoryDataDict: 
-            chartString += str(categoryData).replace('\n','\n\t') + '\n' #add an indentation level to the category data output, then add a newline
+        for name,categoryData in self.categoryDataDict.items(): 
+            chartString += self.tabTextBlock(str(categoryData)) + '\n' #add an indentation level to the category data output, then add a newline
         
         return chartString
+    
+    @staticmethod
+    def tabTextBlock(textBlock):
+        newTextBlock = textBlock.replace('\n','\n\t')
+        newTextBlock = '\t' + newTextBlock
+        
+        return newTextBlock
     
     def scoreChartData(self,theirChartData,weightingsTree):
         totalChartScore = 0.0
@@ -63,11 +70,20 @@ class CategoryData:
     
     #TODO: DRY
     def __str__(self):
-        categoryString = "Category: " + self.name + '\n'
-        for name,elementDataPair in self.elementDataDict: 
-            categoryString += str(elementDataPair['you']).replace('\n','\n\t') #add an indentation level to the category data output, then add a newline
-            categoryString += str(elementDataPair['them']).replace('\n','\n\t')
-            categoryString += '\n'
+        youElements  = []
+        themElements = []
+        for name,elementDataPair in self.elementDataDict.items():
+            youElements.append(elementDataPair['you'])
+            themElements.append(elementDataPair['them'])
+        
+        categoryString = "Category: " + self.name
+        categoryString += '\n\tYou: '
+        for youElement in youElements:
+            categoryString += '\n' + ChartData.tabTextBlock(ChartData.tabTextBlock(str(youElement))) #TODO: number of extra tabs should be an optional argument to tabTextBlock
+        
+        categoryString += '\n\tThem: '
+        for themElement in themElements:
+            categoryString += '\n' + ChartData.tabTextBlock(ChartData.tabTextBlock(str(themElement)))
         
         return categoryString
     
@@ -86,9 +102,9 @@ class ElementData:
         self.colorFieldDataDict = colorFieldDataDict
     
     def __str__(self):
-        elementString = "Element: " + self.name + '\n'
-        for label,colorFieldData in self.colorFieldDataDict:
-            elementString += label + ": " + str(colorFieldData).replace('\n','\n\t') + '\n'
+        elementString = "Element: " + self.name
+        for label,colorFieldData in self.colorFieldDataDict.items():
+            elementString += '\n\t' + label + ": " + str(colorFieldData)
             
         return elementString
     
@@ -105,22 +121,28 @@ class ColorFieldData:
     __unselectedColors  = ['#ebebeb','#c3c3c3','#c0c0c0','#ffffff'] #almost everything uses 'ebebeb'; 'facial hair' and 'body type' use the others
     __singleSelectIndex = 2
     __neutralIndex      = 3
+    __bestIndex         = 0
+    __worstIndex        = 5
     __colorNames = ['pink', 'blue', 'green', 'yellow', 'orange', 'red']
     __colorCodes = ['#ff00ff', '#0000ff', '#00ff00', '#ffff00', '#ff7200', '#ff0000'] #these should be FF for at least one RGB component
-    __importanceScoreMapping = [-1.0, -0.5, 0.0, 0.33, 0.67, 1.0]
-    __traitScoreMapping      = [-1.0, -0.5, 0.0, 0.5, 1.0]
+    __importanceScoreMapping = [1.0, 0.33, 0.67, 0, -0.5, -1.0]
+    __traitScoreMapping      = [1.0, 0.5, 0.0, -0.5, -1.0]
     
     def __init__(self, colorCode, isYou, isMulticolor):
         self.isYou        = isYou #tells us whether this is a trait or importance score
         self.isMulticolor = isMulticolor
+
+        if not self.isYou:
+            self.isMulticolor = True
+        
         self.isSelected   = False
         self.colorScore   = self.colorScoreFromCode(colorCode) #TODO: would be nice to have an alternate constructor for colorIndex rather than colorCode...
         
-        if not isYou and not isMulticolor:
+        if not self.isYou and not self.isMulticolor:
             raise ValueError('Them cells are always multicolor.')
     
     def __str__(self):
-        return colorCode
+        return str(self.__colorNames[self.colorScore])
     
     def colorScoreFromCode(self,colorCode):
         for i in range(0,len(self.__colorCodes)):
@@ -135,7 +157,7 @@ class ColorFieldData:
                     return self.__neutralIndex #for multicolor cells, an unfilled cell can be assumed yellow
                 else:
                     self.isSelected = False
-                    return 0
+                    return self.__worstIndex
         
         raise ValueError('Could not map color code ' + colorCode + ' to a valid color score.')
     
@@ -152,6 +174,8 @@ class ColorFieldData:
         intTuple    = (int(stringTuple[0], 16), int(stringTuple[1], 16), int(stringTuple[2], 16))
         
         return intTuple
+
+    #TODO: add a method which takes a list of possible canonical colors, and outputs the most likely one if it's "close enough"
 
     @staticmethod
     def closeEnoughColor(htmlCanonicalColor,htmlTestColor):
@@ -234,8 +258,8 @@ class ColorFieldData:
     
     def singleColorYouScoring(self,traitIsSelected,importanceScoreIndex): #trait score is either 1.0 or 0.0, no in-betweens
         if traitIsSelected:
-            traitScoreIndex = len(self.__traitScoreMapping)-1 #just set to either extreme trait score
+            traitScoreIndex = self.__bestIndex #just set to either extreme trait score
         else:
-            traitScoreIndex = 0
+            traitScoreIndex = self.__worstIndex
         
-        return multiColorYouScoring(traitScoreIndex,importanceScoreIndex)
+        return self.multiColorYouScoring(traitScoreIndex,importanceScoreIndex)

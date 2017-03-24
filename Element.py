@@ -45,6 +45,5 @@ class Element: #a chart element is a collection of individual cells, has a non-c
             cell.fillCellByColorFieldData(elementData[cellName])
     
     def propagatePixelMap(self,pixelMap):
-        print(self.cells)
         for cellName,cell in self.cells.items():
             cell.pixelMap = pixelMap

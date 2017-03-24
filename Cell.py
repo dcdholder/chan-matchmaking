@@ -14,7 +14,6 @@ class Cell: #an indivisble component of an image element
         self.coordinates = coordinates
     
     def getColorFieldData(self,isYou,isMulticolor):
-        print(self.label)
         return ColorFieldData(self.getColor(),isYou,isMulticolor)
     
     def getColor(self): #just select color from the given coordinates -- is different for square cell

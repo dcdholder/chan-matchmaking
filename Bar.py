@@ -14,8 +14,6 @@ class Bar(Element):
         super().__init__(elementYaml,isYou)
         
     def getCellSize(self):
-        print(self.size)
-        print(self.numCells)
         return ((self.size[0] // self.numCells), (self.size[1]))
 
 class BooleanBar(Bar):
@@ -113,14 +111,18 @@ class FuzzyRangeBar(Bar):
 class TwoDFuzzyRangeBar(Bar):
     def __init__(self, elementYaml, isYou):
         self.cellDimensions = int(elementYaml['cellDimensions'])
+        self.numCells = self.cellDimensions #TODO: Hideous hack. May lead to bugs.
         super().__init__(elementYaml,isYou)
-        self.leftQuality   = elementYaml['free']
-        self.rightQuality  = elementYaml['regulated']
-        self.topQuality    = elementYaml['capitalist']
-        self.bottomQuality = elementYaml['socialist']
+        self.leftQuality   = elementYaml['left']
+        self.rightQuality  = elementYaml['right']
+        self.topQuality    = elementYaml['top']
+        self.bottomQuality = elementYaml['bottom']
         
     def getCells(self):        
         return SquareCell.genSquare(self.coordinates,self.cellSize,self.cellDimensions)
+        
+    def getCellSize(self):
+        return ((self.size[0] // self.numCells), (self.size[1]) // self.numCells)
         
     #TODO: DRY
     @staticmethod

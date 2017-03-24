@@ -41,12 +41,12 @@ class Category:
             for numericalRangeBarYaml in numericalRangeBarsYaml:
                 elements[numericalRangeBarYaml['name']] = NumericalRangeBar.getYouAndThemElementsFromYaml(numericalRangeBarYaml)
 
-        if 'fuzzyRangeBarsYaml' in self.categoryYaml.keys():        
+        if 'fuzzyRangeBars' in self.categoryYaml.keys():        
             fuzzyRangeBarsYaml = self.categoryYaml['fuzzyRangeBars']
             for fuzzyRangeBarYaml in fuzzyRangeBarsYaml:
                 elements[fuzzyRangeBarYaml['name']] = FuzzyRangeBar.getYouAndThemElementsFromYaml(fuzzyRangeBarYaml)
 
-        if 'twoDFuzzyRangeBarsYaml' in self.categoryYaml.keys():        
+        if 'twoDFuzzyRangeBars' in self.categoryYaml.keys():        
             twoDFuzzyRangeBarsYaml = self.categoryYaml['twoDFuzzyRangeBars']
             for twoDFuzzyRangeBarYaml in twoDFuzzyRangeBarsYaml:
                 elements[twoDFuzzyRangeBarYaml['name']] = TwoDFuzzyRangeBar.getYouAndThemElementsFromYaml(twoDFuzzyRangeBarYaml)
