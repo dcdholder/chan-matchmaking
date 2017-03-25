@@ -54,13 +54,13 @@ class Chart:
     
     def getWeightingTree(self):
         weightingsTree = {}
-        for categoryName,category in category:
+        for categoryName,category in self.categories.items():
             weightingsTree[categoryName]             = {}
             weightingsTree[categoryName]['elements'] = {}
-            weightingsTree[categoryName]['weight']   = category.weight
+            weightingsTree[categoryName]['weight']   = category.weighting
             
-            for elementName,element in category.elements.items():
-                weightingsTree[categoryName]['elements']['elementName'] = element.weighting
+            for elementName,elementDict in category.elements.items():
+                weightingsTree[categoryName]['elements']['elementName'] = elementDict['you'].weighting
                 
         return weightingsTree
     
@@ -116,3 +116,15 @@ class Chart:
             chartDataDict[filename] = Chart.getChartDataFromImage(filename)
             
         return chartDataDict
+    
+    @staticmethod
+    def compareImages(filenameA,filenameB):
+        chart      = Chart(Chart.DEF_CATEGORY_RELATIVE_WEIGHTINGS)
+        weightings = chart.getWeightingTree()
+        
+        chartDataA = Chart.getChartDataFromImage(filenameA)
+        chartDataB = Chart.getChartDataFromImage(filenameB)
+        
+        compatibilityScore = chartDataA.compare(chartDataB,weightings)
+        
+        return compatibilityScore

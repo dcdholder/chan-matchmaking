@@ -22,8 +22,8 @@ class ChartData:
     
     def scoreChartData(self,theirChartData,weightingsTree):
         totalChartScore = 0.0
-        for categoryName,categoryData in self.categoryDataDict:
-            totalChartScore += category.scoreCategoryData(weightingsTree[categoryName]['weight'],weightingsTree[categoryName]['elements']) #each category takes care of its weighting
+        for categoryName,categoryData in self.categoryDataDict.items():
+            totalChartScore += categoryData.scoreCategoryData(theirChartData.categoryDataDict[categoryName],weightingsTree[categoryName]['weight'],weightingsTree[categoryName]['elements']) #each category takes care of its weighting
             
         return totalChartScore
     
@@ -119,8 +119,8 @@ class CategoryData:
         
     def scoreCategoryData(self,theirCategory,weighting,elementWeightings):
         totalCategoryScore = 0.0
-        for elementName,elementPair in self.elementDataDict:
-            totalCategoryScore += elementPair['you'].scoreElementData(elementPair['them'],elementWeightings[elementName]) #'You' scores 'Them'
+        for elementName,elementPair in self.elementDataDict.items():
+            totalCategoryScore += elementPair['them'].scoreElementData(theirCategory.elementDataDict[elementName]['you'],elementWeightings[elementName]) #'You' scores 'Them'
         
         totalCategoryScore *= weighting
         
@@ -140,7 +140,7 @@ class ElementData:
     
     def scoreElementData(self,theirElement,weighting):    
         totalElementScore = 0.0
-        for colorFieldName,colorFieldData in self.colorFieldDataDict:
+        for colorFieldName,colorFieldData in self.colorFieldDataDict.items():
             totalElementScore += colorFieldDataDict[colorFieldName].scoreColorFieldData(theirElement.colorFieldDataDict[colorFieldName])
             
         totalElementScore *= weighting
