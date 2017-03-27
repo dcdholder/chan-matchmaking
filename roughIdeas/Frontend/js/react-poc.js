@@ -7,7 +7,12 @@ class Chart extends React.Component {
     this.tagLine = "The Ultimate QT Infograph";
     this.edition = "Enterprise Edition";
 
-    this.categoryElementMap = {'Emotional': {Quirks: ['Adventurous','Ambitious','Analytical','Artistic','Assertive', 'Athletic', 'Confident', 'Creative', 'Cutesy']}};
+    this.categoryElementMap = {'Emotional': {Quirks:
+      ['Adventurous','Ambitious','Analytical','Artistic','Assertive', 'Athletic', 'Confident', 'Creative',
+       'Cutesy', 'Cynical', 'Easy-going', 'Empathetic', 'Energetic', 'Honest', 'Humorous', 'Hygienic',
+       'Intelligent', 'Kind', 'Lazy', 'Loud', 'Materialistic', 'Messy', 'Outdoorsy', 'Passionate',
+       'Reliable', 'Resourceful', 'Romantic', 'Serious', 'Sexual', 'Social', 'Talkative', 'Wise']
+    }};
 
     this.targets = [];
     var possibleTargets = ["You","Them"]
