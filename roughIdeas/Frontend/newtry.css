@@ -1,0 +1,124 @@
+@font-face {
+    font-family: Passion;
+    src: url(https://fonts.gstatic.com/s/passionone/v6/fY6k21F1QT2c_Oc3HRNDwiYE0-AqJ3nfInTTiDXDjU4.woff2);
+}
+
+body {
+  background-color:blanchedalmond;
+}
+
+.multicolorCheckbox {
+  border-radius: 10px;
+  background-color:#E5D3B8;
+  border: 1px solid #B7A893;
+  margin: 10px 0;
+  padding: 3px;
+}
+
+.checkboxChoice.left {
+    border-top-left-radius:15px;
+    border-bottom-left-radius:15px;
+}
+
+.checkboxChoice.right {
+    border-top-right-radius:15px;
+    border-bottom-right-radius:15px;
+}
+
+.multicolorCheckbox .checkboxChoice {
+    float:left;
+    width: 16.5%;
+    height:30px;
+    margin:0px;
+    background-color:#404040;
+    border:2px solid #A09380;
+    overflow:auto;
+}
+
+.multicolorCheckbox .checkboxChoice:hover {
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+    opacity: 0.75;
+}
+
+.multicolorCheckbox .checkboxChoice span {
+    position:relative;
+    top:50%;
+    transform:translateY(-50%);
+    color:white;
+    font-weight:bold;
+    text-align:center;
+    font-size: 1.5vh;
+    display:block;
+}
+
+.target {
+  border-top-right-radius:10px;
+  border-top-left-radius:10px;
+  border: 1px solid #B7A893;
+  margin-top: 5px;
+}
+
+.category {
+  border: 1px solid #B7A893;
+}
+
+.chartName {
+  color: white;
+  font-family: Cambria,Georgia,serif;
+  background-color:#55452F;
+  border-radius: 10px;
+  border: 4px solid #3b2f1f;
+  margin: 3px;
+}
+
+.chartName h1 {
+  font-family: Passion,Georgia,serif;
+}
+
+.targetName {
+  border-top-left-radius:10px;
+  border-top-right-radius:10px;
+  border-bottom: 3px solid #B7A893;
+  margin-left: 3px;
+  margin-right: 3px;
+  padding: 3px;
+}
+
+.categoryName {
+  border-top-left-radius:10px;
+  border-top-right-radius:10px;
+  border-bottom: 3px solid #B7A893;
+  padding: 3px;
+}
+
+.checkboxChoice input {
+  display: none;
+}
+
+.checkboxChoice.black {
+    background-color:#404040;
+}
+
+.checkboxChoice.red {
+    background-color:#FF0000;
+}
+
+.checkboxChoice.orange {
+    background-color:#FF7200;
+}
+
+.checkboxChoice.yellow {
+    background-color:#FFFF00;
+}
+
+.checkboxChoice.green {
+    background-color:#00FF00;
+}
+
+.checkboxChoice.blue {
+    background-color:#0000FF;
+}
+
+.checkboxChoice.pink {
+    background-color:#FF00FF;
+}

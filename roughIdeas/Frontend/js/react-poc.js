@@ -3,7 +3,7 @@ class Chart extends React.Component {
     super(props);
 
     this.tagLine = "The Ultimate QT Infograph";
-    this.edition = "Enterprise Edition";
+    this.edition = "ENTERPRISE EDITION";
 
     this.categoryElementMap = {'Emotional': {Quirks:
       ['Adventurous','Ambitious','Analytical','Artistic','Assertive', 'Athletic', 'Confident', 'Creative',
@@ -25,12 +25,14 @@ class Chart extends React.Component {
         <ReactBootstrap.Grid>
           <ReactBootstrap.Row>
             <ReactBootstrap.Col>
-              <h1 style={{'text-align': 'center'}}>{this.tagLine}</h1>
-              <h4 style={{'text-align': 'center'}}>{this.tagLine}</h4>
+              <div className="chartName">
+                <h1 style={{'textAlign': 'center'}}>{this.tagLine}</h1>
+                <h4 style={{'textAlign': 'center'}}>{this.edition}</h4>
+              </div>
+              {this.targets}
             </ReactBootstrap.Col>
           </ReactBootstrap.Row>
         </ReactBootstrap.Grid>
-        {this.targets}
       </div>
     );
   }
@@ -57,7 +59,9 @@ class Target extends React.Component {
         <ReactBootstrap.Grid>
           <ReactBootstrap.Row>
             <ReactBootstrap.Col>
-              <h2>{this.props.targetName}</h2>
+              <div className="targetName">
+                <h2>{this.props.targetName}</h2>
+              </div>
             </ReactBootstrap.Col>
           </ReactBootstrap.Row>
         </ReactBootstrap.Grid>
@@ -84,7 +88,9 @@ class Category extends React.Component {
         <ReactBootstrap.Grid>
           <ReactBootstrap.Row>
             <ReactBootstrap.Col>
-              <h3>{this.props.categoryName}</h3>
+              <div className="categoryName">
+                <h3>{this.props.categoryName}</h3>
+              </div>
             </ReactBootstrap.Col>
           </ReactBootstrap.Row>
         </ReactBootstrap.Grid>
@@ -182,50 +188,90 @@ class MulticolorCheckbox extends React.Component {
   static get youMulticolorLabels()  { return ['Very Poorly', 'Poorly', 'Somewhat Accurately', 'Accurately', 'Very Accurately']; }
   static get themMulticolorLabels() { return ['Awful', 'Bad', 'Acceptable', 'Good', 'Very Good', 'Perfect']; }
 
-  render() {
+  constructor(props) {
+    super(props);
+
+    this.makeSelection = this.makeSelection.bind(this); //ensure callbacks have the proper context
+
+    var descriptors = [];
+    var footerInitial;
     if ((this.props.youOrThem.toLowerCase()=='you' && !this.props.pickOneIfYou) || this.props.youOrThem.toLowerCase()=='them') {
-      var descriptors;
       if (this.props.youOrThem.toLowerCase()=='you') { //present all colors except pink
-        descriptors = MulticolorCheckbox.youMulticolorLabels;
+        descriptors   = MulticolorCheckbox.youMulticolorLabels;
+        footerInitial = 'Describes me'
       } else { //present all colors including pink
         descriptors = MulticolorCheckbox.themMulticolorLabels;
+        footerInitial = 'I consider this'
       }
-
-      var choices = [];
-      for (var i=0; i<descriptors.length; i++) {
-        var extraClasses = [];
-        if (i==0) {
-          extraClasses.push('leftmostChoice');
-        } else if (i==descriptors.length-1) {
-          extraClasses.push('rightmostChoice');
-        }
-
-        choices.push(<CheckboxChoice label={this.props.label} colorName={MulticolorCheckbox.colorNames(i)} colorScore={i} text={descriptors[i]} textHidden={true} />);
-      }
-
-      return (
-        <div className="multicolorCheckbox">
-          <label class="multicolorCheckboxLabel"><span><b>{this.props.label + ': '}</b></span></label>
-          <br />
-          {choices}
-        </div>
-      );
     } else {
       throw "Multicolor checkboxes cannot be \'pick one\'.";
     }
+
+    var footer = 'Select one.';
+
+    var childColors = [];
+    for (var i=0; i<descriptors.length; i++) {
+      childColors[i] = MulticolorCheckbox.colorNames(i);
+    }
+
+    this.state = {
+      footerInitial: footerInitial,
+      footer: footer,
+      descriptors: descriptors,
+      childColors: childColors
+    };
+  }
+
+  makeSelection(index) {
+    this.setState( {footer: this.state.footerInitial + ' ' + this.state.descriptors[index].toLowerCase() + '.'} ); //set the footer as appropriate
+
+    var childColorsTmp = []; //reset the other checkbox choices' colors, and change the color of the new selection
+    for (var i=0;i<this.state.childColors.length;i++) {
+      childColorsTmp[i] = MulticolorCheckbox.colorNames(i);
+    }
+    childColorsTmp[index] = 'black';
+    this.setState( {childColors: childColorsTmp} );
+  }
+
+  render() {
+    var choices = [];
+    var percentWidth = 100 / this.state.descriptors.length;
+    for (var i=0; i<this.state.descriptors.length; i++) {
+      var side;
+      var text;
+      if (i==0) {
+        side = 'left';
+        text = '-';
+      } else if (i==this.state.descriptors.length-1) {
+        side = 'right';
+        text = '+';
+      } else {
+        side = 'middle';
+        text = '';
+      }
+
+      console.log(this.state.childColors[i]);
+      choices.push(<CheckboxChoice label={this.props.label} side={side} colorName={this.state.childColors[i]} colorScore={i} text={text} onClick={this.makeSelection} percentWidth={percentWidth} textHidden={true} />);
+    }
+
+    //TODO: the extra line breaks here are a hideous kludge
+    return (
+      <div className="multicolorCheckbox">
+        <label class="multicolorCheckboxLabel"><span><b>{this.props.label + ': '}</b></span></label>
+        <br />
+        {choices}
+        <br />
+        <br />
+        <span>{this.state.footer}</span>
+      </div>
+    );
   }
 }
 
 class CheckboxChoice extends React.Component {
   render() {
-    var classes = ['checkboxChoice', this.props.colorName];
-
-    if (this.props.textHidden) {
-      classes.push('textHidden');
-    }
-
     return ( //TODO: figure out how to add multiple optional classes
-      <label className="checkboxChoice"><input type="radio" name={this.props.label} value={this.props.colorScore} /><span>{this.props.text}</span></label>
+      <label className={'checkboxChoice' + ' ' + this.props.colorName + ' ' + this.props.side} style={{width: this.props.percentWidth + "%"}}><input type="radio" name={this.props.label} value={this.props.colorScore} onClick={() => this.props.onClick(this.props.colorScore)} /><span>{this.props.text}</span></label>
     );
   }
 }
