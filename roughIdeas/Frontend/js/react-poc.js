@@ -1,5 +1,3 @@
-//import React, { Component } from 'react';
-
 class Chart extends React.Component {
   constructor (props) { //TODO: change this to a yaml parser when you're done testing out the basic UI
     super(props);
@@ -24,12 +22,14 @@ class Chart extends React.Component {
   render() {
     return (
       <div className="chart">
-        <div class="row">
-          <div class="col-lg-12">
-            <h1>{this.tagLine}</h1>
-            <h4>{this.edition}</h4>
-          </div>
-        </div>
+        <ReactBootstrap.Grid>
+          <ReactBootstrap.Row>
+            <ReactBootstrap.Col>
+              <h1 style={{'text-align': 'center'}}>{this.tagLine}</h1>
+              <h4 style={{'text-align': 'center'}}>{this.tagLine}</h4>
+            </ReactBootstrap.Col>
+          </ReactBootstrap.Row>
+        </ReactBootstrap.Grid>
         {this.targets}
       </div>
     );
@@ -54,11 +54,13 @@ class Target extends React.Component {
   render() {
     return (
       <div className="target">
-        <div class="row">
-          <div class="col-lg-12">
-            <h2>{this.props.targetName}</h2>
-          </div>
-        </div>
+        <ReactBootstrap.Grid>
+          <ReactBootstrap.Row>
+            <ReactBootstrap.Col>
+              <h2>{this.props.targetName}</h2>
+            </ReactBootstrap.Col>
+          </ReactBootstrap.Row>
+        </ReactBootstrap.Grid>
         {this.categories}
       </div>
     );
@@ -79,11 +81,13 @@ class Category extends React.Component {
   render() {
     return (
       <div className="category">
-        <div class="row">
-          <div class="col-lg-12">
-            <h3>{this.props.categoryName}</h3>
-          </div>
-        </div>
+        <ReactBootstrap.Grid>
+          <ReactBootstrap.Row>
+            <ReactBootstrap.Col>
+              <h3>{this.props.categoryName}</h3>
+            </ReactBootstrap.Col>
+          </ReactBootstrap.Row>
+        </ReactBootstrap.Grid>
         {this.elements}
       </div>
     );
@@ -98,7 +102,8 @@ class MulticolorCheckboxSet extends React.Component {
     this.gridCheckboxes = this.fillGrid(MulticolorCheckboxSet.colsDesktop,this.checkboxes);
   }
 
-  static get colsDesktop() {return 4;}
+  static get colsDesktop()   {return 4;}
+  static get numColsMedium() {return 2;}
 
   getCheckboxes() {
     this.props.labels.sort()
@@ -119,7 +124,9 @@ class MulticolorCheckboxSet extends React.Component {
 
     return (
       <div className="multicolorCheckboxes">
-        {rows}
+        <ReactBootstrap.Grid>
+          {rows}
+        </ReactBootstrap.Grid>
       </div>
     );
   }
@@ -137,23 +144,18 @@ class MulticolorCheckboxSet extends React.Component {
     }
 
     return (
-      <div class="row">
+      <ReactBootstrap.Row>
         {cols}
-      </div>
+      </ReactBootstrap.Row>
     );
   }
 
   fillColumn(numColsDesktop,element) {
-    if (typeof element===undefined) { //TODO: figure out if this is necessary
+    if (typeof element!==undefined) { //TODO: figure out if this is necessary
       return (
-        <div class="col-lg-{numColsDesktop}">
-        </div>
-      );
-    } else {
-      return (
-        <div class="col-lg-{numColsDesktop}">
+        <ReactBootstrap.Col lg={Math.floor(12/numColsDesktop)} md={Math.floor(12/MulticolorCheckboxSet.numColsMedium)}>
           {element}
-        </div>
+        </ReactBootstrap.Col>
       );
     }
   }
@@ -161,7 +163,13 @@ class MulticolorCheckboxSet extends React.Component {
   render() { //the grid is wrapped in another div by fillGrid
     return (
       <div className="multicolorCheckboxSet">
-        <label class="multicolorCheckboxSetName"><span>{this.props.name}</span></label>
+        <ReactBootstrap.Grid>
+          <ReactBootstrap.Row>
+            <ReactBootstrap.Col lg={12}>
+              <label class="multicolorCheckboxSetName"><span><h4>{this.props.name}</h4></span></label>
+            </ReactBootstrap.Col>
+          </ReactBootstrap.Row>
+        </ReactBootstrap.Grid>
         {this.gridCheckboxes}
       </div>
     );
@@ -197,7 +205,8 @@ class MulticolorCheckbox extends React.Component {
 
       return (
         <div className="multicolorCheckbox">
-          <label class="multicolorCheckboxLabel"><span>{this.props.label + ': '}</span></label>
+          <label class="multicolorCheckboxLabel"><span><b>{this.props.label + ': '}</b></span></label>
+          <br />
           {choices}
         </div>
       );
