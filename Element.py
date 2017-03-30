@@ -17,7 +17,7 @@ class Element: #a chart element is a collection of individual cells, has a non-c
         cellDataDict = {}
         for label,cell in self.cells.items():
             cellDataDict[label] = cell.getColorFieldData(self.isYou,self.isMulticolor)
-            
+
         return ElementData(self.name,cellDataDict)
 
     def youOrThemString(self):
@@ -32,17 +32,23 @@ class Element: #a chart element is a collection of individual cells, has a non-c
         coordsAsIntTuple    = tuple(list(map(int,coordsAsStringArray)))
 
         return coordsAsIntTuple
-        
+
     def getCells(self):
         raise ValueError('Parent version should never be called.')
 
     def getYouAndThemElementsFromYaml(self,elementYaml):
         pass
-    
+
+    #TODO: should we allow for missing cell data for cells which shouldn't be colored in?
     def colorElement(self,elementData):
         for cellName,cell in self.cells.items():
             cell.fillCellByColorFieldData(elementData.colorFieldDataDict[cellName])
-    
+
+    #TODO: allows for missing cell data in string dict, see above
+    def colorElementFromStringDict(self,elementDataStringDict):
+        for cellName,cellColorCode in elementDataStringDict.items():
+            self.cells[cellName].fillCellByColorStringData(cellColorCode,self.isYou,self.isMulticolor)
+
     def propagatePixelMap(self,pixelMap):
         for cellName,cell in self.cells.items():
             cell.pixelMap = pixelMap
