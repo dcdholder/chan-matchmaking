@@ -150,15 +150,15 @@ class ElementData:
 class ColorFieldData:
     __unselectedColors  = ['#ebebeb','#c3c3c3','#c0c0c0','#ffffff'] #almost everything uses 'ebebeb'; 'facial hair' and 'body type' use the others
     __defaultEmptyIndex = 0
-    __singleSelectIndex = 2
-    __neutralIndex      = 3
-    __bestIndex         = 0
-    __worstIndex        = 5
+    __singleSelectIndex = 3
+    __neutralIndex      = 2
+    __bestIndex         = 5
+    __worstIndex        = 0
     #TODO: endianness should be the same in the frontend and the backend
-    __colorNames = ['pink', 'blue', 'green', 'yellow', 'orange', 'red']
-    __colorCodes = ['#ff00ff', '#0000ff', '#00ff00', '#ffff00', '#ff7200', '#ff0000'] #these should be FF for at least one RGB component
-    __importanceScoreMapping = [1.0, 0.33, 0.67, 0, -0.5, -1.0]
-    __traitScoreMapping      = [1.0, 0.5, 0.0, -0.5, -1.0]
+    __colorNames = ['red', 'orange', 'yellow', 'green', 'blue', 'pink']
+    __colorCodes = ['#ff0000', '#ff7200', '#ffff00', '#00ff00', '#0000ff', '#ff00ff'] #these should be FF for at least one RGB component
+    __importanceScoreMapping = [-1.0, -0.5, 0, 0.67, 0.33, 1.0]
+    __traitScoreMapping      = [-1.0, -0.5, 0, 0.5, 1.0]
 
     def __init__(self, colorCode, isYou, isMulticolor):
         self.isYou        = isYou #tells us whether this is a trait or importance score

@@ -2,7 +2,7 @@
 
 #TODO: determine whether color testing needs some "fuzziness" by testing with multiple jpeg qualities
 
-from ChartData import ColorFieldData
+from common.ChartData import ColorFieldData
 from PIL import Image,ImageDraw,ImageColor
 import yaml
 

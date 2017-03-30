@@ -1,5 +1,5 @@
-from Cell import Cell,PictographicCell,SquareCell
-from ChartData import ChartData, CategoryData, ElementData, ColorFieldData
+from common.Cell import Cell,PictographicCell,SquareCell
+from common.ChartData import ChartData, CategoryData, ElementData, ColorFieldData
 
 from PIL import Image
 

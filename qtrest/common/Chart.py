@@ -1,5 +1,5 @@
-from ChartData import ChartData, CategoryData, ElementData, ColorFieldData
-from Category import Category
+from common.ChartData import ChartData, CategoryData, ElementData, ColorFieldData
+from common.Category import Category
 
 import yaml
 from PIL import Image
@@ -7,7 +7,8 @@ import os
 
 #TODO: I should only have to load config.yaml ONCE -- fix this
 class Chart:
-    CLEAN_CHART_FILENAME             = "clean.png"
+    CHART_CONFIG_FILENAME            = "chart-configs/v3.yaml"
+    CLEAN_CHART_FILENAME             = "../media/charts/blank/v3.png"
     DEF_CATEGORY_RELATIVE_WEIGHTINGS = {'physical': 1, 'emotional': 1, 'beliefs': 1, 'other': 1}
 
     def __init__(self, categoryRelativeWeightings=None):
@@ -29,7 +30,7 @@ class Chart:
         return ChartData(self.filename,categoryDataDict) #TODO: figure out how to make name something other than the filename
 
     def __getCategories(self):
-        with open('config.yaml', 'r') as f:
+        with open(os.path.dirname(__file__) + '/' + self.CHART_CONFIG_FILENAME, 'r') as f:
             categories = {}
             try:
                 categoriesYaml = yaml.load(f)
@@ -43,7 +44,7 @@ class Chart:
 
     #TODO: change this to a setter, and update references to it
     def __getPixelMap(self):
-        pixelMap = Image.open(self.filename)
+        pixelMap = Image.open(os.path.dirname(__file__) + '/' + self.filename)
         pixelMap.load()
         pixelMap.convert('RGB')
 

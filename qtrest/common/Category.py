@@ -1,7 +1,7 @@
-from Element import Element
-from Bar import Bar, BooleanBar, NumericalRangeBar, FuzzyRangeBar, TwoDFuzzyRangeBar
-from CheckboxSet import CheckboxSet, PictographicCheckboxSet, SquareCheckboxSet
-from ChartData import CategoryData
+from common.Element import Element
+from common.Bar import Bar, BooleanBar, NumericalRangeBar, FuzzyRangeBar, TwoDFuzzyRangeBar
+from common.CheckboxSet import CheckboxSet, PictographicCheckboxSet, SquareCheckboxSet
+from common.ChartData import CategoryData
 
 from PIL import Image
 
