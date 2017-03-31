@@ -14,7 +14,7 @@ from flask_sqlalchemy import SQLAlchemy
 from common.Chart import Chart
 
 chartApp = Flask(__name__)
-chartApp.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+chartApp.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.abspath(os.path.dirname(os.path.realpath(__file__))) + '/charts.db'
 db = SQLAlchemy(chartApp)
 
 #basically, this prevents the generated image "cache" from growing out of control
@@ -50,7 +50,6 @@ class ChartImageModel(db.Model):
             #raise ValueError(ChartImageModel.query.count())
             entries = ChartImageModel.query.order_by(ChartImageModel.creationDate.asc())
             for i in range(0,len(entries.all())-self.MAX_IMAGES):
-                print(entries.all())
                 os.remove(entries.all()[i].filename)
                 db.session.delete(entries[i])
 

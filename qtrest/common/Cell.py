@@ -10,7 +10,6 @@ class Cell: #an indivisble component of an image element
     STANDARD_DIMENSIONS = (3828, 4587)
 
     def __init__(self,label,coordinates):
-        #print("Cell creation label: " + label)
         self.label       = label
         self.pixelMap    = None
         self.coordinates = coordinates

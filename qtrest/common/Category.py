@@ -90,12 +90,7 @@ class Category:
     #TODO: for the moment, we won't require all elements in a category to be present
     def colorCategoryFromStringDict(self,categoryDataStringDict):
         for elementName,elementPairStringDict in categoryDataStringDict.items():
-            print(elementName)
             for elementOwner,elementStringDict in elementPairStringDict.items():
-                #print(elementOwner)
-                #print(elementStringDict)
-                #print("HERE IT COMES")
-                #print(self.elements)
                 self.elements[elementName][elementOwner].colorElementFromStringDict(elementStringDict)
 
     def propagatePixelMap(self,pixelMap):

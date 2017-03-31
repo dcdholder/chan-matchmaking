@@ -38,7 +38,7 @@ class Chart:
                     categories[categoryYaml['category']] = Category(categoryYaml,self.categoryWeightings[categoryYaml['category']])
 
             except yaml.YAMLError:
-                print('Could not open config file.')
+                raise ValueError('Could not open config file.')
 
         return categories
 
