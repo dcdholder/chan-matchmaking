@@ -1,15 +1,16 @@
-# Shut-in Matchmaker
-https://dcdholder.github.io/
+# The Ultimate QT Infograph REST API
+This thing spits out an *Ultimate QT Infograph* friendship/relationship chart when presented with a REST request in the form of a garbled JSON string containing the desired chart data.  
 
-## General Idea
-IN PROGRESS
-This is an application for playing matchmaker, using a database of personal data taken from QT charts.
-Frontend code now has its own repository (https://github.com/dcdholder/dcdholder.github.io) and page.
+# API
+Chart data should be of the form encodeURIComponent(JSON.stringify(chartDataObject)), where chartDataObject is a JS object indexed first by category name, image element name, 'you' or 'them', then image subelement name.
+- {url}/new/?chartdata={chart data}
 
-## Challenges
-- Figure out how to combine the different chart image data representations with the models
-- Finish the frontend
-- Add database search functionality (user-configurable category weightings)
-- Find a way to return QT data on the frontend in text and image form
-- Find a way to pull text from the text sections
-- Consider adding a censor to the contact info section (would sort of invalidate the whole application TBH)
+## Basic Development Info
+The API is written in Flask with the help of flask-restful (to simplify the REST interface) and flask-sqlalchemy (to keep track of a small cache of generated images). The images are generated from the chart data using Pillow.
+
+## Progress
+Currently the API is only able to fill in the "personality quirks" section. The plan is to add support for other parts of the chart in tandem with the frontend.
+
+## Future Challenges
+- Support all non-text, non-image fields from the QT chart
+- Add matchmaker functionality
