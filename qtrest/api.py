@@ -24,7 +24,6 @@ class ChartImageModel(db.Model):
     chartDataHash = db.Column(db.String(100), primary_key=True)
     filename      = db.Column(db.String(100), unique=True) #for simplicity's sake, this is the full path
     creationDate  = db.Column(db.DateTime, unique=False)
-    db.create_all()
 
     def __init__(self,chartDataString,filename):
         self.chartDataHash = self.hashingFunction(chartDataString)
@@ -46,9 +45,7 @@ class ChartImageModel(db.Model):
 
     @classmethod
     def keepNewestN(self):
-        #raise ValueError(ChartImageModel.query.count())
         if (ChartImageModel.query.count() > self.MAX_IMAGES):
-            #raise ValueError(ChartImageModel.query.count())
             entries = ChartImageModel.query.order_by(ChartImageModel.creationDate.asc())
             for i in range(0,len(entries.all())-self.MAX_IMAGES):
                 os.remove(entries.all()[i].filename)
@@ -104,6 +101,8 @@ class ChartImageResource(Resource):
             raise ValueError('Cannot retrieve JSON from URI')
 
         return decodedDict
+
+db.create_all() #needs to be after the model is defined
 
 #TODO: spend a few dozen more hours trying to break this into multiple files without descending into circular import hell
 chartApi = Api(chartApp)
