@@ -24,6 +24,7 @@ class ChartImageModel(db.Model):
     chartDataHash = db.Column(db.String(100), primary_key=True)
     filename      = db.Column(db.String(100), unique=True) #for simplicity's sake, this is the full path
     creationDate  = db.Column(db.DateTime, unique=False)
+    db.create_all()
 
     def __init__(self,chartDataString,filename):
         self.chartDataHash = self.hashingFunction(chartDataString)
@@ -109,5 +110,4 @@ chartApi = Api(chartApp)
 chartApi.add_resource(ChartImageResource, '/new')
 
 if __name__ == '__main__':
-    db.create_all()
     chartApp.run(debug=True)
