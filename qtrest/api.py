@@ -7,15 +7,17 @@ import random
 import hashlib
 from datetime import datetime
 
-from flask import Flask, send_from_directory, request, send_file
+from flask import Flask, request, send_file
 from flask_restful import Api, Resource
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 
 from common.Chart import Chart
 
 chartApp = Flask(__name__)
 chartApp.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.abspath(os.path.dirname(os.path.realpath(__file__))) + '/charts.db'
 db = SQLAlchemy(chartApp)
+CORS(chartApp)
 
 #basically, this prevents the generated image "cache" from growing out of control
 class ChartImageModel(db.Model):
@@ -66,7 +68,7 @@ class ChartImageResource(Resource):
     imageDirectory     = './media/charts/generated/'
 
     def get(self):
-        return self.imageFromChartDataUri(request.form['chartdata'].lower()) #the 'lower()' is important, here
+        return self.imageFromChartDataUri(request.args.get("chartdata").lower()) #the 'lower()' is important, here
 
     @classmethod
     def imageFromChartDataUri(self,chartDataUri):

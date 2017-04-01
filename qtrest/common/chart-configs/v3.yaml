@@ -33,7 +33,7 @@
             them: 2750x2076
         - label: asian
           coordinates:
-            you:  2865x591 
+            you:  2865x591
             them: 2865x2076
         - label: latin
           coordinates:
@@ -55,7 +55,7 @@
           coordinates:
             you:  3444x591
             them: 3444x2076
-    
+
     - name: hairStyle
       weighting: 1
       isMulticolor: false
@@ -111,19 +111,19 @@
           coordinates:
             you:  3730x1658
             them: 3730x3148
-            
+
   booleanBars:
     - name: piercings
       weighting: 4
       yesPosition: right
-      coordinates: 
+      coordinates:
         you:  3638x854
         them: 3638x2340
       size: 157x74
     - name: tattoos
       weighting: 4
       yesPosition: right
-      coordinates: 
+      coordinates:
         you:  3638x980
         them: 3638x2466
       size: 157x74
@@ -156,7 +156,7 @@
           coordinates:
             you:  3360x1062
             them: 3360x2542
-            
+
         - label: fitFemale
           coordinates:
             you:  3021x924
@@ -181,7 +181,7 @@
           coordinates:
             you:  3412x1070
             them: 3412x2556
-    
+
     - name: facialHair
       weighting: 1
       checkboxes:
@@ -196,7 +196,7 @@
         - label: goatee
           coordinates:
             you:  3445x1281
-            them: 3445x2768  
+            them: 3445x2768
         - label: stubble
           coordinates:
             you:  2996x1370
@@ -220,7 +220,7 @@
         you:  161x734
         them: 161x2218
       size: 637x77
-      
+
     - name: height
       weighting: 15
       min: 56
@@ -230,7 +230,7 @@
         you:  2794x752
         them: 2794x2240
       size: 798x76
-        
+
 - category: emotional
   fuzzyRangeBars:
     - name:      introversion
@@ -238,11 +238,11 @@
       left:      introverted
       right:     extroverted
       numCells:  10
-      coordinates: 
+      coordinates:
         you:  1596x570
         them: 1596x2056
       size: 600x52
-        
+
     - name:      practicality
       weighting: 1
       left:      theoretical
@@ -252,7 +252,7 @@
         you:  1596x656
         them: 1596x2142
       size: 600x52
-      
+
     - name:      emotional
       weighting: 1
       left:      logical
@@ -262,7 +262,7 @@
         you:  1596x742
         them: 1596x2228
       size: 600x52
-        
+
     - name:      spontaneity
       weighting: 1
       left:      structured
@@ -272,7 +272,7 @@
         you:  1596x828
         them: 1596x2316
       size: 600x52
-  
+
   checkboxSets:
     - name: quirks
       weighting: 8
@@ -295,7 +295,7 @@
           coordinates:
             you:  2212x1006
             them: 2212x2494
-            
+
         - label: ambitious
           coordinates:
             you:  1324x1102
@@ -312,12 +312,12 @@
           coordinates:
             you:  2212x1102
             them: 2212x2588
-        
+
         - label: analytical
           coordinates:
             you:  1324x1194
             them: 1324x2682
-        - label: easyGoing
+        - label: easy-going
           coordinates:
             you:  1624x1194
             them: 1624x2682
@@ -329,7 +329,7 @@
           coordinates:
             you:  2212x1194
             them: 2212x2682
-             
+
         - label: artistic
           coordinates:
             you:  1324x1290
@@ -346,7 +346,7 @@
           coordinates:
             you:  2212x1290
             them: 2212x2778
-            
+
         - label: assertive
           coordinates:
             you:  1324x1384
@@ -363,7 +363,7 @@
           coordinates:
             you:  2212x1384
             them: 2212x2870
-            
+
         - label: athletic
           coordinates:
             you:  1324x1478
@@ -380,7 +380,7 @@
           coordinates:
             you:  2212x1478
             them: 2212x2966
-            
+
         - label: confident
           coordinates:
             you:  1324x1572
@@ -397,7 +397,7 @@
           coordinates:
             you:  2212x1572
             them: 2212x3058
-            
+
         - label: creative
           coordinates:
             you:  1324x1666
@@ -414,7 +414,7 @@
           coordinates:
             you:  2212x1666
             them: 2212x3154
-            
+
 - category: beliefs
   twoDFuzzyRangeBars:
     - name:   economic
@@ -428,7 +428,7 @@
         you:  696x1396
         them: 696x2884
       size: 300x300
-        
+
   fuzzyRangeBars:
     - name:  political
       weighting: 4
@@ -439,7 +439,7 @@
         you:  50x1142
         them: 50x2626
       size: 558x72
-      
+
     - name:  social
       weighting: 4
       left:  progressive
@@ -449,7 +449,7 @@
         you:  50x1360
         them: 50x2846
       size: 558x72
-      
+
     - name:  religiousDevotion
       weighting: 4
       left:  low
@@ -459,7 +459,7 @@
         you:  44x940
         them: 44x2426
       size: 160x28
-      
+
   pictographicCheckboxSets:
     - name: religion
       weighting: 5
@@ -484,7 +484,7 @@
           coordinates:
             you:  931x822
             them: 931x2296
-            
+
         - label: deist
           coordinates:
             you:  304x902
@@ -505,7 +505,7 @@
           coordinates:
             you:  1042x928
             them: 1042x2416
-          
+
 - category: other
   fuzzyRangeBars:
     - name:     alcohol
@@ -513,11 +513,11 @@
       left:     never
       right:    frequently
       numCells: 3
-      coordinates: 
+      coordinates:
         you:  346x1542
         them: 346x3028
       size: 238x76
-        
+
     - name:     tobacco
       weighting: 1
       left:     never
@@ -527,7 +527,7 @@
         you:  818x1542
         them: 818x3028
       size: 238x76
-      
+
     - name:     otherDrugs
       weighting: 1
       left:     never
