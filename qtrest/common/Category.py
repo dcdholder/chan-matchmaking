@@ -1,7 +1,7 @@
-from common.Element import Element
-from common.Bar import Bar, BooleanBar, NumericalRangeBar, FuzzyRangeBar, TwoDFuzzyRangeBar
-from common.CheckboxSet import CheckboxSet, PictographicCheckboxSet, SquareCheckboxSet
-from common.ChartData import CategoryData
+from qtrest.common.Element import Element
+from qtrest.common.Bar import Bar, BooleanBar, NumericalRangeBar, FuzzyRangeBar, TwoDFuzzyRangeBar
+from qtrest.common.CheckboxSet import CheckboxSet, PictographicCheckboxSet, SquareCheckboxSet
+from qtrest.common.ChartData import CategoryData
 
 from PIL import Image
 

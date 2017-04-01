@@ -1,5 +1,5 @@
-from common.Element import Element
-from common.Cell import Cell,SquareCell,PictographicCell
+from qtrest.common.Element import Element
+from qtrest.common.Cell import Cell,SquareCell,PictographicCell
 
 #TODO: figure out how abstract classes work in Python
 class Bar(Element):

@@ -1,5 +1,5 @@
-from common.Cell import Cell,PictographicCell,SquareCell
-from common.ChartData import ChartData, CategoryData, ElementData, ColorFieldData
+from qtrest.common.Cell import Cell,PictographicCell,SquareCell
+from qtrest.common.ChartData import ChartData, CategoryData, ElementData, ColorFieldData
 
 from PIL import Image
 

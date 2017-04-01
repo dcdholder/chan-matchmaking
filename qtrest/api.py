@@ -12,7 +12,7 @@ from flask_restful import Api, Resource
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 
-from common.Chart import Chart
+from qtrest.common.Chart import Chart
 
 chartApp = Flask(__name__)
 chartApp.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.abspath(os.path.dirname(os.path.realpath(__file__))) + '/charts.db'

@@ -1,6 +1,6 @@
 import pytest
 
-from ChartData import ColorFieldData
+from qtrest.common.ChartData import ColorFieldData
 
 def test_closeEnoughCompoundPrimaryFarFromZero(): #should fail when you get too far from zero, despite non-primaries being close to each other
     assert not ColorFieldData.closeEnoughColor('#ff0000','#feaaaa')
@@ -19,18 +19,18 @@ def test_closeEnoughNonCompoundPrimaryClose(): #should succeed when subpixels ar
 
 def test_closeEnoughNonCompoundPrimaryFar(): #should fail when subpixels are far from canonical values
     assert not ColorFieldData.closeEnoughColor('#ff7200','#ee9943')
-    
+
 def test_htmlCodeToRgbPositive():
     assert ColorFieldData.htmlCodeToRgb('#ff00ff') == (255,0,255)
-    
+
 def test_htmlCodeToRgbInvalidChars():
     with pytest.raises(ValueError):
         ColorFieldData.htmlCodeToRgb('#gg00ff')
-        
+
 def test_htmlCodeToRgbMissingPoundSign():
     with pytest.raises(ValueError):
         ColorFieldData.htmlCodeToRgb('ff00ff')
-        
+
 def test_htmlCodeToRgbTooLong():
     with pytest.raises(ValueError):
         ColorFieldData.htmlCodeToRgb('#ff00ff00')

@@ -1,5 +1,5 @@
-from common.ChartData import ChartData, CategoryData, ElementData, ColorFieldData
-from common.Category import Category
+from qtrest.common.ChartData import ChartData, CategoryData, ElementData, ColorFieldData
+from qtrest.common.Category import Category
 
 import yaml
 from PIL import Image
