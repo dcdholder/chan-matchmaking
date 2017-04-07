@@ -2,6 +2,7 @@
 
 #TODO: determine whether color testing needs some "fuzziness" by testing with multiple jpeg qualities
 
+import time
 from qtrest.common.ChartData import ColorFieldData
 from PIL import Image,ImageDraw,ImageColor
 import yaml
@@ -46,14 +47,18 @@ class Cell: #an indivisble component of an image element
 
     def fillCell(self,colorCode): #WARNING: Pillow does not support fuzzy floodfill, so use a losslessly compressed image
         fillCoordinates = self.getCenterPixel()
+        #initial = time.time() * 1000
         ImageDraw.floodfill(self.pixelMap,fillCoordinates,ImageColor.getrgb(colorCode))
+        #final = time.time() * 1000 - initial
+        #print(final)
 
     def fillCellByColorFieldData(self,colorFieldData):
         colorCode = colorFieldData.getColorCode()
         self.fillCell(colorCode)
 
+    #seems like a somewhat roundabout way of doing things, but creating a color field data object filters "edge cases" (colorScore=='none')
     def fillCellByColorStringData(self,colorStringData,isYou,isMulticolor):
-        colorFieldData = ColorFieldData(ColorFieldData.colorCodeFromExternalScore(int(colorStringData)),isYou,isMulticolor)
+        colorFieldData = ColorFieldData(ColorFieldData.colorCodeFromExternalScore(colorStringData),isYou,isMulticolor)
         colorCode = colorFieldData.getColorCode()
         self.fillCell(colorCode)
 

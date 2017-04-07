@@ -28,7 +28,7 @@ class ChartImageModel(db.Model):
     creationDate  = db.Column(db.DateTime, unique=False)
 
     def __init__(self,chartDataString,filename):
-        self.chartDataHash = self.hashingFunction(chartDataString)
+        self.chartDataHash = ChartImageModel.hashingFunction(chartDataString)
         self.filename      = filename
         self.creationDate  = datetime.utcnow()
 
@@ -58,30 +58,36 @@ class ChartImageModel(db.Model):
     @classmethod
     def alreadyExists(self,chartDataString): #filename string will evaluate to true
         try:
-            existingChart = ChartImageModel.query.filter_by(chartDataHash=self.hashingFunction(chartDataString)).first()
+            existingChart = ChartImageModel.query.filter_by(chartDataHash=ChartImageModel.hashingFunction(chartDataString)).first()
             return existingChart.filename
         except:
             return False
+
+#TODO: get this running, then put this config data somewhere centralized ('global.yaml')
+class VersionsResource(Resource):
+    pass
+
+class VersionFormatResource(Resource):
+    pass
 
 class ChartImageResource(Resource):
     filenameNumLetters = 20
     imageDirectory     = './media/charts/generated/'
 
-    def get(self):
-        return self.imageFromChartDataUri(request.args.get("chartdata").lower()) #the 'lower()' is important, here
+    def post(self):
+        return self.imageFromChartDataUri(request.get_json()) #the 'lower()' is important, here
 
     @classmethod
-    def imageFromChartDataUri(self,chartDataUri):
+    def imageFromChartDataUri(self,chartDataStringDict):
         path     = os.path.abspath(os.path.dirname(os.path.realpath(__file__)) + '/' + self.imageDirectory)
         fullPath = ''
-        if (ChartImageModel.alreadyExists(chartDataUri)):
-            fullPath = ChartImageModel.alreadyExists(chartDataUri)
+        if ChartImageModel.alreadyExists(json.dumps(chartDataStringDict)):
+            fullPath = ChartImageModel.alreadyExists(json.dumps(chartDataStringDict))
         else:
             filename            = self.randomAlphabeticalFilename() + '.png'
             fullPath            = os.path.abspath(path + '/' + filename)
-            chartDataStringDict = self.jsonUri2Dict(chartDataUri)
+            ChartImageModel.addNew(json.dumps(chartDataStringDict),fullPath)
             Chart.chartImageFromStringDict(chartDataStringDict,fullPath)
-            ChartImageModel.addNew(chartDataUri,fullPath)
 
         return send_file(fullPath,mimetype='image/png')
 
@@ -109,6 +115,8 @@ db.create_all() #needs to be after the model is defined
 #TODO: spend a few dozen more hours trying to break this into multiple files without descending into circular import hell
 chartApi = Api(chartApp)
 chartApi.add_resource(ChartImageResource, '/new')
+#chartApi.add_resource(VersionsResource, '/versions')
+#chartApi.add_resource(VersionFormatResource, '/format')
 
 if __name__ == '__main__':
     chartApp.run(debug=True)

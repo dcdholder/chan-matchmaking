@@ -102,16 +102,16 @@ class CategoryData:
         acceptsFtm    = not self.elementDataDict['gender']['them'].colorFieldDataDict['ftm'].isWorst()
 
         if (acceptsMale or acceptsFtm) and not acceptsFemale and not acceptsMtf:    #allow facial hair, do not allow female body types
-            for bodyTypeName,bodyTypeData in self.elementDataDict['bodyType']['them'].colorFieldDataDict.items():
-                if 'Female' in bodyTypeName:
+            for bodyTypeName,bodyTypeData in self.elementDataDict['body type']['them'].colorFieldDataDict.items():
+                if 'female' in bodyTypeName:
                     bodyTypeData.resetToWorst()
 
         elif not acceptsMale and not acceptsFtm and (acceptsFemale or acceptsMtf): #do not allow facial hair (except for 'None'), do not allow male body types
-            for bodyTypeName,bodyTypeData in self.elementDataDict['bodyType']['them'].colorFieldDataDict.items():
-                if 'Male' in bodyTypeName:
+            for bodyTypeName,bodyTypeData in self.elementDataDict['body type']['them'].colorFieldDataDict.items():
+                if 'male' in bodyTypeName:
                     bodyTypeData.resetToWorst()
 
-            for facialHairName,facialHairData in self.elementDataDict['facialHair']['them'].colorFieldDataDict.items():
+            for facialHairName,facialHairData in self.elementDataDict['facial hair']['them'].colorFieldDataDict.items():
                 if facialHairName.lower()=='none':
                     facialHairData.resetToBest()
                 else:
@@ -212,7 +212,10 @@ class ColorFieldData:
 
     @staticmethod
     def colorCodeFromExternalScore(colorScore):
-        return ColorFieldData.__colorCodes[colorScore]
+        if colorScore=='none':
+            return ColorFieldData.__colorCodes[ColorFieldData.__worstIndex] #we assume the worst if a cell is unselected
+        else:
+            return ColorFieldData.__colorCodes[int(colorScore)]
 
     def getColorCode(self):
         if self.isYou and not self.isMulticolor:

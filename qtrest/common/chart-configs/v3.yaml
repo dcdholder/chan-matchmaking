@@ -56,7 +56,7 @@
             you:  3444x591
             them: 3444x2076
 
-    - name: hairStyle
+    - name: hair style
       weighting: 1
       isMulticolor: false
       size: 74x74
@@ -77,12 +77,12 @@
           coordinates:
             you:  3614x1534
             them: 3614x3020
-        - label: veryLong
+        - label: very long
           coordinates:
             you:  3728x1534
             them: 3728x3020
 
-    - name: hairColor
+    - name: hair color
       weighting: 10
       isMulticolor: false
       size: 72x72
@@ -129,60 +129,60 @@
       size: 157x74
 
   pictographicCheckboxSets:
-    - name: bodyType
+    - name: body type
       weighting: 25
       checkboxes:
-        - label: fitMale
+        - label: fit male
           coordinates:
             you:  2977x920
             them: 2977x2382
-        - label: skinnyMale
+        - label: skinny male
           coordinates:
             you:  3133x922
             them: 3133x2416
-        - label: thinMale
+        - label: thin male
           coordinates:
             you:  3296x928
             them: 3296x2422
-        - label: mediumMale
+        - label: medium male
           coordinates:
             you:  2981x1063
             them: 2981x2556
-        - label: chubbyMale
+        - label: chubby male
           coordinates:
             you:  3175x1047
             them: 3175x2530
-        - label: fatMale
+        - label: fat male
           coordinates:
             you:  3360x1062
             them: 3360x2542
 
-        - label: fitFemale
+        - label: fit female
           coordinates:
             you:  3021x924
             them: 3021x2414
-        - label: skinnyFemale
+        - label: skinny female
           coordinates:
             you:  3168x926
             them: 3168x2412
-        - label: thinFemale
+        - label: thin female
           coordinates:
             you:  3333x926
             them: 3333x2402
-        - label: mediumFemale
+        - label: medium female
           coordinates:
             you:  3024x1076
             them: 3024x2560
-        - label: chubbyFemale
+        - label: chubby female
           coordinates:
             you:  3213x1074
             them: 3213x2544
-        - label: fatFemale
+        - label: fat female
           coordinates:
             you:  3412x1070
             them: 3412x2556
 
-    - name: facialHair
+    - name: facial hair
       weighting: 1
       checkboxes:
         - label: none
@@ -233,7 +233,7 @@
 
 - category: emotional
   fuzzyRangeBars:
-    - name:      introversion
+    - name:      extroversion
       weighting: 1
       left:      introverted
       right:     extroverted
@@ -417,7 +417,7 @@
 
 - category: beliefs
   twoDFuzzyRangeBars:
-    - name:   economic
+    - name:   economic views
       weighting: 1
       left:   free
       right:  regulated
@@ -430,7 +430,7 @@
       size: 300x300
 
   fuzzyRangeBars:
-    - name:  political
+    - name:  political views
       weighting: 4
       left:  libertarian
       right: authoritarian
@@ -440,7 +440,7 @@
         them: 50x2626
       size: 558x72
 
-    - name:  social
+    - name:  social views
       weighting: 4
       left:  progressive
       right: conservative
@@ -450,7 +450,7 @@
         them: 50x2846
       size: 558x72
 
-    - name:  religiousDevotion
+    - name:  religious devotion
       weighting: 4
       left:  low
       right: high
@@ -528,7 +528,7 @@
         them: 818x3028
       size: 238x76
 
-    - name:     otherDrugs
+    - name:     other drugs
       weighting: 1
       left:     never
       right:    frequently

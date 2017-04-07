@@ -88,10 +88,45 @@ class Category:
 
     #TODO: DRY
     #TODO: for the moment, we won't require all elements in a category to be present
-    def colorCategoryFromStringDict(self,categoryDataStringDict):
+    def colorCategoryFromStringDict(self,categoryName,categoryDataStringDict):
+        if categoryName=='physical':
+            self.preprocessBodyType(categoryDataStringDict)
+
         for elementName,elementPairStringDict in categoryDataStringDict.items():
             for elementOwner,elementStringDict in elementPairStringDict.items():
                 self.elements[elementName][elementOwner].colorElementFromStringDict(elementStringDict)
+
+    def preprocessBodyType(self,categoryDataStringDict):
+        defaultGender = 'male'
+        for gender,score in categoryDataStringDict['gender']['you'].items():
+            if score!='none':
+                if gender=='male' or gender=='ftm':
+                    defaultGender = 'male'
+                else:
+                    defaultGender = 'female'
+
+        #pick the correct body type image for you
+        for label in list(categoryDataStringDict['body type']['you'].keys()):
+            categoryDataStringDict['body type']['you'][label + ' ' + defaultGender] = categoryDataStringDict['body type']['you'][label]
+            del categoryDataStringDict['body type']['you'][label]
+
+        acceptsMale   = False
+        acceptsFemale = False
+        for gender,score in categoryDataStringDict['gender']['them'].items():
+            if score!=0 and score!='none':
+                if gender=="mtf" or gender=="female":
+                    acceptsFemale = True
+                else:
+                    acceptsMale = True
+
+        #pick the correct body type image for them
+        for label in list(categoryDataStringDict['body type']['them'].keys()):
+            if acceptsMale or (not acceptsMale and not acceptsFemale): #if the target accepts neither, give them both (and see how they like it)
+                categoryDataStringDict['body type']['them'][label + ' male'] = categoryDataStringDict['body type']['them'][label]
+            if acceptsFemale or (not acceptsMale and not acceptsFemale):
+                categoryDataStringDict['body type']['them'][label + ' female'] = categoryDataStringDict['body type']['them'][label]
+
+            del categoryDataStringDict['body type']['them'][label]
 
     def propagatePixelMap(self,pixelMap):
         for elementName,elementDict in self.elements.items():

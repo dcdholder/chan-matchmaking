@@ -1,6 +1,7 @@
 from qtrest.common.ChartData import ChartData, CategoryData, ElementData, ColorFieldData
 from qtrest.common.Category import Category
 
+import time
 import yaml
 from PIL import Image
 import os
@@ -73,10 +74,16 @@ class Chart:
     def saveAsImage(self,filename):
         self.filename = filename
 
+        initial = time.time() * 1000
         for categoryName,category in self.categories.items():
             category.colorCategory(self.chartData.categoryDataDict[categoryName])
+        final = time.time() * 1000 - initial
+        print(final)
 
+        initial = time.time() * 1000
         self.pixelMap.save(filename)
+        final = time.time() * 1000 - initial
+        print(final)
 
     def loadInChartData(self,chartData):
         self.chartData = chartData
@@ -84,7 +91,7 @@ class Chart:
     #TODO: currently does not check if all category data is present, include this once frontend is done
     def colorWithChartDataStringDict(self,chartDataStringDict):
         for categoryName,categoryStringDict in chartDataStringDict.items():
-            self.categories[categoryName].colorCategoryFromStringDict(categoryStringDict)
+            self.categories[categoryName].colorCategoryFromStringDict(categoryName,categoryStringDict)
 
     @staticmethod
     def chartImageFromStringDict(stringDict,filename):
@@ -97,11 +104,17 @@ class Chart:
     @staticmethod
     def convertImageToCleanImage(filenameA,filenameB):
         chart = Chart()
+        #initial = time.time() * 1000
         chart.loadInImage(filenameA)
+        #final = time.time() * 1000 - initial
+        #print(final)
         chartData = chart.chartData
         chart.loadInImage(Chart.CLEAN_CHART_FILENAME)
         chart.loadInChartData(chartData)
+        #initial = time.time() * 1000
         chart.saveAsImage(filenameB)
+        #final = time.time() * 1000 - initial
+        #print(final)
 
     @staticmethod
     def getChartDataFromImage(filename,categoryRelativeWeightings=None):
