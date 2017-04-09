@@ -41,20 +41,16 @@
             them: 2980x2076
         - label: arab
           coordinates:
-            you:  3097x591
-            them: 3097x2076
-        - label: jewish
-          coordinates:
-            you:  3213x591
-            them: 3213x2076
+            you:  3100x591
+            them: 3100x2076
         - label: black
           coordinates:
-            you:  3329x591
-            them: 3329x2076
+            you:  3214x591
+            them: 3214x2076
         - label: other
           coordinates:
-            you:  3444x591
-            them: 3444x2076
+            you:  3332x591
+            them: 3332x2076
 
     - name: hair style
       weighting: 1
