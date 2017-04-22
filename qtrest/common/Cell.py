@@ -45,22 +45,12 @@ class Cell: #an indivisble component of an image element
 
         return expansionRatio
 
-    def fillCell(self,colorCode): #WARNING: Pillow does not support fuzzy floodfill, so use a losslessly compressed image
+    def floodFillCell(self,colorCode): #WARNING: Pillow does not support fuzzy floodfill, so use a losslessly compressed image
         fillCoordinates = self.getCenterPixel()
         #initial = time.time() * 1000
         ImageDraw.floodfill(self.pixelMap,fillCoordinates,ImageColor.getrgb(colorCode))
         #final = time.time() * 1000 - initial
         #print(final)
-
-    def fillCellByColorFieldData(self,colorFieldData):
-        colorCode = colorFieldData.getColorCode()
-        self.fillCell(colorCode)
-
-    #seems like a somewhat roundabout way of doing things, but creating a color field data object filters "edge cases" (colorScore=='none')
-    def fillCellByColorStringData(self,colorStringData,isYou,isMulticolor):
-        colorFieldData = ColorFieldData(ColorFieldData.colorCodeFromExternalScore(colorStringData),isYou,isMulticolor)
-        colorCode = colorFieldData.getColorCode()
-        self.fillCell(colorCode)
 
 #TODO: allow for multiple color sampling points, since users don't fill in pictographic cells all the same way
 class PictographicCell(Cell): #subclass is really just for readability right now
@@ -69,6 +59,16 @@ class PictographicCell(Cell): #subclass is really just for readability right now
 
     def getCenterPixel(self): #the default is just to return the 'coordinates' -- overriden in SquareCell, but not PictographicCell
         return (int(self.coordinates[0]*self.getExpansionRatio()), int(self.coordinates[1]*self.getExpansionRatio()))
+
+    def fillCellByColorFieldData(self,colorFieldData):
+        colorCode = colorFieldData.getColorCode()
+        self.floordFillCell(colorCode)
+
+    #seems like a somewhat roundabout way of doing things, but creating a color field data object filters "edge cases" (colorScore=='none')
+    def fillCellByColorStringData(self,colorStringData,isYou,isMulticolor):
+        colorFieldData = ColorFieldData(ColorFieldData.colorCodeFromExternalScore(colorStringData),isYou,isMulticolor)
+        colorCode = colorFieldData.getColorCode()
+        self.floodFillCell(colorCode)
 
 class SquareCell(Cell):
     def __init__(self,label,coordinates,size):
@@ -99,3 +99,19 @@ class SquareCell(Cell):
         middleYBase = self.coordinates[1] - self.size[1] / 2
 
         return (int(middleXBase*self.getExpansionRatio()), int(middleYBase*self.getExpansionRatio()))
+
+    def rectFillCell(self,colorCode):
+        draw = ImageDraw.Draw(self.pixelMap)
+        #raise ValueError([self.coordinates[0],self.coordinates[1]])
+        draw.rectangle([(self.coordinates[0],self.coordinates[1]),(self.coordinates[0]+self.size[0],self.coordinates[1]-self.size[1])],fill=colorCode)
+        del draw
+
+    def fillCellByColorFieldData(self,colorFieldData):
+        colorCode = colorFieldData.getColorCode()
+        self.rectFillCell(colorCode)
+
+    #seems like a somewhat roundabout way of doing things, but creating a color field data object filters "edge cases" (colorScore=='none')
+    def fillCellByColorStringData(self,colorStringData,isYou,isMulticolor):
+        colorFieldData = ColorFieldData(ColorFieldData.colorCodeFromExternalScore(colorStringData),isYou,isMulticolor)
+        colorCode = colorFieldData.getColorCode()
+        self.rectFillCell(colorCode)

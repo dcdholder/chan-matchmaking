@@ -84,7 +84,7 @@ class ChartImageResource(Resource):
         if ChartImageModel.alreadyExists(json.dumps(chartDataStringDict)):
             fullPath = ChartImageModel.alreadyExists(json.dumps(chartDataStringDict))
         else:
-            filename            = self.randomAlphabeticalFilename() + '.png'
+            filename            = self.randomAlphabeticalFilename() + '.jpg'
             fullPath            = os.path.abspath(path + '/' + filename)
             ChartImageModel.addNew(json.dumps(chartDataStringDict),fullPath)
             Chart.chartImageFromStringDict(chartDataStringDict,fullPath)

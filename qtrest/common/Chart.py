@@ -1,6 +1,7 @@
 from qtrest.common.ChartData import ChartData, CategoryData, ElementData, ColorFieldData
 from qtrest.common.Category import Category
 
+import timeit
 import time
 import yaml
 from PIL import Image
@@ -81,7 +82,7 @@ class Chart:
         print(final)
 
         initial = time.time() * 1000
-        self.pixelMap.save(filename)
+        self.pixelMap.save(filename,quality=95,optimize=True)
         final = time.time() * 1000 - initial
         print(final)
 
@@ -95,11 +96,15 @@ class Chart:
 
     @staticmethod
     def chartImageFromStringDict(stringDict,filename):
+        #startTime = timeit.default_timer()
         chart = Chart()
         chart.loadInImage(Chart.CLEAN_CHART_FILENAME)
         chart.colorWithChartDataStringDict(stringDict)
+        #print(timeit.default_timer() - startTime)
 
-        chart.pixelMap.save(filename)
+        startTime = timeit.default_timer()
+        chart.pixelMap.save(filename,quality=65,optimize=True)
+        #print(timeit.default_timer() - startTime)
 
     @staticmethod
     def convertImageToCleanImage(filenameA,filenameB):
@@ -112,7 +117,7 @@ class Chart:
         chart.loadInImage(Chart.CLEAN_CHART_FILENAME)
         chart.loadInChartData(chartData)
         #initial = time.time() * 1000
-        chart.saveAsImage(filenameB)
+        chart.saveAsImage(filenameB,quality=95,optimize=True)
         #final = time.time() * 1000 - initial
         #print(final)
 

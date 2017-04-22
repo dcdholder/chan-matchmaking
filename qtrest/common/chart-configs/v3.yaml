@@ -3,110 +3,110 @@
     - name: gender
       weighting: 100
       isMulticolor: false
-      size: 78x78
+      size: 76x76
       checkboxes:
         - label: male
           coordinates:
-            you:  161x591
+            you:  161x592
             them: 161x2078
         - label: female
           coordinates:
-            you:  383x591
+            you:  383x592
             them: 383x2078
         - label: ftm
           coordinates:
-            you:  661x591
-            them: 661x2078
+            you:  660x592
+            them: 660x2078
         - label: mtf
           coordinates:
-            you:  860x591
-            them: 860x2078
+            you:  859x592
+            them: 859x2078
 
     - name: race
       weighting: 15
       isMulticolor: false
-      size: 78x78
+      size: 76x76
       checkboxes:
         - label: white
           coordinates:
-            you:  2750x591
-            them: 2750x2076
+            you:  2746x592
+            them: 2748x2078
         - label: asian
           coordinates:
-            you:  2865x591
-            them: 2865x2076
+            you:  2862x592
+            them: 2864x2078
         - label: latin
           coordinates:
-            you:  2980x591
-            them: 2980x2076
+            you:  2978x592
+            them: 2980x2078
         - label: arab
           coordinates:
-            you:  3100x591
-            them: 3100x2076
+            you:  3094x592
+            them: 3096x2078
         - label: black
           coordinates:
-            you:  3214x591
-            them: 3214x2076
+            you:  3212x592
+            them: 3214x2078
         - label: other
           coordinates:
-            you:  3332x591
-            them: 3332x2076
+            you:  3328x592
+            them: 3330x2078
 
     - name: hair style
       weighting: 1
       isMulticolor: false
-      size: 74x74
+      size: 76x76
       checkboxes:
         - label: bald
           coordinates:
-            you:  3264x1534
-            them: 3264x3020
+            you:  3261x1536
+            them: 3261x3022
         - label: short
           coordinates:
-            you:  3378x1534
-            them: 3378x3020
+            you:  3377x1536
+            them: 3377x3022
         - label: medium
           coordinates:
-            you:  3494x1534
-            them: 3494x3020
+            you:  3493x1536
+            them: 3493x3022
         - label: long
           coordinates:
-            you:  3614x1534
-            them: 3614x3020
+            you:  3609x1536
+            them: 3609x3022
         - label: very long
           coordinates:
-            you:  3728x1534
-            them: 3728x3020
+            you:  3725x1536
+            them: 3725x3022
 
     - name: hair color
       weighting: 10
       isMulticolor: false
-      size: 72x72
+      size: 76x76
       checkboxes:
         - label: black
           coordinates:
-            you:  3146x1658
-            them: 3146x3148
+            you:  3145x1663
+            them: 3145x3149
         - label: brown
           coordinates:
-            you:  3262x1658
-            them: 3262x3148
+            you:  3261x1663
+            them: 3261x3149
         - label: gold
           coordinates:
-            you:  3380x1658
-            them: 3380x3148
+            you:  3377x1663
+            them: 3377x3149
         - label: blonde
           coordinates:
-            you:  3496x1658
-            them: 3496x3148
+            you:  3493x1663
+            them: 3493x3149
         - label: ginger
           coordinates:
-            you:  3610x1658
-            them: 3610x3148
+            you:  3609x1663
+            them: 3609x3149
         - label: other
           coordinates:
-            you:  3730x1658
-            them: 3730x3148
+            you:  3725x1663
+            them: 3725x3149
 
   booleanBars:
     - name: piercings
@@ -273,143 +273,143 @@
     - name: quirks
       weighting: 8
       isMulticolor: true
-      size: 58x58
+      size: 57x58
       checkboxes:
         - label: adventurous
           coordinates:
-            you:  1324x1006
-            them: 1324x2494
+            you:  1324x1010
+            them: 1324x2496
         - label: cutesy
           coordinates:
-            you:  1624x1006
-            them: 1624x2494
+            you:  1623x1010
+            them: 1623x2496
         - label: intelligent
           coordinates:
-            you:  1902x1006
-            them: 1902x2494
+            you:  1902x1010
+            them: 1902x2496
         - label: reliable
           coordinates:
-            you:  2212x1006
-            them: 2212x2494
+            you:  2209x1010
+            them: 2209x2496
 
         - label: ambitious
           coordinates:
-            you:  1324x1102
-            them: 1324x2588
+            you:  1324x1104
+            them: 1324x2590
         - label: cynical
           coordinates:
-            you:  1624x1102
-            them: 1624x2588
+            you:  1623x1104
+            them: 1623x2590
         - label: kind
           coordinates:
-            you:  1902x1102
-            them: 1902x2588
+            you:  1902x1104
+            them: 1902x2590
         - label: resourceful
           coordinates:
-            you:  2212x1102
-            them: 2212x2588
+            you:  2209x1104
+            them: 2209x2590
 
         - label: analytical
           coordinates:
-            you:  1324x1194
-            them: 1324x2682
+            you:  1324x1198
+            them: 1324x2684
         - label: easy-going
           coordinates:
-            you:  1624x1194
-            them: 1624x2682
+            you:  1623x1198
+            them: 1623x2684
         - label: lazy
           coordinates:
-            you:  1902x1194
-            them: 1902x2682
+            you:  1902x1198
+            them: 1902x2684
         - label: romantic
           coordinates:
-            you:  2212x1194
-            them: 2212x2682
+            you:  2209x1198
+            them: 2209x2684
 
         - label: artistic
           coordinates:
-            you:  1324x1290
+            you:  1324x1292
             them: 1324x2778
         - label: empathetic
           coordinates:
-            you:  1624x1290
-            them: 1624x2778
+            you:  1623x1292
+            them: 1623x2778
         - label: loud
           coordinates:
-            you:  1902x1290
+            you:  1902x1292
             them: 1902x2778
         - label: serious
           coordinates:
-            you:  2212x1290
-            them: 2212x2778
+            you:  2209x1292
+            them: 2209x2778
 
         - label: assertive
           coordinates:
-            you:  1324x1384
-            them: 1324x2870
+            you:  1324x1386
+            them: 1324x2872
         - label: energetic
           coordinates:
-            you:  1624x1384
-            them: 1624x2870
+            you:  1623x1386
+            them: 1623x2872
         - label: materialistic
           coordinates:
-            you:  1902x1384
-            them: 1902x2870
+            you:  1902x1386
+            them: 1902x2872
         - label: sexual
           coordinates:
-            you:  2212x1384
-            them: 2212x2870
+            you:  2209x1386
+            them: 2209x2872
 
         - label: athletic
           coordinates:
-            you:  1324x1478
+            you:  1324x1480
             them: 1324x2966
         - label: honest
           coordinates:
-            you:  1624x1478
-            them: 1624x2966
+            you:  1623x1480
+            them: 1623x2966
         - label: messy
           coordinates:
-            you:  1902x1478
+            you:  1902x1480
             them: 1902x2966
         - label: social
           coordinates:
-            you:  2212x1478
-            them: 2212x2966
+            you:  2209x1480
+            them: 2209x2966
 
         - label: confident
           coordinates:
-            you:  1324x1572
-            them: 1324x3058
+            you:  1324x1574
+            them: 1324x3060
         - label: humorous
           coordinates:
-            you:  1624x1572
-            them: 1624x3058
+            you:  1623x1574
+            them: 1623x3060
         - label: outdoorsy
           coordinates:
-            you:  1902x1572
-            them: 1902x3058
+            you:  1902x1574
+            them: 1902x3060
         - label: talkative
           coordinates:
-            you:  2212x1572
-            them: 2212x3058
+            you:  2209x1574
+            them: 2209x3060
 
         - label: creative
           coordinates:
-            you:  1324x1666
+            you:  1324x1668
             them: 1324x3154
         - label: hygienic
           coordinates:
-            you:  1624x1666
-            them: 1624x3154
+            you:  1623x1668
+            them: 1623x3154
         - label: passionate
           coordinates:
-            you:  1902x1666
+            you:  1902x1668
             them: 1902x3154
         - label: wise
           coordinates:
-            you:  2212x1666
-            them: 2212x3154
+            you:  2209x1668
+            them: 2209x3154
 
 - category: beliefs
   twoDFuzzyRangeBars:
