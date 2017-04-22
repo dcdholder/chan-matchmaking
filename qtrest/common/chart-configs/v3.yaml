@@ -3,7 +3,7 @@
     - name: gender
       weighting: 100
       isMulticolor: false
-      size: 76x76
+      size: 77x77
       checkboxes:
         - label: male
           coordinates:
@@ -25,7 +25,7 @@
     - name: race
       weighting: 15
       isMulticolor: false
-      size: 76x76
+      size: 77x77
       checkboxes:
         - label: white
           coordinates:
@@ -55,7 +55,7 @@
     - name: hair style
       weighting: 1
       isMulticolor: false
-      size: 76x76
+      size: 77x77
       checkboxes:
         - label: bald
           coordinates:
@@ -81,7 +81,7 @@
     - name: hair color
       weighting: 10
       isMulticolor: false
-      size: 76x76
+      size: 77x77
       checkboxes:
         - label: black
           coordinates:
@@ -113,16 +113,18 @@
       weighting: 4
       yesPosition: right
       coordinates:
-        you:  3638x854
-        them: 3638x2340
-      size: 157x74
+        you:  3637x855
+        them: 3637x2341
+      size: 157x77
+      borderWidth: 3
     - name: tattoos
       weighting: 4
       yesPosition: right
       coordinates:
-        you:  3638x980
-        them: 3638x2466
-      size: 157x74
+        you:  3637x982
+        them: 3637x2468
+      size: 157x77
+      borderWidth: 3
 
   pictographicCheckboxSets:
     - name: body type
@@ -214,8 +216,9 @@
       numCells: 8
       coordinates:
         you:  161x734
-        them: 161x2218
+        them: 161x2220
       size: 637x77
+      borderWidth: 3
 
     - name: height
       weighting: 15
@@ -223,9 +226,10 @@
       max: 75
       numCells: 10
       coordinates:
-        you:  2794x752
-        them: 2794x2240
-      size: 798x76
+        you:  2791x756
+        them: 2791x2242
+      size: 798x77
+      borderWidth: 3
 
 - category: emotional
   fuzzyRangeBars:
@@ -235,9 +239,10 @@
       right:     extroverted
       numCells:  10
       coordinates:
-        you:  1596x570
-        them: 1596x2056
-      size: 600x52
+        you:  1596x573
+        them: 1596x2059
+      size: 600x59
+      borderWidth: 2
 
     - name:      practicality
       weighting: 1
@@ -245,9 +250,10 @@
       right:     practical
       numCells:  10
       coordinates:
-        you:  1596x656
-        them: 1596x2142
-      size: 600x52
+        you:  1596x659
+        them: 1596x2145
+      size: 600x59
+      borderWidth: 2
 
     - name:      emotional
       weighting: 1
@@ -255,9 +261,10 @@
       right:     emotional
       numCells:  10
       coordinates:
-        you:  1596x742
-        them: 1596x2228
-      size: 600x52
+        you:  1596x745
+        them: 1596x2231
+      size: 600x59
+      borderWidth: 2
 
     - name:      spontaneity
       weighting: 1
@@ -265,15 +272,16 @@
       right:     spontaneous
       numCells:  10
       coordinates:
-        you:  1596x828
-        them: 1596x2316
-      size: 600x52
+        you:  1596x831
+        them: 1596x2317
+      size: 600x59
+      borderWidth: 2
 
   checkboxSets:
     - name: quirks
       weighting: 8
       isMulticolor: true
-      size: 57x58
+      size: 58x59
       checkboxes:
         - label: adventurous
           coordinates:
@@ -421,9 +429,10 @@
       bottom: socialist
       cellDimensions: 5
       coordinates:
-        you:  696x1396
-        them: 696x2884
+        you:  695x1400
+        them: 695x2886
       size: 300x300
+      borderWidth: 2
 
   fuzzyRangeBars:
     - name:  political views
@@ -432,9 +441,10 @@
       right: authoritarian
       numCells: 7
       coordinates:
-        you:  50x1142
-        them: 50x2626
-      size: 558x72
+        you:  47x1143
+        them: 47x2629
+      size: 558x77
+      borderWidth: 3
 
     - name:  social views
       weighting: 4
@@ -442,9 +452,10 @@
       right: conservative
       numCells: 7
       coordinates:
-        you:  50x1360
-        them: 50x2846
-      size: 558x72
+        you:  47x1362
+        them: 47x2848
+      size: 558x77
+      borderWidth: 3
 
     - name:  religious devotion
       weighting: 4
@@ -452,9 +463,10 @@
       right: high
       numCells: 5
       coordinates:
-        you:  44x940
-        them: 44x2426
-      size: 160x28
+        you:  45x942
+        them: 45x2428
+      size: 159x31
+      borderWidth: 1
 
   pictographicCheckboxSets:
     - name: religion
@@ -510,9 +522,10 @@
       right:    frequently
       numCells: 3
       coordinates:
-        you:  346x1542
-        them: 346x3028
-      size: 238x76
+        you:  345x1544
+        them: 345x3030
+      size: 238x77
+      borderWidth: 3
 
     - name:     tobacco
       weighting: 1
@@ -520,9 +533,10 @@
       right:    frequently
       numCells: 3
       coordinates:
-        you:  818x1542
-        them: 818x3028
-      size: 238x76
+        you:  818x1544
+        them: 818x3030
+      size: 238x77
+      borderWidth: 3
 
     - name:     other drugs
       weighting: 1
@@ -530,6 +544,7 @@
       right:    frequently
       numCells: 3
       coordinates:
-        you:  346x1666
-        them: 346x3150
-      size: 238x76
+        you:  345x1667
+        them: 345x3153
+      size: 238x77
+      borderWidth: 3

@@ -76,20 +76,20 @@ class SquareCell(Cell):
         super().__init__(label,coordinates)
 
     @staticmethod
-    def genRow(baseCoordinates,cellSize,numCells): #create a horizontal row of cells
+    def genRow(baseCoordinates,cellSize,borderWidth,numCells): #create a horizontal row of cells
         cells = {}
         for i in range(0,numCells):
-            cellCoordinates = ((baseCoordinates[0] + cellSize[0] * i), baseCoordinates[1])
+            cellCoordinates = ((baseCoordinates[0] + (cellSize[0] + borderWidth)*i), baseCoordinates[1])
             cells[str(i)]   = SquareCell(str(i),cellCoordinates,cellSize)
 
         return cells
 
     @staticmethod
-    def genSquare(baseCoordinates,cellSize,cellDimensions):
+    def genSquare(baseCoordinates,cellSize,borderWidth,cellDimensions):
         cells = {}
         for j in range(0,cellDimensions): #assume all 2D cell arrays are square
             for i in range(0,cellDimensions):
-                cellCoordinates              = ((baseCoordinates[0] + cellSize[0] * i), (baseCoordinates[1] - cellSize[1] * j))
+                cellCoordinates              = ((baseCoordinates[0] + (cellSize[0]+borderWidth) * i), (baseCoordinates[1] - (cellSize[1]+borderWidth) * j))
                 cells[(str(i) + "," + str(j))] = SquareCell((str(i) + "," + str(j)),cellCoordinates,cellSize)
 
         return cells
@@ -103,7 +103,7 @@ class SquareCell(Cell):
     def rectFillCell(self,colorCode):
         draw = ImageDraw.Draw(self.pixelMap)
         #raise ValueError([self.coordinates[0],self.coordinates[1]])
-        draw.rectangle([(self.coordinates[0],self.coordinates[1]),(self.coordinates[0]+self.size[0],self.coordinates[1]-self.size[1])],fill=colorCode)
+        draw.rectangle([(self.coordinates[0],self.coordinates[1]),(self.coordinates[0]+self.size[0]-1,self.coordinates[1]-self.size[1]+1)],fill=colorCode)
         del draw
 
     def fillCellByColorFieldData(self,colorFieldData):

@@ -9,12 +9,14 @@ class Bar(Element):
         else:
             self.coordinates = Element.coordinatesFromString(elementYaml['coordinates']['them'])
 
-        self.size     = Element.coordinatesFromString(elementYaml['size'])
+        self.size        = Element.coordinatesFromString(elementYaml['size'])
+        self.borderWidth = elementYaml['borderWidth']
+
         self.cellSize = self.getCellSize()
         super().__init__(elementYaml,isYou)
 
     def getCellSize(self):
-        return ((self.size[0] // self.numCells), (self.size[1]))
+        return (((self.size[0] - (self.numCells-1)*self.borderWidth) // self.numCells), (self.size[1]))
 
 class BooleanBar(Bar):
     def __init__(self, elementYaml, isYou):
@@ -25,7 +27,7 @@ class BooleanBar(Bar):
     def getCells(self):
         cells = {}
 
-        rightCoordinates = (self.coordinates[0] + self.cellSize[0], self.coordinates[1])
+        rightCoordinates = (self.coordinates[0] + self.cellSize[0] + self.borderWidth, self.coordinates[1])
 
         if self.yesPosition=='left':
             yesCell = SquareCell('yes', self.coordinates, self.cellSize)
@@ -65,7 +67,7 @@ class NumericalRangeBar(Bar):
 
     #TODO: DRY
     def getCells(self):
-        return SquareCell.genRow(self.coordinates,self.cellSize,self.numCells)
+        return SquareCell.genRow(self.coordinates,self.cellSize,self.borderWidth,self.numCells)
 
     def getNumericalValue(self):
         pass
@@ -113,7 +115,7 @@ class FuzzyRangeBar(Bar):
         self.rightQuality = elementYaml['right']
 
     def getCells(self):
-        return SquareCell.genRow(self.coordinates,self.cellSize,self.numCells)
+        return SquareCell.genRow(self.coordinates,self.cellSize,self.borderWidth,self.numCells)
 
     def getPercentScoreLeft(self):
         pass
@@ -158,10 +160,10 @@ class TwoDFuzzyRangeBar(Bar):
         self.bottomQuality = elementYaml['bottom']
 
     def getCells(self):
-        return SquareCell.genSquare(self.coordinates,self.cellSize,self.cellDimensions)
+        return SquareCell.genSquare(self.coordinates,self.cellSize,self.borderWidth,self.cellDimensions)
 
     def getCellSize(self):
-        return ((self.size[0] // self.numCells), (self.size[1]) // self.numCells)
+        return (((self.size[0] - (self.numCells-1)*self.borderWidth) // self.numCells), ((self.size[1] - (self.numCells-1)*self.borderWidth) // self.numCells))
 
     #TODO: DRY
     @staticmethod
