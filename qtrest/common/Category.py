@@ -1,6 +1,7 @@
 from qtrest.common.Element import Element
 from qtrest.common.Bar import Bar, BooleanBar, NumericalRangeBar, FuzzyRangeBar, TwoDFuzzyRangeBar
 from qtrest.common.CheckboxSet import CheckboxSet, PictographicCheckboxSet, SquareCheckboxSet
+from qtrest.common.Bullet import Bullet, BulletList
 from qtrest.common.ChartData import CategoryData
 
 from PIL import Image
@@ -10,12 +11,21 @@ class Category:
         self.categoryYaml      = categoryYaml
         self.name              = categoryYaml['category']
         self.weighting         = weighting
-        self.elements          = self.__getElements() #dict of dicts -- each key corresponds to the 'You' and 'Them' versions of an element
+        self.imageElements     = self.__getImageElements() #dict of dicts -- each key corresponds to the 'You' and 'Them' versions of an element
+        self.textElements      = self.__getTextElements()
+
+        self.elements = {}
+        for imageElementName,imageElement in self.imageElements.items():
+            self.elements[imageElementName] = imageElement
+
+        for textElementName,textElement in self.textElements.items():
+            self.elements[textElementName] = textElement
+
         self.elementWeightings = self.__getElementWeightings()
 
     def getCategoryData(self):
         elementDataDict = {}
-        for name,elementDict in self.elements.items():
+        for name,elementDict in self.imageElements.items():
             elementDataDict[name]         = {}
             elementDataDict[name]['you']  = elementDict['you'].getElementData()
             elementDataDict[name]['them'] = elementDict['them'].getElementData()
@@ -23,7 +33,7 @@ class Category:
         return CategoryData(self.name,elementDataDict)
 
     #TODO: pretty ugly
-    def __getElements(self): #Yaml format is different for each element type
+    def __getImageElements(self): #Yaml format is different for each element type
         elements = {}
 
         if 'checkboxSets' in self.categoryYaml.keys():
@@ -58,13 +68,29 @@ class Category:
 
         return elements
 
+    def __getTextElements(self):
+        elements = {}
+
+        if 'bullets' in self.categoryYaml.keys():
+            bulletsYaml = self.categoryYaml['bullets']
+            for bulletYaml in bulletsYaml:
+                elements[bulletYaml['name']] = Bullet.getYouAndThemElementsFromYaml(bulletYaml)
+
+        if 'bulletLists' in self.categoryYaml.keys():
+            bulletListsYaml = self.categoryYaml['bulletLists']
+            for bulletListYaml in bulletListsYaml:
+                elements[bulletListYaml['name']] = BulletList.getYouAndThemElementsFromYaml(bulletListYaml)
+
+        return elements
+
     def __getElementWeightings(self):
         elementRelativeWeightings = {}
 
         for elementTypeYaml in self.categoryYaml:
             if elementTypeYaml!='category': #ignore lines in the yaml starting with 'category'
                 for elementYaml in self.categoryYaml[elementTypeYaml]:
-                    elementRelativeWeightings[elementYaml['name']] = elementYaml['weighting']
+                    if elementYaml['name'] in self.imageElements.keys():
+                        elementRelativeWeightings[elementYaml['name']] = elementYaml['weighting']
 
         return Category.weightingsFromRelativeWeightings(elementRelativeWeightings)
 
@@ -82,9 +108,20 @@ class Category:
         return weightings
 
     def colorCategory(self,categoryData):
-        for elementName,elementDict in self.elements.items():
+        for elementName,elementDict in self.imageElements.items():
             for elementOwner,element in elementDict.items():
                 element.colorElement(categoryData.elementDataDict[elementName][elementOwner])
+
+    def fillCategoryFromStringDict(self,categoryName,categoryDataStringDict):
+        self.enterTextFromStringDict(categoryName,categoryDataStringDict)
+        self.colorCategoryFromStringDict(categoryName,categoryDataStringDict)
+
+    def enterTextFromStringDict(self,categoryName,categoryDataStringDict):
+        for textElementName,textElement in self.textElements.items():
+            #print(categoryDataStringDict)
+            if textElementName in categoryDataStringDict.keys():
+                for elementOwner,elementStringArr in categoryDataStringDict[textElementName].items():
+                    self.textElements[textElementName][elementOwner].enterTextFromStringArr(elementStringArr)
 
     #TODO: DRY
     #TODO: for the moment, we won't require all elements in a category to be present
@@ -92,9 +129,10 @@ class Category:
         if categoryName=='physical':
             self.preprocessBodyType(categoryDataStringDict)
 
-        for elementName,elementPairStringDict in categoryDataStringDict.items():
-            for elementOwner,elementStringDict in elementPairStringDict.items():
-                self.elements[elementName][elementOwner].colorElementFromStringDict(elementStringDict)
+        for imageElementName,imageElement in self.imageElements.items():
+            if imageElementName in categoryDataStringDict.keys():
+                for elementOwner,elementStringDict in categoryDataStringDict[imageElementName].items():
+                    self.imageElements[imageElementName][elementOwner].colorElementFromStringDict(elementStringDict)
 
     def preprocessBodyType(self,categoryDataStringDict):
         defaultGender = 'male'
@@ -127,6 +165,11 @@ class Category:
                 categoryDataStringDict['body type']['them'][label + ' female'] = categoryDataStringDict['body type']['them'][label]
 
             del categoryDataStringDict['body type']['them'][label]
+
+    def propagateFontFilename(self,fontFilename):
+        for elementName,elementDict in self.textElements.items():
+            for elementOwner,element in elementDict.items():
+                element.propagateFontFilename(fontFilename)
 
     def propagatePixelMap(self,pixelMap):
         for elementName,elementDict in self.elements.items():

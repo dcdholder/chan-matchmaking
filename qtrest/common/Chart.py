@@ -11,7 +11,8 @@ import os
 class Chart:
     CHART_CONFIG_FILENAME            = "chart-configs/v3.yaml"
     CLEAN_CHART_FILENAME             = "../media/charts/blank/v3.png"
-    DEF_CATEGORY_RELATIVE_WEIGHTINGS = {'physical': 1, 'emotional': 1, 'beliefs': 1, 'other': 1}
+    FONT_FILENAME                    = os.path.dirname(__file__) + '/' + "../media/fonts/font.ttf"
+    DEF_CATEGORY_RELATIVE_WEIGHTINGS = {'physical': 1, 'emotional': 1, 'beliefs': 1, 'other': 1, 'more information': 1}
 
     def __init__(self, categoryRelativeWeightings=None):
         self.filename  = None
@@ -23,6 +24,8 @@ class Chart:
 
         self.categoryWeightings = Category.weightingsFromRelativeWeightings(categoryRelativeWeightings)
         self.categories         = self.__getCategories() #indexed by category name
+
+        self.propagateFontFilename()
 
     def getChartData(self):
         categoryDataDict = {}
@@ -43,6 +46,10 @@ class Chart:
                 raise ValueError('Could not open config file.')
 
         return categories
+
+    def propagateFontFilename(self):
+        for categoryName,category in self.categories.items():
+            category.propagateFontFilename(self.FONT_FILENAME)
 
     #TODO: change this to a setter, and update references to it
     def __getPixelMap(self):
@@ -90,21 +97,21 @@ class Chart:
         self.chartData = chartData
 
     #TODO: currently does not check if all category data is present, include this once frontend is done
-    def colorWithChartDataStringDict(self,chartDataStringDict):
+    def fillWithChartDataStringDict(self,chartDataStringDict):
         for categoryName,categoryStringDict in chartDataStringDict.items():
-            self.categories[categoryName].colorCategoryFromStringDict(categoryName,categoryStringDict)
+            self.categories[categoryName].fillCategoryFromStringDict(categoryName,categoryStringDict)
 
     @staticmethod
     def chartImageFromStringDict(stringDict,filename):
-        #startTime = timeit.default_timer()
+        startTime = timeit.default_timer()
         chart = Chart()
         chart.loadInImage(Chart.CLEAN_CHART_FILENAME)
-        chart.colorWithChartDataStringDict(stringDict)
+        chart.fillWithChartDataStringDict(stringDict)
         #print(timeit.default_timer() - startTime)
 
-        startTime = timeit.default_timer()
+        #startTime = timeit.default_timer()
         chart.pixelMap.save(filename,quality=65,optimize=True)
-        #print(timeit.default_timer() - startTime)
+        print(timeit.default_timer() - startTime)
 
     @staticmethod
     def convertImageToCleanImage(filenameA,filenameB):

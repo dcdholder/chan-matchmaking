@@ -1,8 +1,8 @@
-from qtrest.common.Element import Element
+from qtrest.common.Element import Element, ImageElement
 from qtrest.common.Cell import Cell,SquareCell,PictographicCell
 
 #TODO: figure out how abstract classes work in Python
-class Bar(Element):
+class Bar(ImageElement):
     def __init__(self, elementYaml, isYou):
         if isYou: #TODO: fix this ugly hack to get around calling youOrThemString before isYou is set, without setting isYou twice
             self.coordinates = Element.coordinatesFromString(elementYaml['coordinates']['you'])
@@ -42,7 +42,7 @@ class BooleanBar(Bar):
         return cells
 
     def getElementData(self): #throw it through a filter to ensure that both options aren't checked on the 'You' side
-        elementData = Element.getElementData(self)
+        elementData = ImageElement.getElementData(self)
         if self.isYou:
             if elementData.colorFieldDataDict['yes'].isPositive() and elementData.colorFieldDataDict['no'].isPositive():
                 raise ValueError('Cannot select both options in a boolean bar.')
@@ -78,7 +78,7 @@ class NumericalRangeBar(Bar):
 
     #TODO: DRY - I think I can merge the numerical and fuzzy versions
     def getElementData(self): #can select up to 2 cells -- the rightmost will be kept
-        elementData = Element.getElementData(self)
+        elementData = ImageElement.getElementData(self)
         if self.isYou:
             rightmostPositivePosition = 0
             numSelected = 0
@@ -126,7 +126,7 @@ class FuzzyRangeBar(Bar):
         #TODO: generate a key-value pair corresponding to the "matching percentage" of the right attribute
 
     def getElementData(self): #some users like to draw a solid bar, rather than only selecting a single cell
-        elementData = Element.getElementData(self)
+        elementData = ImageElement.getElementData(self)
         if self.isYou:
             rightmostPositivePosition = 0
             for label, colorFieldData in elementData.colorFieldDataDict.items():

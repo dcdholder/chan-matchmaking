@@ -8,7 +8,7 @@ from PIL import Image,ImageDraw,ImageColor
 import yaml
 
 class Cell: #an indivisble component of an image element
-    STANDARD_DIMENSIONS = (3828, 4587)
+    STANDARD_DIMENSIONS = (3828, 4478)
 
     def __init__(self,label,coordinates):
         self.label       = label

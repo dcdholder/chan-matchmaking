@@ -1,8 +1,8 @@
-from qtrest.common.Element import Element
+from qtrest.common.Element import Element, ImageElement
 from qtrest.common.Cell import Cell,SquareCell,PictographicCell
 
 #TODO: figure out how abstract classes work in Python
-class CheckboxSet(Element):
+class CheckboxSet(ImageElement):
     def __init__(self, elementYaml, isYou):
         super().__init__(elementYaml,isYou)
 

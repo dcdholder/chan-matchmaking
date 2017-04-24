@@ -548,3 +548,94 @@
         them: 345x3153
       size: 238x77
       borderWidth: 3
+
+  bullets:
+    - name: occupation
+      coordinates:
+        you:  932x1672
+        them: 932x3158
+      textSize: 30
+      maxWidth: 20
+
+    - name: location
+      coordinates:
+        you:  1074x720
+        them: 1074x2206
+      textSize: 30
+      maxWidth: 20
+
+- category: more information
+  bulletLists:
+  - name: sites/boards
+    coordinates:
+      you:      68x3486
+    textSize:   40
+    maxWidth:   20
+    lineSpacing: 22
+    numBullets: 3
+  - name: sports
+    coordinates:
+      you:      790x3486
+    textSize:   40
+    maxWidth:   20
+    lineSpacing: 22
+    numBullets: 3
+  - name: music
+    coordinates:
+      you:      1518x3486
+    textSize:   40
+    maxWidth:   20
+    lineSpacing: 22
+    numBullets: 3
+
+  - name: literature
+    coordinates:
+      you:      68x3782
+    textSize:   40
+    maxWidth:   20
+    lineSpacing: 22
+    numBullets: 3
+  - name: games
+    coordinates:
+      you:      790x3782
+    textSize:   40
+    maxWidth:   20
+    lineSpacing: 22
+    numBullets: 3
+  - name: movies/tv
+    coordinates:
+      you:      1518x3782
+    textSize:   40
+    maxWidth:   20
+    lineSpacing: 22
+    numBullets: 3
+
+  - name: mutual activities
+    coordinates:
+      you:      67x4078
+    textSize:   40
+    maxWidth:   20
+    lineSpacing: 22
+    numBullets: 7
+  - name: other interests
+    coordinates:
+      you:       1079x4078
+    textSize:    40
+    maxWidth:    20
+    lineSpacing: 22
+    numBullets: 7
+
+  - name: contact info
+    coordinates:
+      you:      2607x4170
+    textSize:   40
+    maxWidth:   20
+    lineSpacing: 22
+    numBullets: 3
+  - name: other information
+    coordinates:
+      you:       2607x3392
+    textSize:    40
+    maxWidth:    20
+    lineSpacing: 22
+    numBullets: 10
