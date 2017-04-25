@@ -1,5 +1,6 @@
 sandbox
 __pycache__/
-qtrest/media/charts/*
+qtrest/media/charts/generated/*.png
+qtrest/media/charts/generated/*.jpg
 *.db
 .cache
