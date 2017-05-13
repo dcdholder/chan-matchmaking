@@ -52,12 +52,16 @@ class BulletList(TextElement):
             if len(elementDataString) > self.maxWidth:
                 raise ValueError('String too long for bullet.')
 
-        #print(elementDataStringArr)
+        #eliminate empty bullet points
+        collapsedElementDataStringArr = []
+        for lineText in elementDataStringArr:
+            if (not lineText.isspace()) and lineText!='':
+                collapsedElementDataStringArr.append(lineText)
 
         concatenatedText = ''
-        if len(elementDataStringArr)!=1 or elementDataStringArr[0]!='':
-            for lineText in elementDataStringArr:
-                concatenatedText += '•' + lineText + '\n'
+        #if len(elementDataStringArr)!=1:
+        for lineText in collapsedElementDataStringArr:
+            concatenatedText += '•' + lineText + '\n'
 
         draw = ImageDraw.Draw(self.pixelMap)
         draw.text((self.coordinates[0],self.coordinates[1]-self.textSize), concatenatedText, fill=(0,0,0), font=self.font, spacing=self.lineSpacing)
